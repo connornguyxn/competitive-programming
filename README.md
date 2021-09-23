@@ -2,7 +2,7 @@
 
 ### What is this?
 
- - This repository contains *almost* **all of my written code** *(except for projects, which will be in their own repos)* and **personal files** that have been encrypted by a 21 character password with both cases, numbers and special characters, so good luck trying to crack it :)
+ - This repository contains *almost* **all of my written code** *(except for projects, which will be in their own repos)* and *some* **personal files**.
 
 ### Purpose
 
