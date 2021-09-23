@@ -1,0 +1,15 @@
+function binsearch(a:longint;mg:ar;l,r:longint):longint;
+var m:longint;
+begin
+while l<=r do
+    begin
+    m:=(l+r) div 2;
+    if a=mg[m] then
+        exit(m);
+    if a<mg[m] then
+        r:=m-1
+    else
+        l:=m+1;
+    end;
+exit(0);
+end;

@@ -1,0 +1,11 @@
+function tcs(a:int64):int64;
+var i,e:longint;b:ansistring;c:int64;
+begin
+tcs:=0;
+str(a,b);
+for i:=1 to length(b) do
+    begin
+        val(b[i],c,e);
+        tcs:=tcs+c;
+    end;
+end;

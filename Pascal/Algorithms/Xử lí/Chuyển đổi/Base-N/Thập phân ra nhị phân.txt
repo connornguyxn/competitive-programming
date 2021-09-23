@@ -1,0 +1,11 @@
+function dectobin(a:int64):ansistring;
+var b:ansistring;
+begin
+dectobin:=0;
+while a<>0 do 
+    begin
+    str((a mod 2),b);
+    dectobin:=b+dectobin;
+    a:=a div 2;
+    end;
+end;
