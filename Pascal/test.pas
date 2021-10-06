@@ -15,7 +15,7 @@ begin
 end;
 
 ///////////////////////////
-var n:longint;
+var n,i:longint;
 begin
 readln(n);
 writeln(binet(n));
