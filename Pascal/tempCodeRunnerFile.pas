@@ -1,2 +1,0 @@
-
-var phi,psi:real;
