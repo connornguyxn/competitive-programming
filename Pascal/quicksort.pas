@@ -1,7 +1,7 @@
 type ar=array[1..1000000] of longint;
 var mg:ar;
 n,i:longint;
-
+////////////////////////////////////
 procedure quicksort(var a:ar; l,r:longint);
 var i,j:longint;
 x,tg:int64;
@@ -27,8 +27,6 @@ if j>l then quicksort(a,l,j);
 end;
 ////////////////////////////
 begin
-assign(input,'quicksort.inp');reset(input);
-assign(output,'quicksort.out');rewrite(output);
 readln(n);
 for i:=1 to n do read(mg[i]);
 quicksort(mg,1,n);

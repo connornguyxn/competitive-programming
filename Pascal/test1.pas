@@ -1,11 +1,6 @@
-var n,i,d:longint;
+var n,i,d:int64;
 
 begin
-assign(input,'test1.inp');reset(input);
-assign(output,'test1.out');rewrite(output);
-readln(n);
-for i:=7 to n do
-    if i mod 7=0 then
-        d:=d+1;
-writeln(d);
+for i:=1 to 10 do
+    writeln(1)
 end.

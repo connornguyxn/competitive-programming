@@ -14,8 +14,6 @@ exit(f2);
 end;
 //////////////////////////////////
 begin
-assign(input,'phantichfibo.inp');reset(input);
-assign(output,'phantichfibo.out');rewrite(output);
 readln(k);
 repeat
     f:=fb(k);

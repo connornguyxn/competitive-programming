@@ -6,17 +6,16 @@ begin
         mu:=mu*a;
 end;
 /////////////////////////////
-function binet(n:longint):longint;
+function binet(n:longint):extended;
 var phi,psi:extended;
 begin
-    phi:= (1 + sqrt(5)) / 2;
-    psi:= (1 - sqrt(5)) / 2;
-    exit(round((mu(phi,n) - mu(psi,n)) / sqrt(5)));
+    phi := (1 + sqrt(5)) / 2;
+    psi := (1 - sqrt(5)) / 2;
+   exit((mu(phi, n) - mu(psi, n)) / sqrt(5));
 end;
-
 ///////////////////////////
 var n:longint;
 begin
 readln(n);
-writeln(binet(n));
+writeln(binet(n):0:0);
 end.

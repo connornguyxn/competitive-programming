@@ -1,7 +1,7 @@
 var i,d:longint;
-a,b:qword;
+a,b:longint;
 ////////////////////////////func//////////////////////////////
-function nto(a:qword):boolean;
+function nto(a:longint):boolean;
 begin
 i:=1;
 if a<2 then exit(false);
@@ -15,7 +15,7 @@ while i<=trunc(sqrt(a)) do
     end;
 end;
 ///////////////////////////////////
-function dx(anum:qword):boolean;
+function dx(anum:longint):boolean;
 var i:longint;a:ansistring;
 begin
 str(anum,a);
@@ -25,9 +25,7 @@ if a[i]<>a[length(a)-i+1] then exit(false);
 end;
 /////////////////////////main////////////////////////////////
 begin
-assign(input,'digit.inp');reset(input);
-assign(output,'digit.out');rewrite(output);
-read(a,b);
+readln(a,b);
 for i:=a to b do
     if (nto(i)=true) and (dx(i)=true) then
         d:=d+1;
