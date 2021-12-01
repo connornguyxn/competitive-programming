@@ -1,13 +1,14 @@
-uses crt;
-var t,n:longint;
+var m,y:longint;
 begin
-clrscr;
-write('Nhap thang, nam: ');readln(t,n);
-if t in [1,3,5,7,8,10,12] then writeln('Thang ',t,' co 31 ngay')
+readln(m,y);
+if (m in [1,3,5,7,8,10,12]) then
+    writeln('31')
+else
+    if (m in [4,6,9,11]) then
+        writeln('30')
     else
-    if t in [4,6,9,11] then writeln('Thang ',t,' co 30 ngay')
+        if (y mod 400=0) or ((y mod 4=0) and (y mod 100<>0)) then 
+            writeln('29')
         else
-            if (n mod 400=0) or (n mod 4=0) and (n mod 100<>0) then writeln('Thang ',t,' co 29 ngay')
-                else writeln('Thang ',t,' co 30 ngay');
-readln;
+            writeln('28');
 end.
