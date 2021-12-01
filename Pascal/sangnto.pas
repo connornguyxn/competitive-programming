@@ -1,4 +1,4 @@
-type ntoar=array[1..1000000] of boolean;
+type ntoar=array[1..10000000] of boolean;
 var nto:ntoar;
 //////////////////////////////////////////
 procedure sangnto(var a:ntoar);

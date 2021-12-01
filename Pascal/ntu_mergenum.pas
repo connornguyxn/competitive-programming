@@ -1,52 +1,45 @@
-var a,b,c,d:ansistring;
-i,j:longint;
-
+var a,b,c,mx,mn:ansistring;
+/////////////////////////////////////////////
+function max(a,b:ansistring):ansistring;
 begin
-assign(input,'ntu_mergenum.inp');reset(input);
-assign(output,'ntu_mergenum.out');rewrite(output);
+if a>b then
+    exit(a);
+exit(b);
+end;
+//////////
+function min(a,b:ansistring):ansistring;
+begin
+if a<b then
+    exit(a);
+exit(b);
+end;
+//////////////
+procedure try(a,b,c:ansistring);
+begin
+if (length(a)=0) or (length(b)=0) then
+    begin
+    c:=c+max(a,b);
+    if c>mx then
+        mx:=c;
+    if (c<mn) or (mn='') then
+        mn:=c;
+    end
+else
+    begin
+    try(copy(a,2,length(a)-1),b,c+a[1]);
+    try(a,copy(b,2,length(b)-1),c+b[1]);
+    end;
+end;
+/////////////////////////////////////////////
+begin
+//readln(a);
 readln(b);
+//13 26
 a:=copy(b,1,pos(' ',b)-1);
 delete(b,1,pos(' ',b));
-i:=1;
-j:=1;
-c:='';
-while (i<>length(a)+1) and (j<>length(b)+1) do
-    begin
-    if a[i]<b[j] then
-        begin
-        c:=c+a[i];
-        i:=i+1;
-        end
-    else
-        begin
-        c:=c+b[j];
-        j:=j+1;
-        end;
-    end;
-d:=copy(a,i,length(a))+copy(b,j,length(b));
-if c+d<d+c then
-    writeln(c+d)
-else
-    writeln(d+c);
-i:=1;
-j:=1;
-c:='';
-while (i<>length(a)+1) and (j<>length(b)+1) do
-    begin
-    if a[i]>b[j] then
-        begin
-        c:=c+a[i];
-        i:=i+1;
-        end
-    else
-        begin
-        c:=c+b[j];
-        j:=j+1;
-        end;
-    end;
-d:=copy(a,i,length(a))+copy(b,j,length(b));
-if c+d>d+c then
-    writeln(c+d)
-else
-    writeln(d+c);
+mx:='';
+mn:='';
+try(a,b,'');
+writeln(mn);
+writeln(mx);
 end.
