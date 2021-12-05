@@ -1,34 +1,20 @@
-//rewritten for the 5th time
-var a,b,tt,ht,kq:ansistring;
-i:longint;
-
+var a,kq:ansistring;
+l,r:longint;
+////////////////////
 begin
-assign(input,'surfacepro4.inp');reset(input);
-assign(output,'surfacepro4.out');rewrite(output);
 readln(a);
+l:=1;
+r:=length(a);
 kq:='Just a joke';
-for i:=length(a)-2 downto 1 do
-//in an attempt to reduce the processing time:
-//for i:=length(a)-2 downto length(a) div 3 do
+while l<=length(a) div 3 do
     begin
-    tt:=a;
-    //delete(tt,length(a)-1,length(a)-i);
-    delete(tt,i+1,length(a)-i);
-    ht:=a;
-    delete(ht,1,length(a)-i);
-    if tt=ht then
+    if (copy(a,1,l)=copy(a,r,length(a)-r+1)) and (pos(copy(a,1,l),copy(a,l,r-l+1))<>0) then
         begin
-        b:=a;
-        delete(b,1,i);
-        delete(b,length(b)-i,i);
-        if pos(tt,b)<>0 then
-            begin
-            //writeln(tt);
-            //halt;
-            kq:=tt;
-            //break;
-            end;
+        kq:=copy(a,1,l);
+        break;
         end;
+    l:=l+1;
+    r:=r-1;
     end;
 writeln(kq);
 end.

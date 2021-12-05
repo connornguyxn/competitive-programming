@@ -3,9 +3,9 @@ var a:array[1..9] of longint;
     n,d,i,inp:longint;
 ///////////////////////////////////////
 function stri(number:int64):ansistring;
-begin
-str(number,stri);
-end;
+    begin
+    str(number,stri);
+    end;
 ////////
 function int(strin:ansistring):int64;
 var check:longint;
