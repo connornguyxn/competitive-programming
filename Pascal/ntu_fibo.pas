@@ -14,8 +14,11 @@ begin
    exit((mu(phi, n) - mu(psi, n)) / sqrt(5));
 end;
 ///////////////////////////
-var n:longint;
+var n,i:longint;
+
 begin
 readln(n);
+for i:=1 to n-1 do
+    write(binet(i):0:0,' ');
 writeln(binet(n):0:0);
 end.

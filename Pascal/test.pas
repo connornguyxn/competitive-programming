@@ -1,34 +1,25 @@
-const
-        nmax=9;
-type
-        data = byte;
-var
-        n:data;
-        res:array[1..nmax]of data;
- 
-procedure xuat;
-var     i:data;
+var  n,i,ai,aj,d:longint;a,b:array[0..100] of int64;max,miin:int64;
+///////
+function min(a,b:int64):int64;
 begin
-        for i:=1 to n do
-                write(res[i]);
-        writeln;
+if a>b then min:=b else min:=a;
 end;
- 
-procedure try(i:data);
-var     j:data;
+///
 begin
-if i>n then
-    exit
-else
-    for j:=0 to 1 do
-        begin
-        res[i]:=j;
-        writeln('res[',i,']=',j);
-        try(i+1);
-        end;
-end;
-
-begin
-        readln(n);
-        try(1);
+readln(n);
+for i:=1 to n do
+ begin
+ read(a[i]);
+ if a[i]=1 then inc(d);
+ if a[i]=0 then b[i]:=b[i]+1
+  else b[i]:=b[i]-1;
+ end;
+for i:=1 to n do b[i]:=b[i-1]+b[i];
+miin:=maxlongint;max:=0;
+for i:=1 to n do
+ begin
+ if b[i]<miin then begin miin:=b[i]; ai:=i+1; end;
+ if b[i]-miin>max then begin max:=b[i]-miin; aj:=i; end;
+ end;
+writeln(max+d);
 end.
