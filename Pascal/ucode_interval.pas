@@ -1,4 +1,4 @@
-var l,r,a,b,t,:int64;
+var l,r,a,b,t:int64;
 x:ansistring;
 
 begin
@@ -15,7 +15,7 @@ b:=b div 10;
 //writeln(a,' ',b);
 //t:=t+((b-a) div 10);
 str(l,x);
-val(x[1],)
+val(x[1],t);
 //writeln(l);
 writeln(t);
 end.

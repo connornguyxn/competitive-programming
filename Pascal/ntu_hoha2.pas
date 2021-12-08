@@ -1,12 +1,21 @@
-var t,a:int64;
-i:longint;
+var i:longint;
+    n,t:qword;
 
 begin
-assign(input,'hoha2.inp');reset(input);
-assign(output,'hoha2.out');rewrite(output);
-readln(a);
-for i:=2 to trunc(sqrt(a)) do
-    if a mod i=0 then writeln(i);
-if t+1=a then writeln('YES')
-    else writeln('NO');
+readln(n);
+t:=1;
+for i:=2 to trunc(sqrt(n)) do
+    begin
+    if n mod i=0 then
+        t:=t+i+n div i;
+    if t>n then
+        begin
+        writeln('NO');
+        halt;
+        end;
+    end;
+if t=n then
+    writeln('YES')
+else
+    writeln('NO');
 end.
