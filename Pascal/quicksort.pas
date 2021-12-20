@@ -3,7 +3,7 @@ var a:ar;
     i,n:longint;
 //////////////////////////////////////
 procedure qsort(var a:ar; l,r:longint);
-    var i,j,x,tg:longint;
+var i,j,x,tg:longint;
     begin
     i:=l;
     j:=r;

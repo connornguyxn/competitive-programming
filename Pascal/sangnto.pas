@@ -9,10 +9,10 @@ var i,j:longint;
     i:=2;
     while i<=trunc(sqrt(sizeof(a))) do
         begin
-        while a[i]=false do
+        while (a[i] = false) do
             i:=i+1;
-        for j:=2 to sizeof(a) div i do
-            a[i*j]:=false;
+        for j:=2 to (sizeof(a) div i) do
+            a[i*j] := false;
         i:=i+1;
         end;
     end;

@@ -1,19 +1,16 @@
-var l:array[1..3] of int64;
+var d:array[0..2] of longint;
+    a,i,n:longint;
 
 begin
-assign(input,'ucode_div3.inp');reset(input);
-assign(output,'ucode_div3.out');rewrite(output);
+//assign(input,'ucode_div3.inp');reset(input);
+//assign(output,'ucode_div3.out');rewrite(output);
 readln(n);
 for i:=1 to n do
     begin
     read(a);
     a:=a mod 3;
-    if a=0 then
-        d0:=d0+1
-    else
-        begin
-        l[a]:=l[a]+1;
-        d:=d+l[3-a];
-        end;
+    d[a]:=d[a]+1;
     end;
+d[0]:=d[0]*(d[0]-1) div 2;
+writeln(d[0]+d[1]*d[2]);
 end.

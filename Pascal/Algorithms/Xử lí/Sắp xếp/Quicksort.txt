@@ -21,6 +21,8 @@ var i,j,tmp,x:longint;
             j:=j-1;
             end;
         end;
-    if i<r then qsort(a,i,r);
-    if j>l then qsort(a,l,j);
+    if i<r then 
+        qsort(a,i,r);
+    if j>l then
+        qsort(a,l,j);
     end;
