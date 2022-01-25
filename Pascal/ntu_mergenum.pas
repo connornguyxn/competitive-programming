@@ -10,6 +10,7 @@ function max(a,b:ansistring):ansistring;
     end;
 //////////////
 procedure try(a,b,c:ansistring);
+    /////////////////
     begin
     if ((length(a) = 0) or (length(b) = 0)) then
         begin
@@ -21,8 +22,8 @@ procedure try(a,b,c:ansistring);
         end
     else
         begin
-        try(copy(a,2,length(a)-1),b,c+a[1]);
-        try(a,copy(b,2,length(b)-1),c+b[1]);
+        try(copy(a,2,length(a) - 1),b,c + a[1]);
+        try(a,copy(b,2,length(b) - 1),c + b[1]);
         end;
     end;
 /////////////////////////////////////////////
