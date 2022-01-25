@@ -8,7 +8,7 @@ function max(a,b:ansistring):ansistring;
         exit(a);
     exit(b);
     end;
-//////////////
+/////////////////////////////////////////////
 procedure try(a,b,c:ansistring);
     /////////////////
     begin
