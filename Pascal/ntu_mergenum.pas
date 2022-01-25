@@ -11,12 +11,12 @@ function max(a,b:ansistring):ansistring;
 //////////////
 procedure try(a,b,c:ansistring);
     begin
-    if (length(a) = 0) or (length(b) = 0) then
+    if ((length(a) = 0) or (length(b) = 0)) then
         begin
         c := c + max(a,b);
         if (c > mx) then
             mx := c;
-        if (c < mn) or (mn = '') then
+        if ((c < mn) or (mn = '')) then
             mn := c;
         end
     else
@@ -28,7 +28,7 @@ procedure try(a,b,c:ansistring);
 /////////////////////////////////////////////
 begin
 readln(b);
-a := copy(b,1,pos(' ',b)-1);
+a := copy(b,1,pos(' ',b) - 1);
 delete(b,1,pos(' ',b));
 mx := '';
 mn := '';
