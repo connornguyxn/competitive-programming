@@ -1,4 +1,4 @@
-# Inf1nity's Code Backup
+# Connor's Code Backup
 
 ### What is this?
 
