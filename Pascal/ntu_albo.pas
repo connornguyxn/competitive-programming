@@ -2,8 +2,8 @@ var n,k:int64;
 //////////////////////////////////////
 begin
 readln(n,k);
-if n mod k mod 2 = 0 then
-    writeln('Alice will win')
+if (n mod (k + 1) = 0) then
+    writeln('Bob will win')
 else
-    writeln('Bob will win');
+    writeln('Alice will win');
 end.

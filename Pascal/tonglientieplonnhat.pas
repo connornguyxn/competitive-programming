@@ -1,21 +1,17 @@
-var a:array[0..100000000] of int64;
-    i,l,r,n,mx,mxc:longint;
+var a:array[0..100000000] of longint;
+    i,j,n,mx:longint;
 
 begin
 readln(n);
-for i:=1 to n do
+for i := 1 to n do
     begin
     read(a[i]);
-    a[i]:=a[i]+a[i-1];
+    a[i] := a[i] + a[i - 1];
     end;
-for l:=1 to n-1 do
-    for r:=l+1 to n do
-        begin
-        if a[r]-a[l-1]>=mx then
-            begin
-            mx:=a[r]-a[l-1];
-            mxc:=r-l+1;
-            end;
-        end;
-writeln(mxc)
+mx := a[2] - a[1];
+for i := 1 to (n - 1) do
+    for j := (i + 1) to n do
+        if (a[j] - a[i - 1] > mx) then
+            mx := a[j] - a[i - 1];
+writeln(mx);
 end.
