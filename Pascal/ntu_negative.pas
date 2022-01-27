@@ -1,47 +1,51 @@
-var a:int64;
-i:longint;
-b:ansistring;
+var i,n,a:longint;
+    b:ansistring;
 //////////////////////////////////////////
-function bintodec(a:ansistring):int64;
+function dec(a:ansistring):longint;
 var i,j,b,kt:longint;
-t:int64;
+t:longint;
 begin
-bintodec:=0;
+dec:=0;
 for i:=length(a) downto 1 do
     begin
     t:=1;
     for j:=1 to length(a)-i do
+        begin
         t:=t*2;
+        end;
     val(a[i],b,kt);
-    bintodec:=bintodec+(b*t);
+    dec:=dec+(b*t);
     end;
 end;
 /////
-function dectobin(a:int64):ansistring;
+function bin(a:longint):ansistring;
 var b:ansistring;
 begin
-while a<>0 do
+while (a <> 0) do
     begin
     str((a mod 2),b);
-    dectobin:=b+dectobin;
+    bin:=b+bin;
     a:=a div 2;
     end;
 end;
-
 //////////////////////////////////////////
 begin
 //assign(input,'ntu_negative.inp');reset(input);
 //assign(output,'ntu_negative.out');rewrite(output);
-readln(a);
-b:=dectobin(a);
-for i:=1 to length(b) do
+readln(n);
+for i:=1 to n do
     begin
-    if b[i]='1'then
-        b[i]:='0'
-    else
-        b[i]:='1';
+    readln(a);
+    if (a = 0) then
+        begin
+        writeln(1);
+        continue;
+        end;
+    b:=bin(a);
+    while (pos('0',b) <> 0) do
+        begin
+        b[pos('0',b)]:='1';
+        end;
+    writeln(dec(b)-a);
     end;
-while b[1]='0' do
-    delete(b,1,1);
-writeln(bintodec(b));
 end.

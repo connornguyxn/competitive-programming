@@ -1,23 +1,41 @@
-var a:qword;
-
-function nto(a:qword):boolean;
-var i:longint;
-begin
-i:=1;
-if a<2 then exit(false);
-if a in [2,3,5,7] then exit(true);
-if a mod 2=0 then exit(false);
-nto:=true;
-while i<=trunc(sqrt(a)) do
+type boolar = array[0..10000000] of boolean;
+var nto:boolar;
+    n:longint;
+//////////////////////////////////////////
+procedure sangnto(var a:boolar);
+var i,j:longint;
     begin
-    i:=i+2;
-    if a mod i=0 then exit(false);
+    fillchar(a,sizeof(a),true);
+    a[1] := false;
+    i := 2;
+    while (i <= trunc(sqrt(sizeof(a)))) do
+        begin
+        while (a[i] = false) do
+            i := i + 1;
+        n := n - 1;
+        if (n = 0) then
+            begin
+            writeln(i);
+            halt;
+            end;
+        for j:=2 to (sizeof(a) div i) do
+            a[i * j] := false;
+        i := i + 1;
+        end;
+    while (i <= sizeof(a)) do
+        begin
+        while (a[i] = false) do
+            i := i + 1;
+        n := n - 1;
+        if (n = 0) then
+            begin
+            writeln(i);
+            halt;
+            end;
+        end;
     end;
-end;
-
+////////////////////////////////////////////
 begin
-readln(a);
-if nto(a)=true then write('YES')
-    else writeln('NO');
+readln(n);
+sangnto(nto);
 end.
-
