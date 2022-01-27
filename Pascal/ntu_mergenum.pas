@@ -1,4 +1,3 @@
-//coded w/ <3 by connornguyxn
 var a,b,c,mx,mn:ansistring;
 ///////////////////////////////////////
 function max(a,b:ansistring):ansistring;
@@ -36,5 +35,4 @@ mn := '';
 try(a,b,'');
 writeln(mn);
 writeln(mx);
-/////////////////////////////////////////////
 end.
