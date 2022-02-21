@@ -43,9 +43,7 @@ procedure try(a:string;k:longint);
         if (not (nto(inter(a)))) then
             exit();
         if (k = n + 1) then
-            begin
-            d := d + 1;
-            end
+            d := d + 1
         else
             begin
             for i := 1 to 4 do
@@ -55,8 +53,8 @@ procedure try(a:string;k:longint);
     end;
 ///////////////////////////////////////
 begin
-readln(n);
 d := 0;
+n := 9;
 try('',1);
 writeln(d);
 end.
