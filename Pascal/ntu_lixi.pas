@@ -44,10 +44,10 @@ readln(n);
 for i := 1 to n do
     readln(a[i],b[i]);
 qsort(b,a,1,n);
-for i := 1 to n do
-    begin
-    //writeln(a[i]);
-    end;
+//for i := 1 to n do
+//    begin
+//    writeln(a[i]);
+//    end;
 d := 1;
 t := 0;
 for i := 1 to n do

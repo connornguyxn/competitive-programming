@@ -1,44 +1,35 @@
-type boolar = array[0..1000000000] of boolean;
-var snto:boolar;
-    i,d:longint;
-//////////////////////////////////////////
-procedure sangnto(var a:boolar);
-    var i,j:longint;
+type intar = array[0..1000000] of int64;
+var a:intar;
+    i,n:longint;
+///////////////////////////////////////
+procedure sort(var a:intar;l,r:longint);
+    var m,i,j,tmp:longint;
     /////////////////
     begin
-    fillchar(a,sizeof(a),true);
-    a[1] := false;
-    i := 2;
-    while (i <= trunc(sqrt(sizeof(a)))) do
+    i := l;
+    j := r;
+    m := a[(l + r) div 2];
+    while (i <= j) do
         begin
-        while (a[i] = false) do
+        while (a[i] < m) do
             i := i + 1;
-        for j:=2 to (sizeof(a) div i) do
-            a[i * j] := false;
-        i := i + 1;
+        while (a[j] > m) do
+            j := j - 1;
+        if (i <= j) then
+            begin
+            tmp := a[i];
+            a[i] := a[j];
+            a[j] := tmp;
+            i := i + 1;
+            j := j - 1;
+            end;
         end;
-    end;
-///////////////////////////////////////
-function nto(a:int64):boolean;
-var i:longint;
-    begin
-    if (a < 2) then
-        exit(false);
-    if (a in [2,3,5,7]) then
-        exit(true);
-    if (a mod 2 = 0) then
-        exit(false);
-    nto := true;
-    i := 3;
-    while (i <= trunc(sqrt(a))) do
-        begin
-        if (a mod i = 0) then
-            exit(false);
-        i := i + 2;
-        end;
+    if (i < r) then
+        sort(a,i,r);
+    if (j > l) then
+        sort(a,l,j);
     end;
 ///////////////////////////////////////
 begin
-sangnto(snto);
-writeln(d);
+
 end.

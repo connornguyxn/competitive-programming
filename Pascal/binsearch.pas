@@ -3,7 +3,8 @@ var a:ar;
 n,i,m:longint;
 ////////////////////////////////////
 function binsearch(a:longint;mg:ar;l,r:longint):longint;
-var m:longint;
+    var m:longint;
+    /////////////////
     begin
     while (l <= r) do
         begin

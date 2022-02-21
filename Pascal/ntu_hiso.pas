@@ -1,14 +1,12 @@
-var a:array[1..100000000] of longint;
-    i,j,n,mx:longint;
-//////////////////////////////////////
+var a:array[1..1000000] of longint;
+    i,n,mn,mx:longint;
+///////////////////////////////////////
 begin
-//assign(input,'ntu_hiso.inp');reset(input);
+assign(input,'ntu_hiso.inp');reset(input);
 readln(n);
-for i:=1 to n do
+mn := 1;
+mx := 0;
+read(a[1]);
+for i := 2 to n do
     read(a[i]);
-for i:=1 to n-1 do
-    for j:=i+1 to n do
-        if a[j]-a[i]>mx then
-            mx:=a[j]-a[i];
-writeln(mx);
 end.
