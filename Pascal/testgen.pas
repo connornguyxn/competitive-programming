@@ -1,8 +1,8 @@
 var i,n:longint;
 ///////////////////////////////////////
 begin
-assign(output,'arraylcm.inp');rewrite(output);
-writeln(1000000);
-for i := 1000000 downto 1 do
-    write(1000000,' ');
+assign(output,'test.inp');rewrite(output);
+writeln(10000000);
+for i := 1 to 10000000 do
+    write(10,' ');
 end.
