@@ -3,7 +3,8 @@ var c1:array[1..4] of char = ('2','3','5','7');
     n,d:longint;
 ///////////////////////////////////////
 function nto(a:int64):boolean;
-var i:longint;
+    var i:longint;
+    /////////////////
     begin
     if (a < 2) then
         exit(false);
@@ -21,11 +22,11 @@ var i:longint;
         end;
     end;
 ///////////////////////////////////////
-function inter(a:string):int64;
+function cint(a:string):int64;
     var check:longint;
     /////////////////
     begin
-    val(a,inter,check);
+    val(a,cint,check);
     end;
 ///////////////////////////////////////
 procedure try(a:string;k:longint);
@@ -40,7 +41,7 @@ procedure try(a:string;k:longint);
         end
     else
         begin
-        if (not (nto(inter(a)))) then
+        if (not (nto(cint(a)))) then
             exit();
         if (k = n + 1) then
             d := d + 1
