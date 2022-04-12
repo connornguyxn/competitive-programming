@@ -1,10 +1,19 @@
-var n,i:longint;
-    a,mx,mn:int64;
+var a,tmp:ansistring;
+    i,md:longint;
 ///////////////////////////////////////
 begin
-readln(n);
-while (1 = 2) do
+readln(a);
+md := 0;
+while (length(a) > 1) do
     begin
-    writeln('chay');
+    tmp := '';
+    for i := 1 to length(a) do
+        begin
+        if (i mod 2 <> md) then
+            tmp := tmp + a[i];
+        end;
+    md := (md + 1) mod 2;
+    a := tmp;
     end;
+writeln(a);
 end.
