@@ -1,0 +1,2 @@
+#exclude all non-extension file
+/[^\.]*
