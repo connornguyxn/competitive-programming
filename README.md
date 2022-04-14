@@ -5,16 +5,14 @@ This repository is for storing and sharing my written code from competitive prog
 ## 1.1. Table of Contents
 - [1. What is this?](#1-what-is-this)
   - [1.1. Table of Contents](#11-table-of-contents)
-- [2. Notes](#2-notes)
-  - [2.1. File prefixes](#21-file-prefixes)
-  - [2.2. Interesting things to know](#22-interesting-things-to-know)
-      - [Why faster input/output code works and cout.tie(NULL) does literally nothing:](#why-faster-inputoutput-code-works-and-couttienull-does-literally-nothing)
-    - [What are the differences between array-like types and when to use them:](#what-are-the-differences-between-array-like-types-and-when-to-use-them)
-    - [Why hash maps are OP:](#why-hash-maps-are-op)
+  - [1.2. File prefixes](#12-file-prefixes)
+- [2. Interesting notes](#2-interesting-notes)
+  - [2.1. Why faster input/output code works and cout.tie(NULL) does literally nothing](#21-why-faster-inputoutput-code-works-and-couttienull-does-literally-nothing)
+  - [2.2. What are the differences between array-like types and when to use them](#22-what-are-the-differences-between-array-like-types-and-when-to-use-them)
+  - [2.3. Why hash maps are OP](#23-why-hash-maps-are-op)
+  - [2.4. Why pragmas are also OP and how to use them](#24-why-pragmas-are-also-op-and-how-to-use-them)
 
-# 2. Notes
-
-## 2.1. File prefixes
+## 1.2. File prefixes
 
 The file prefixes used in this project represent the website the problem is on for easier access.
 
@@ -27,17 +25,31 @@ The file prefixes used in this project represent the website the problem is on f
 |uco|[ucode.vn](ucode.vn)|
 |vnj|[oj.vnoj.info](oj.vnoj.info)|
 
-## 2.2. Interesting things to know
+# 2. Interesting notes
 
-#### Why faster input/output code works and cout.tie(NULL) does literally nothing:
-[https://stackoverflow.com/a/31165481](https://stackoverflow.com/a/31165481)
 
-### What are the differences between array-like types and when to use them:
-[https://stackoverflow.com/q/4424579](https://stackoverflow.com/a/31165481)
+## 2.1. Why faster input/output code works and cout.tie(NULL) does literally nothing
 
-### Why hash maps are OP:
+> [https://stackoverflow.com/a/31165481](https://stackoverflow.com/a/31165481)
 
-"In a nutshell, what they can provide is at worst O(1) look up,
-which takes away the work of finding where a complement element
-would be in a list. So in problems like TwoSum, you can solve it
-in O(N) rather than using binary search to solve it in O(N log n)."
+## 2.2. What are the differences between array-like types and when to use them
+
+> [https://stackoverflow.com/q/4424579](https://stackoverflow.com/a/31165481)
+
+## 2.3. Why hash maps are OP
+
+In a nutshell, what they can provide is at worst O(1) look up, which takes away the work of finding where a complement element would be in a list. So in problems like TwoSum, you can solve it in O(N) rather than using binary search to solve it in O(N log n).
+
+## 2.4. Why pragmas are also OP and how to use them
+
+[This blog entry](https://codeforces.com/blog/entry/96344) from Codeforces explains it very nicely:
+
+[![https://codeforces.com/predownloaded/f9/1a/f91a4a1cd9da1af1b944492a5f836221ced2d8dd.png](https://codeforces.com/predownloaded/f9/1a/f91a4a1cd9da1af1b944492a5f836221ced2d8dd.png)](https://codeforces.com/predownloaded/f9/1a/f91a4a1cd9da1af1b944492a5f836221ced2d8dd.png)
+
+> Here is an example of a solution with pragmas (vdc_quatang.cpp):
+
+[![https://imgur.com/faIAI4t.png](https://imgur.com/faIAI4t.png)](https://imgur.com/faIAI4t.png)
+
+> And without pragmas:
+
+[![https://imgur.com/sI0e0Kd.png](https://imgur.com/sI0e0Kd.png)](https://imgur.com/sI0e0Kd.png)
