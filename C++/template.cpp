@@ -17,29 +17,21 @@ using namespace std; // use standard namespace for faster access
 
 //<problem id/link>
 
-//cfs: codeforces.com
-//ntu: ntucoder.net
-//lqd: lequydon.ntucoder.net
-//uco: ucode.vn
-//vnj: oj.vnoj.info
-
 
 int main() {
-    // https://stackoverflow.com/a/31165481/16964411
+    //note: refer to README.md > Interesting things to know
     ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
     cin.tie(NULL); // turn off automatic output flushing
-    //cout.tie(NULL); // does literally nothing. cout is already tied to null
     //ifstream cin("template.inp");
     //ofstream cout("template.out");
     // main code
-
 
 
 }
 
 
 
-
+//ascii_art. refer to _notes.txt
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
