@@ -1,5 +1,5 @@
-
 # 1. Table of Contents
+
 - [1. Table of Contents](#1-table-of-contents)
 - [2. Notes](#2-notes)
   - [2.1. Why faster input/output code works and cout.tie(NULL) does literally nothing](#21-why-faster-inputoutput-code-works-and-couttienull-does-literally-nothing)
@@ -26,6 +26,8 @@ In a nutshell, what they can provide is at worst O(1) look up, which takes away 
 [This blog entry](https://codeforces.com/blog/entry/96344) from Codeforces explains it very nicely:
 
 [![https://codeforces.com/predownloaded/f9/1a/f91a4a1cd9da1af1b944492a5f836221ced2d8dd.png](https://codeforces.com/predownloaded/f9/1a/f91a4a1cd9da1af1b944492a5f836221ced2d8dd.png)](https://codeforces.com/predownloaded/f9/1a/f91a4a1cd9da1af1b944492a5f836221ced2d8dd.png)
+
+You can check out all of them in [gcc's official guide](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html).
 
 > Here is an example of a solution with pragmas (vdc_quatang.cpp):
 
