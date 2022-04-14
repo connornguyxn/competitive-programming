@@ -8,6 +8,9 @@ This repository is for storing and sharing my written code from competitive prog
 - [2. Notes](#2-notes)
   - [2.1. File prefixes](#21-file-prefixes)
   - [2.2. Interesting things to know](#22-interesting-things-to-know)
+      - [Why faster input/output code works and cout.tie(NULL) does literally nothing:](#why-faster-inputoutput-code-works-and-couttienull-does-literally-nothing)
+    - [What are the differences between array-like types and when to use them:](#what-are-the-differences-between-array-like-types-and-when-to-use-them)
+    - [Why hash maps are OP:](#why-hash-maps-are-op)
 
 # 2. Notes
 
@@ -26,11 +29,15 @@ The file prefixes used in this project represent the website the problem is on f
 
 ## 2.2. Interesting things to know
 
-- Why faster input/output code works and cout.tie(NULL) does literally nothing:
+#### Why faster input/output code works and cout.tie(NULL) does literally nothing:
 [https://stackoverflow.com/a/31165481](https://stackoverflow.com/a/31165481)
 
-- What is the differences between array-like types and when to use them:
+### What are the differences between array-like types and when to use them:
 [https://stackoverflow.com/q/4424579](https://stackoverflow.com/a/31165481)
 
-- Why hash maps are OP:
-> "What they can provide is at worst O(1) look up, which is something not provided anywhere else. It takes away the work of finding where a complement element would be in a list. So in problems like TwoSum, you can solve it O(N) rather than use a binary search to solve it in O(Nlogn)."
+### Why hash maps are OP:
+
+"In a nutshell, what they can provide is at worst O(1) look up,
+which takes away the work of finding where a complement element
+would be in a list. So in problems like TwoSum, you can solve it
+in O(N) rather than using binary search to solve it in O(N log n)."
