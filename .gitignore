@@ -1,0 +1,9 @@
+**/*.out
+**/*.exe
+**/*.gch
+
+**/_todo_*
+
+C++/lib/include/debugging.h.gch
+
+etc/
