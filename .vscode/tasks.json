@@ -6,13 +6,20 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-Dlocal_debug",
+<<<<<<< HEAD
                 "-I",
                 "${workspaceFolder}/C++/lib",
+=======
+>>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
                 "-Wall",
                 "-Wextra",
                 "-fdiagnostics-color=always",
                 "-ggdb3",
                 "${file}",
+<<<<<<< HEAD
+=======
+                "-H",
+>>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
                 "-o",
                 "${fileDirname}/a.out"
             ],
@@ -33,8 +40,11 @@
             "label": "(inf) C/C++: g++ build active file (with debug flags)",
             "command": "/usr/bin/g++",
             "args": [
+<<<<<<< HEAD
                 "-I",
                 "${workspaceFolder}/C++/lib",
+=======
+>>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
                 "-Wall",
                 "-Wextra",
                 "-pedantic",

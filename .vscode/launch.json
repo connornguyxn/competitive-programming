@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+<<<<<<< HEAD
         {
             "name": "(gdb) Launch",
             "type": "cppdbg",
@@ -28,5 +29,10 @@
                 }
             ]
         }
+=======
+        
+        
+
+>>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
     ]
 }

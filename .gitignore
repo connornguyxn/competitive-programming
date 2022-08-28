@@ -1,9 +1,13 @@
-**/*.out
-**/*.exe
-**/*.gch
+<<<<<<< HEAD
+*.out
+*.exe
+*.gch
 
-**/_todo_*
+_todo_*
 
-C++/lib/include/debugging.h.gch
 
 etc/
+=======
+#exclude all non-extension file
+*/[^\.]*
+>>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746

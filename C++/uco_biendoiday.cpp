@@ -1,90 +1,33 @@
-<<<<<<< HEAD
 #undef _GLIBCXX_DEBUG
-#pragma GCC optimize("Ofast,unroll-loops,inline")
-#pragma GCC target("bmi,bmi2,lzcnt,avx,avx2,f16c,fma,sse2,sse3,ssse3,sse4,sse4.1,sse4.2")
+#pragma GCC optimize("Ofast,inline")
+#pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2")
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
+#define ull unsigned long long
 #define ld long double
-#define max_size 100000
 #define nl '\n'
-#define sp(n) fixed << showpoint << setpreciscion(n)
 
-// http://vinhdinhcoder.net/Problem/Details/5291
-// sorting, 2pointers
+//https://ucode.vn/problems/113723
 
-///////////////////////////////////////
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    //ifstream cin("vdcoder_quatang.inp");
-    //ofstream cout("vdcoder_quatang.out");
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    //ifstream cin("uco_biendoiday.inp");
+    //ofstream cout("uco_biendoiday.out");
     int n, k;
     cin >> n >> k;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-    sort(a.begin(), a.end());
-    int l = 0, r = n - 1, ans = 0;
-    while (l < r) {
-        if (a[l] + a[r] < k) {
-            if (a[l] + a[r] > ans)
-                ans = a[l] + a[r];
-            l++;
-        } else {
-            r--;
-        }
-    }
-    cout << ans;
+    ll a, d = 0;
+    for (int i = 1; i <= n; i++) {
+        cin >> a;
+        ll b = ceil(a / k);
+        d += min(k * (b + 1) - a, a - k * b);
+    };
+    cout << d;
 }
-=======
-#undef _GLIBCXX_DEBUG // disable run-time bound checking
-//#pragma GCC optimize("trapv") // abort() on integer overflow
-                                // increases runtime by ~10%(?)
-#pragma GCC optimize("Ofast,inline") // optimize for speed
-// note: change to O3 to disable fast-math for geometry problems
-//#pragma GCC target("bmi,bmi2,lzcnt,popcnt") // bit manipulation
-                                              // note: *somehow* increases runtime
-#pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2") // SIMD
-// note: include headers *after* compile options
-#include <bits/stdc++.h> // include everything
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // approx -1e18 to 1e18
-#define ull unsigned long long // approx 0 to 1e20
-#define nl '\n' // endl is stupid
 
-//http://vinhdinhcoder.net/Problem/Details/5291
 
-int main() {
-    // https://stackoverflow.com/a/31165481/16964411
-    ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    cin.tie(NULL); // turn off automatic output flushing
-    //ifstream cin("template.inp");
-    //ofstream cout("template.out");
-    // main code
-    ll n, k;
-    cin >> n >> k;
-    ll a[n];
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-    sort(a, a + n);
-    int l = 0, r = n - 1, ans = 0;
-    while (l < r) {
-        if (a[l] + a[r] < k) {
-            if (a[l] + a[r] > ans) {
-                ans = a[l] + a[r];
-            };
-            l++;
-        }
-        else {
-            r--;
-        }
-    }
-    cout << ans << nl;
-}
+
 
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
@@ -100,7 +43,7 @@ int main() {
 000000000000000000000000001. .111.  ..1111111111111111111.. .11111111. .100000000000000000
 000000000000000000000000001. 11111.   ...11111111111111...  .11111111. .100000000000000000
 000000000000000000000000011 .1111111..   ..............   .11111111111. 110000000000000000
-00000000000000000000000001. .1111111111....         ....11111111111111. .10000000000000000
+00000000000000000000000001. .1111111111.................11111111111111. .10000000000000000
 00000000000000000000000001 .1111111111111111111111111111111111111111111  10000000000000000
 0000000000000000000000001. .1111111111111111111111111111111111111111111. .1000000000000000
 0000000000000000000000001. 11111111111111111111111111111111111111111111. .1000000000000000
@@ -133,4 +76,3 @@ int main() {
 00000000000000000000000000000000000000000111111...............1111000000000000000000000000
 000000000000000000000000000000000000000000000000011111111111100000000000000000000000000000
 */
->>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746

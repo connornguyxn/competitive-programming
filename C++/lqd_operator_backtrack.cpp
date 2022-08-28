@@ -1,90 +1,46 @@
-<<<<<<< HEAD
-#undef _GLIBCXX_DEBUG
-#pragma GCC optimize("Ofast,unroll-loops,inline")
-#pragma GCC target("bmi,bmi2,lzcnt,avx,avx2,f16c,fma,sse2,sse3,ssse3,sse4,sse4.1,sse4.2")
-#include <bits/stdc++.h>
-using namespace std;
-#define ll long long
+#undef _GLIBCXX_DEBUG 
+#pragma GCC optimize("Ofast,inline") 
+#pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2") 
+#include <bits/stdc++.h> 
+using namespace std; 
+#define ll long long 
+#define ull unsigned long long 
 #define ld long double
-#define max_size 100000
-#define nl '\n'
-#define sp(n) fixed << showpoint << setpreciscion(n)
+#define nl '\n' 
 
-// http://vinhdinhcoder.net/Problem/Details/5291
-// sorting, 2pointers
+//http://lequydon.ntucoder.net/Problem/Details/4631
 
-///////////////////////////////////////
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    //ifstream cin("vdcoder_quatang.inp");
-    //ofstream cout("vdcoder_quatang.out");
-    int n, k;
-    cin >> n >> k;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-    sort(a.begin(), a.end());
-    int l = 0, r = n - 1, ans = 0;
-    while (l < r) {
-        if (a[l] + a[r] < k) {
-            if (a[l] + a[r] > ans)
-                ans = a[l] + a[r];
-            l++;
-        } else {
-            r--;
-        }
-    }
-    cout << ans;
-}
-=======
-#undef _GLIBCXX_DEBUG // disable run-time bound checking
-//#pragma GCC optimize("trapv") // abort() on integer overflow
-                                // increases runtime by ~10%(?)
-#pragma GCC optimize("Ofast,inline") // optimize for speed
-// note: change to O3 to disable fast-math for geometry problems
-//#pragma GCC target("bmi,bmi2,lzcnt,popcnt") // bit manipulation
-                                              // note: *somehow* increases runtime
-#pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2") // SIMD
-// note: include headers *after* compile options
-#include <bits/stdc++.h> // include everything
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // approx -1e18 to 1e18
-#define ull unsigned long long // approx 0 to 1e20
-#define nl '\n' // endl is stupid
-
-//http://vinhdinhcoder.net/Problem/Details/5291
+int calc(int t, int k) {
+    if (k == 0) {
+        if (t == 0) {
+            return 1;
+        };
+        return 0;
+    };
+    if (calc(t + k, k - 1) == 1) {
+        return 1;
+    };
+    if (calc(t - k, k - 1) == 1) {
+        return 1;
+    };
+    return 0;
+};
 
 int main() {
-    // https://stackoverflow.com/a/31165481/16964411
-    ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    cin.tie(NULL); // turn off automatic output flushing
-    //ifstream cin("template.inp");
-    //ofstream cout("template.out");
-    // main code
-    ll n, k;
-    cin >> n >> k;
-    ll a[n];
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-    sort(a, a + n);
-    int l = 0, r = n - 1, ans = 0;
-    while (l < r) {
-        if (a[l] + a[r] < k) {
-            if (a[l] + a[r] > ans) {
-                ans = a[l] + a[r];
-            };
-            l++;
-        }
-        else {
-            r--;
-        }
-    }
-    cout << ans << nl;
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    //ifstream cin("lqd_operator.inp");
+    //ofstream cout("lqd_operator.out");
+    int n, k, tcs;
+    cin >> tcs;
+    for (int tc = 1; tc <= tcs; tc++) {
+        cin >> k >> n;
+        cout << calc(n, k);
+    };
 }
+
+
+
 
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
@@ -133,4 +89,3 @@ int main() {
 00000000000000000000000000000000000000000111111...............1111000000000000000000000000
 000000000000000000000000000000000000000000000000011111111111100000000000000000000000000000
 */
->>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
