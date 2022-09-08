@@ -1,66 +1,79 @@
-// #pragma GCC optimize("trapv") // abort() on integer overflow
-                                // increase runtime by ~10%(?)
-// note: include headers *after* compile options
-#ifdef local_debug // if local debug flag is set
-#include "include/debugging.h" // include local debugging header
-#define init_ifs() ifstream cin("_input.inp")
-#define init_ofs() ofstream cout("_output.out")
-#else // if not on local machine
-// GCC optimization flags
-// #pragma GCC optimize("O3,unroll-loops,inline")
-// SIMD optimization
-// #pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2")
-#include <bits/stdc++.h> // include everything
-// undefine debug functions
+#ifdef local_debug
+#include "include/debugging.h"
+#define init_ifs() ifstream cin("_input")
+#define init_ofs() ofstream cout("_output")
+#else
+#include <bits/stdc++.h>
 #define init_ifs()
 #define init_ofs()
 #define vdb(...)
 #define db(...)
-#endif // end
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
-#define ld long double // approx -1e308 to 1e308
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
-#define all(a) a.begin(), a.end() // iterator macro
-// macro for functions
-// set decimal precision
+#endif
+using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
 #define dec_point(n) fixed << showpoint << setprecision(n)
-// dynamic container optimization, eg: map, vector
 #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-#define for_in(i, a) for (auto& i : a) // python :D
-const int LIM = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modular
+#define for_in(i, a) for (auto& i : a)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
 // <problem link>
 // <tags>
 
+unordered_map<int, vector<int>> mp;
+vector<bool> ok(LIM), vis(LIM);
+
+void dfs(int v) {
+    if (vis[v]) {
+        return;
+    };
+    vis[v] = true;
+    for (int i : mp[v]) {
+        dfs(i);
+    };
+};
+
 ///////////////////////////////////////
 int main() {
-    // file stream objects
     init_ifs();
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
+    cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
-        
-        
-    //     /////////////////
-    //     cout << nl;
-    // };
-    /////////////////
-    return 0; // for good measure :)
+    int tc = 1;
+    //cin >> tc;
+    while (tc--) {
+        int n, m;
+        cin >> n >> m;
+        int u, v;
+        for (int i = 0; i < m; i++) {
+            cin >> u >> v;
+            mp[u].push_back(v);
+        };
+        for (int i = 1; i <= n; i++) {
+            if (!vis[i]) {
+                ok[i] = true;
+                dfs(i);
+            };
+        };
+        fill(all(vis), false);
+        int cnt = 0;
+        for (int i = n; i >= 1; i--) {
+            if (ok[i] && !vis[i]) {
+                cnt++;
+                dfs(i);
+            };
+        };
+        cout << cnt;
+        /////////////////
+        cout << nl;
+    };
+    return 0;
 };
-// nice
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

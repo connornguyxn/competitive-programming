@@ -1,66 +1,60 @@
-// #pragma GCC optimize("trapv") // abort() on integer overflow
-                                // increase runtime by ~10%(?)
-// note: include headers *after* compile options
-#ifdef local_debug // if local debug flag is set
-#include "include/debugging.h" // include local debugging header
+#ifdef local_debug
+#include "include/debugging.h"
 #define init_ifs() ifstream cin("_input.inp")
 #define init_ofs() ofstream cout("_output.out")
-#else // if not on local machine
-// GCC optimization flags
-// #pragma GCC optimize("O3,unroll-loops,inline")
-// SIMD optimization
-// #pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2")
-#include <bits/stdc++.h> // include everything
-// undefine debug functions
+#else
+#include <bits/stdc++.h>
 #define init_ifs()
 #define init_ofs()
 #define vdb(...)
 #define db(...)
-#endif // end
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
-#define ld long double // approx -1e308 to 1e308
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
-#define all(a) a.begin(), a.end() // iterator macro
-// macro for functions
-// set decimal precision
+#endif
+using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
 #define dec_point(n) fixed << showpoint << setprecision(n)
-// dynamic container optimization, eg: map, vector
 #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-#define for_in(i, a) for (auto& i : a) // python :D
-const int LIM = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modular
+#define for_in(i, a) for (auto& i : a)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// https://oj.vnoi.info/problem/bedao_r09_mnumber
+// math, brute_force
 
 ///////////////////////////////////////
 int main() {
-    // file stream objects
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
     init_ifs();
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
     /////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
-        
-        
-    //     /////////////////
-    //     cout << nl;
-    // };
-    /////////////////
-    return 0; // for good measure :)
+    int tc = 1;
+    //cin >> tc;
+    while (tc--) {
+        int n;
+        cin >> n;
+        for (int i = 1; i <= sqrt(n); i++) {
+            if (n % i != 0) {
+                continue;
+            };
+            int big = (i + n / i) / 2;
+            int small = abs(i - n / i) / 2;
+            if (small + big == i || small + big == n / i) {
+                cout << "YES" << nl;
+                cout << big << sp << small;
+                return 0;
+            };
+        };
+        cout << "NO";
+        /////////////////
+        cout << nl;
+    };
+    return 0;
 };
-// nice
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
