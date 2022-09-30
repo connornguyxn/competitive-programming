@@ -12,6 +12,8 @@
 // github.com/rachitiitr/modern-cpp-tricks#solution-using-a-powerful-macro
 #define vdb(...) logger(#__VA_ARGS__, __VA_ARGS__)
 #define db(...) logger("", __VA_ARGS__)
+#define init_ifs() ifstream cin("_input")
+#define init_ofs() ofstream cout("_output")
 
 #include <bits/stdc++.h>
 
@@ -169,6 +171,5 @@ void logger(std::string vars, Args&&... vals) {
     std::string sep = "";
     // fold expression
     (..., (std::cout << sep << vals, sep = ", "));
-    std::cout << '\n';
+    std::cout << std::endl;
 }
-

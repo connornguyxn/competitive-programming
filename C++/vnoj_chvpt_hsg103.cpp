@@ -1,11 +1,7 @@
 #ifdef local_debug
 #include "include/debugging.h"
-#define init_ifs() ifstream cin("input.inp")
-#define init_ofs() ofstream cout("output.out")
 #else
 #include <bits/stdc++.h>
-#define init_ifs()
-#define init_ofs()
 #define vdb(...)
 #define db(...)
 #endif
@@ -23,78 +19,28 @@ using namespace std;
 const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
 
-// Class implementation of a range maximum query segment tree
-// segtree
+// <problem link>
+// <tags>
 
 ///////////////////////////////////////
-struct node {
-    ll val = 0;
-};
-node max(node a, node b) {
-    if (a.val > b.val) {
-        return a;
-    } else {
-        return b;
-    };
-};
-/////////////////
-template <typename data> class segtree {
-    public:
-        vector<data> t;
-        int n;
-        segtree(vector<data> a) {
-            n = a.size();
-            t.resize(n * 2);
-            for (int i = 0; i < n; i++) {
-                t[n + i] = a[i];
-            };
-            build(t);
-        };
-        data query(int l, int r) {
-            r++;
-            data res = 0;
-            for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
-                if (l & 1) res += t[l++];
-                if (r & 1) res += t[--r]
-            };
-            return res;
-        };
-        void modify(int p, int va) {  // set value at position p
-            for (t[p += n] = val; p > 1; p /= 1) {
-                t[p / 2] = t[p] + t[p ^ 1];
-            };
-        };
-    private:
-        void build(vector<data> &t) {
-            for (int i = n - 1; i > 0; i--) {
-                t[i] = t[2 * i] + t[2 * i + 1];
-            };
-        };
-};
-///////////////////////////////////////
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    init_ifs();
+    cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int tc = 1;
-    //cin >> tc;
-    while (tc--) {
-        int n;
-        cin >> n;
-        vector<ll> a(n);
-        for (int i = 0; i < n; i++) {
-            cin >> a[i];
-        };
-        segtree<ll> t(a);
-        for (int i = 0; i < n * 2; i++) {
-            cout << t.t[i] << sp;
-        };
-        cout << nl;
-        cout << t.query(0, 3);
-        /////////////////
-        cout << nl;
+    int n;
+    cin >> n;
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
     };
+    vector<ll> dp(n + 1);
+    priority_queue<ll> pq;
+    pq.push(0);
+    for (int i = 1; i <= n; i++) {
+        dp[i] = max(dp[i - 1], pq.top() + a[i]);
+        pq.push(dp[i - 1]);
+    };
+    cout << dp[n];
+    /////////////////
     return 0;
 };
 /*

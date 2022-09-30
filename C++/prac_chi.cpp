@@ -1,32 +1,48 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
+#define for_in(i, a) for (auto& i : a)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// <problem link>
+// <tags>
 
-const int MOD = 1e9 + 7;
-///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
-};
 ///////////////////////////////////////
 int main() {
+    //ifstream cin("_input");
+    // ofstream cout("_output");
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    };
+    sort(all(a));
+    ll cnt = 0;
+    for (int i = 1; i < n; i++) {
+        int p = lower_bound(all(a), a[i] - k) - a.begin() - 1 + 1;
+        db(p);
+        cnt += p;//(p < n) ? p : 0
+    };
+    cout << cnt;
+    /////////////////
     return 0;
 };
 /*

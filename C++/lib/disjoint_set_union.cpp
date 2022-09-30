@@ -1,64 +1,63 @@
-#ifdef local_debug
-#include "include/debugging.h"
-#define init_ifs() ifstream cin("input.inp")
-#define init_ofs() ofstream cout("output.out")
-#else
 #include <bits/stdc++.h>
-#define init_ifs()
-#define init_ofs()
-#define vdb(...)
-#define db(...)
-#endif
 using namespace std;
-#define ll long long
-#define ull unsigned long long
-#define ld long double
-#define str string
-#define nl '\n'
-#define sp ' '
-#define all(a) a.begin(), a.end()
-#define dec_point(n) fixed << showpoint << setprecision(n)
-#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-#define for_in(i, a) for (auto& i : a)
-const int LIM = 1e6;
-const ull MOD = 1e9 + 7;
 
-// https://codeforces.com/group/BHMt5a5QbO/contest/394701/problem/B
-// sorting, greedy
+// DSU implementation demonstrated by Kruskal algorithm
+// https://vnoi.info/wiki/algo/data-structures/disjoint-set-union.md
+// graph
+
+const int LIM = 1e6;
+// dual purpose array
+// negative array value = number of nodes under it
+// positive array value = parrent of node
+struct edge {
+    int s, e;
+    long long w;
+    bool operator < (edge x) {
+        return w < x.w;
+    };
+};
+
+int n, m;
+int pr[LIM];
+vector<edge> edges;
+
+int root(int v) {
+    if (pr[v] < 0) return v;
+    return pr[v] = root(pr[v]);
+};
+
+bool merge(int a, int b) {
+    if ((a = root(a)) == (b = root(b))) return false;
+    if (-pr[a] < -pr[b]) {
+        swap(a, b);
+    };
+    pr[a] += pr[b];
+    pr[b] = a;
+    return true;
+};
 
 ///////////////////////////////////////
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    init_ifs();
+    cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int tc = 1;
-    //cin >> tc;
-    while (tc--) {
-        int n;
-        cin >> n;
-        vector<pair<int, int>> a(n * 2);
-        for (int i = 0; i < n; i++) {
-            cin >> a[i].first;
-            a[i].second = 0;
-        };
-        for (int i = n; i < n * 2; i++) {
-            cin >> a[i].first;
-            a[i].second = 1;
-        };
-        sort(all(a));
-        vdb(a);
-        int cnt = 0, l = 0;
-        for (int i = 1; i < n * 2; i++) {
-            if (a[i].second + a[l].second == 1) {
-                cnt++;
-                l = i + 1;
-            };
-        };
-        cout << cnt;
-        /////////////////
-        cout << nl;
+    int n, m;
+    cin >> n >> m;
+    vector<edge> edges;
+    for (int i = 0; i < m; i++) {
+        int s, e;
+        long long w;
+        cin >> s >> e >> w;
+        edges.push_back({s, e, w});
     };
+    sort(edges.begin(), edges.end());
+    memset(pr, -1, sizeof(pr));
+    long long cost = 0;
+    for (auto &i : edges) {
+        if (merge(i.s, i.e)) {
+            cost += i.w;
+        };
+    };
+    cout << cost;
     return 0;
 };
 /*

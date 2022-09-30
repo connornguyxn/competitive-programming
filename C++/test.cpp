@@ -1,69 +1,66 @@
-<<<<<<< HEAD
 #include <bits/stdc++.h>
 using namespace std;
- 
-int n, k, t;
-string s;
- 
+
+// DSU implementation demonstrated by Kruskal algorithm
+// https://vnoi.info/wiki/algo/data-structures/disjoint-set-union.md
+// graph
+
+const int LIM = 1e6;
+// dual purpose array
+// negative array value = number of nodes under it
+// positive array value = parrent of node
+struct edge {
+    int s, e;
+    long long w;
+    bool operator < (edge x) {
+        return w < x.w;
+    };
+};
+
+int n, m;
+int pr[LIM];
+vector<edge> edges;
+
+int root(int v) {
+    if (pr[v] < 0) return v;
+    return pr[v] = root(pr[v]);
+};
+
+bool merge(int a, int b) {
+    if ((a = root(a)) == (b = root(b))) return false;
+    if (-pr[a] < -pr[b]) {
+        swap(a, b);
+    };
+    pr[a] += pr[b];
+    pr[b] = a;
+    return true;
+};
+
+///////////////////////////////////////
 int main() {
-    ifstream cin("input.inp");
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cin >> t;
-    while (t--) {
-        cin >> n >> k >> s;
-        int zer = 0, one = 0;
-        bool chk = true;
-        for (int i = 0; i < k; i++) {
-            int tmp = -1;
-            for (int j = i; j < n; j += k) {
-                if (s[j] != '?') {
-                    if (tmp != -1 && s[j] - '0' != tmp) {
-                        cout << "TErm1" << ' ';
-                        chk = false;
-                        break;
-                    }
-                    tmp = s[j] - '0';
-                }
-            }
-            if (tmp != -1) {
-                (tmp == 0 ? zer : one)++;
-            }
-        }
-        if (max(zer, one) > k / 2) {
-            cout << "TErm2" << ' ';
-            chk = false;
-        }
-        
-        cout << (chk ? "YES\n" : "NO\n");
-    }
-}
-=======
-#undef _GLIBCXX_DEBUG 
-#pragma GCC optimize("Ofast,inline") 
-#pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2") 
-#include <bits/stdc++.h> 
-using namespace std; 
-#define ll long long 
-#define ull unsigned long long 
-#define ld long double
-#define nl '\n' 
-
-//<problem id/link>
-
-int main() {
-    ios_base::sync_with_stdio(false); 
-    cin.tie(NULL); 
-    //ifstream cin("template.inp");
-    //ofstream cout("template.out");
-
-
-
-}
-
-
-
-
+    ifstream cin("_input");
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    int n, m;
+    cin >> n >> m;
+    vector<edge> edges;
+    for (int i = 0; i < m; i++) {
+        int s, e;
+        long long w;
+        cin >> s >> e >> w;
+        edges.push_back({s, e, w});
+    };
+    sort(edges.begin(), edges.end());
+    memset(pr, -1, sizeof(pr));
+    long long cost = 0;
+    for (auto &i : edges) {
+        if (merge(i.s, i.e)) {
+            cost += i.w;
+        };
+    };
+    cout << cost;
+    return 0;
+};
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
@@ -78,7 +75,7 @@ int main() {
 000000000000000000000000001. .111.  ..1111111111111111111.. .11111111. .100000000000000000
 000000000000000000000000001. 11111.   ...11111111111111...  .11111111. .100000000000000000
 000000000000000000000000011 .1111111..   ..............   .11111111111. 110000000000000000
-00000000000000000000000001. .1111111111....         ....11111111111111. .10000000000000000
+00000000000000000000000001. .1111111111.................11111111111111. .10000000000000000
 00000000000000000000000001 .1111111111111111111111111111111111111111111  10000000000000000
 0000000000000000000000001. .1111111111111111111111111111111111111111111. .1000000000000000
 0000000000000000000000001. 11111111111111111111111111111111111111111111. .1000000000000000
@@ -111,4 +108,3 @@ int main() {
 00000000000000000000000000000000000000000111111...............1111000000000000000000000000
 000000000000000000000000000000000000000000000000011111111111100000000000000000000000000000
 */
->>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746

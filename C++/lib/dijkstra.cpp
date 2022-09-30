@@ -1,32 +1,68 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#define init_ifs() ifstream cin("_input")
+#define init_ofs() ofstream cout("_output")
+#else
 #include <bits/stdc++.h>
+#define init_ifs()
+#define init_ofs()
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
+#define for_in(i, a) for (auto& i : a)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// <problem link>
+// <tags>
 
-const int MOD = 1e9 + 7;
 ///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
+vector<int> dijkstra(vector<vector<pair<int, int>>> mp, int s) {
+    vector<int> dist(mp.size(), INFINITY);
+    dist[s] = 0;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({0, 0});
+    while (!pq.empty()) {
+        db(pq.top().second, pq.top().first);
+        int u = pq.top().second;
+        pq.pop();
+        int v, w;
+        for (pair<int, int> i : mp[u]) {
+            tie(w, v) = i;
+            if (dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.push({dist[v], v});
+            };
         };
-        n = n * n % MOD;
-        k /= 2;
+        db(dist);
     };
-    return res % MOD;
+    return dist;
 };
 ///////////////////////////////////////
 int main() {
+    init_ifs();
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    int n, m, u, v, w;
+    cin >> n >> m;
+    vector<vector<pair<int, int>>> mp(m);
+    for (int i = 0; i < n; i++) {
+        cin >> u >> v >> w;
+        mp[u].push_back({w, v});
+        //mp[v].push_back({w, u});
+    };
+    vdb(dijkstra(mp, 0));
+    /////////////////
     return 0;
 };
 /*

@@ -1,32 +1,105 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
+#define for_in(i, a) for (auto& i : a)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// https://oj.vnoi.info/problem/segtree_itlazy
+// segtree
 
-const int MOD = 1e9 + 7;
 ///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
+vector<ll> t(LIM * 10), lz(LIM * 10);
+int n;
+
+void push(int v) {
+    // update the child nodes
+    t[v * 2] += lz[v];
+    t[v * 2 + 1] += lz[v];
+    // push buffer to child node
+    lz[v * 2] += lz[v];
+    lz[v * 2 + 1] += lz[v];
+    // delete current node buffer
+    lz[v] = 0;
 };
+
+void update(int l, int r, ll val, int tl, int tr, int v = 1) {
+    if (l > r) return; // if out of range then break
+    if (tl == l && r == tr) { // if this node contains all of update range
+        // update this node only
+        t[v] += val;
+        // delay update of child nodes
+        lz[v] += val;
+    } else {
+        // push update to child nodes
+        push(v);
+        // continue down child nodes
+        int tm = (tl + tr) / 2;
+        update(l, min(r, tm), val, tl, tm, v * 2);
+        update(max(l, tm + 1), r, val, tm + 1, tr, v * 2 + 1);
+        t[v] = max(t[v * 2], t[v * 2 + 1]);
+    };
+};
+
+ll query(int l, int r, int tl, int tr, int v = 1) {
+    if (l > r) { // if out of range then return default value
+        return -INFINITY;
+    };
+    if (l <= tl && tr <= r) { // if this node fits in query range
+        // return this node
+        return t[v];
+    };
+    // push update to child nodes
+    push(v);
+    // continue down child nodes
+    int tm = (tl + tr) / 2;
+    ll lq = query(l, min(r, tm), tl, tm, v * 2);
+    ll rq = query(max(l, tm + 1), r, tm + 1, tr, v * 2 + 1);
+    // compare and return value of child nodes
+    return max(lq, rq);
+};
+
 ///////////////////////////////////////
 int main() {
+    // ifstream cin("_input");
+    // ofstream cout("_output");
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    cin >> n;
+    ll a;
+    for (int i = 0; i < n; i++) {
+        cin >> a;
+        update(i, i, a, 0, n - 1);
+    };
+    // log();
+    int q;
+    cin >> q;
+    while (q--) {
+        int t, l, r, val;
+        cin >> t >> l >> r;
+        if (t == 1) {
+            cin >> val;
+            update(l - 1, r - 1, val, 0, n - 1);
+        } else {
+            cout << query(l - 1, r - 1, 0, n - 1) << nl;
+        };
+        // log();
+    };
+    /////////////////
     return 0;
 };
 /*

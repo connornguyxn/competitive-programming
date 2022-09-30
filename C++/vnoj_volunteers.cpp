@@ -1,32 +1,53 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define ii pair<int, int>
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// https://oj.vnoi.info/problem/bedao_r10_volunteers
+// set, searching
 
-const int MOD = 1e9 + 7;
-///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
-};
 ///////////////////////////////////////
 int main() {
+    // ifstream cin("_input");
+    // ofstream cout("_output");
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    int n, m;
+    cin >> n >> m;
+    multiset<int, greater<int>> a;
+    int inp;
+    for (int i = 0; i < n; i++) {
+        cin >> inp;
+        a.insert(inp);
+    };
+    for (int i = 0; i < m; i++) {
+        cin >> inp;
+        auto it = a.lower_bound(inp);
+        if (it != a.end()) {
+            a.erase(it);
+        };
+        // for (auto &i : a) {
+        //     cout << i << sp;
+        // };
+        // cout << nl;
+    };
+    cout << ((a.empty()) ? -1 : *a.begin());
+    /////////////////
     return 0;
 };
 /*

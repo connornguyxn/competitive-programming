@@ -1,32 +1,73 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#define init_ifs()
+#define init_ofs()
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
+#define for_in(i, a) for (auto& i : a)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// <problem link>
+// <tags>
 
-const int MOD = 1e9 + 7;
-///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
-};
 ///////////////////////////////////////
 int main() {
+    init_ifs();
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    int w, h, n;
+    cin >> w >> h >> n;
+    vector<vector<int>> dp(2001, vector<int> (2001));
+    int r, c;
+    for (int i = 0; i < n; i++) {
+        cin >> r >> c;
+        dp[r][c] = 1;
+    };
+    // for (int i = 1; i <= w; i++) {
+    //     for (int j = 1; j <= h; j++) {
+    //         cout << dp[i][j] << sp;
+    //     };
+    //     cout << nl;
+    // };
+    // cout << nl;
+    // for (int i = 0; i <= w; i++) {
+    //     dp[i][0] = 0;
+    // };
+    // for (int j = 0; j <= h; j++) {
+    //     dp[0][j] = 0;
+    // };
+    dp[0][1] = 1;
+    for (int i = 1; i <= w; i++) {
+        for (int j = 1; j <= h; j++) {
+            if (dp[i][j]) {
+                dp[i][j] = 0;
+                continue;
+            };
+            dp[i][j] = (dp[i - 1][j] % MOD + dp[i][j - 1] % MOD) % MOD;
+        };
+    };
+    // for (int i = 1; i <= w; i++) {
+    //     for (int j = 1; j <= h; j++) {
+    //         cout << dp[i][j] << sp;
+    //     };
+    //     cout << nl;
+    // };
+    cout << dp[w][h];
+    /////////////////
     return 0;
 };
 /*

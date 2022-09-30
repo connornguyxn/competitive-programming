@@ -1,5 +1,4 @@
 #!/bin/python3
-from os.path import exists
 
 with open('_template.cpp', 'r') as f:
     template_lines = f.read().splitlines()
@@ -11,10 +10,9 @@ newfile_name = ''.join(input('name: ').lower().split())
 wildcard_lines = {
     '// <problem link>': '',
     '// <tags>': '',
-    '// ifstream cin("_input");': '',
-    '// ofstream cout("_output");': '',
+    #'//ifstream cin("template.inp");': f'//ifstream cin("{newfile_name}.inp");',
+    #'//ofstream cout("template.out");': f'//ofstream cout("{newfile_name}.out");',
 }
-
 for line in template_lines:
     if line.strip() in wildcard_lines:
         #print('wildcard line:', line)
@@ -27,13 +25,5 @@ for line in template_lines:
             continue
         line = line[:line.find('//')]
     newfile_lines.append(line.rstrip())
-    
-
-if (exists(newfile_name + '.cpp')):
-    inp = input('File exists. Overwrite? (y/n): ')
-    if (inp == 'y'):
-        with open(newfile_name + '.cpp', 'w') as f:
-            f.write('\n'.join(newfile_lines))
-else:
-    with open(newfile_name + '.cpp', 'w') as f:
-        f.write('\n'.join(newfile_lines))
+with open(newfile_name + '.cpp', 'w') as f:
+    f.write('\n'.join(newfile_lines))

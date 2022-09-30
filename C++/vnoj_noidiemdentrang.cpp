@@ -1,32 +1,54 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define ii pair<int, int>
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// https://oj.vnoi.info/problem/bwpoints
+// greedy, sorting
 
-const int MOD = 1e9 + 7;
-///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
-};
 ///////////////////////////////////////
 int main() {
+    // ifstream cin("_input");
+    // ofstream cout("_output");
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    int n;
+    cin >> n;
+    vector<pair<int, int>> a(n * 2);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i].first;
+        a[i].second = 0;
+    };
+    for (int i = n; i < n * 2; i++) {
+        cin >> a[i].first;
+        a[i].second = 1;
+    };
+    sort(all(a));
+    vdb(a);
+    int cnt = 0, l = 0;
+    for (int i = 1; i < n * 2; i++) {
+        if (a[i].second + a[l].second == 1) {
+            cnt++;
+            l = i + 1;
+        };
+    };
+    cout << cnt;
+    /////////////////
     return 0;
 };
 /*

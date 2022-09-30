@@ -1,32 +1,53 @@
-#include <bits/stdc++.h>
+#include "include/debugging.h"
 using namespace std;
 
-// Binary exponentation implementation
-// math
-
-const int MOD = 1e9 + 7;
 ///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
+vector<vector<int>> t;
+vector<int> depth, parent;
+void dfs(int s) {
+    for (int e : t[s]) {
+        parent[e] = s;
+        if (!depth[e]) {
+            depth[e] = depth[s] + 1;
+            dfs(e);
         };
-        n = n * n % MOD;
-        k /= 2;
     };
-    return res % MOD;
 };
+int anscestor(int a, int k) {
+    
+};
+
 ///////////////////////////////////////
 int main() {
+    init_ifs();
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    int n;
+    cin >> n;
+    int s;
+    t.resize(n);
+    for (int i = 0; i < n - 1; i++) {
+        cin >> s;
+        t[s].push_back(0);
+        cin >> t[s].back();
+    };
+    //cout << t;
+    depth.resize(n);
+    parent.resize(n);
+    dfs(0);
+    cout << depth << '\n';
+    cout << parent << '\n';
+    int lgn = log2(n);
+    vector<vector<int>> up(n, vector<int> (lgn + 1));
+    for (int i = 0; i < n; i++) {
+        up[i][0] = parent[i];
+    };
+    for (int j = 1; j <= lgn; j++) {
+        for (int i = 0; i < n; i++) {
+            up[i][j] = up[up[i][j - 1]][j - 1];
+        };
+    };
+    /////////////////
     return 0;
 };
 /*

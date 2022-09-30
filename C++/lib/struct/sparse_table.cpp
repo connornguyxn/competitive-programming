@@ -1,32 +1,55 @@
-#include <bits/stdc++.h>
+#include "include/debugging.h"
 using namespace std;
 
-// Binary exponentation implementation
-// math
+// Implementation of RMQ with sparse table
+// https://cp-algorithms.com/data_structures/sparse-table.html#range-minimum-queries-rmq
+// https://www.youtube.com/watch?v=0jWeUdxrGm4
 
-const int MOD = 1e9 + 7;
+// Test problem:
+// https://www.spoj.com/problems/RMQSQ/
+
+// Preprocessing: O(n log n)
+// Query: O(1)
+
 ///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
-};
+
+
 ///////////////////////////////////////
 int main() {
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
+    int n;
+    cin >> n;
     
+    // precompute all log2 in O(n)
+    vector<int> lg(n + 1);
+    for (int i = 2; i <= n; i++) {
+        lg[i] = lg[i / 2] + 1;
+    };
+    
+    vector<vector<int>> st(n, vector<int> (lg[n] + 1));
+    for (int i = 0; i < n; i++) {
+        cin >> st[i][0];
+    };
+    // for exponent = 1 to log2(n)
+    for (int j = 1; j <= lg[n]; j++) {
+        // for all ranges with length pow(2, j) until exceed n
+        // for starting index = 0 and ++ while i + pow(2, j) - 1 < n
+        for (int i = 0; i + (1 << j) - 1 < n; i++) {
+            // with st[i][j] = st[starting index][length = pow(2, j)]
+            // = min of st[i][j - 1] and st[i + pow(2, j - 1)][j - 1]
+            st[i][j] = min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
+        };
+    };
+    
+    int l, r, q;
+    cin >> q;
+    while (q--) {
+        cin >> l >> r;
+        int j = lg[r - l + 1];
+        cout << min(st[l][j], st[r - (1 << j) + 1][j]) << '\n';
+    };
+
     return 0;
 };
 /*

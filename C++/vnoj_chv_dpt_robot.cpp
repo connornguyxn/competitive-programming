@@ -1,32 +1,53 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#define init_ifs()
+#define init_ofs()
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
+#define for_in(i, a) for (auto& i : a)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// https://oj.vnoi.info/problem/chvpt_dptrobot
+// sorting
 
-const int MOD = 1e9 + 7;
-///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
-};
 ///////////////////////////////////////
 int main() {
+    init_ifs();
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
-    
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    };
+    sort(all(a));
+    vdb(a);
+    ll s1 = 0, s2 = 0, s = 0;
+    for (int i : a) s += i;
+    for (int i = 0; i < k && a[i] < 0; i++) {
+        s1 += a[i];
+    };
+    for (int i = n - 1; i >= n - k && a[i] > 0; i--) {
+        s2 += a[i];
+    };
+    vdb(s1, s2);
+    cout << max({abs(s), abs(s + abs(s1) * 2), abs(s - s2 * 2)});
+    /////////////////
     return 0;
 };
 /*

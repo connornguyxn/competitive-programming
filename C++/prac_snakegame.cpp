@@ -1,32 +1,53 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#define vdb(...)
+#define db(...)
+#endif
 using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define ii pair<int, int>
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(a) a.begin(), a.end()
+#define dec_point(n) fixed << showpoint << setprecision(n)
+const int LIM = 1e6;
+const ull MOD = 1e9 + 7;
 
-// Binary exponentation implementation
-// math
+// <problem link>
+// <tags>
 
-const int MOD = 1e9 + 7;
-///////////////////////////////////////
-unsigned long long bpow(unsigned long long n, unsigned long long k) {
-    unsigned long long res = 1;
-    n %= MOD;
-    while (k > 0) {
-        if (k % 2 == 1) {
-            res = res * n % MOD;
-        };
-        n = n * n % MOD;
-        k /= 2;
-    };
-    return res % MOD;
-};
 ///////////////////////////////////////
 int main() {
+    ifstream cin("_input");
+    // ofstream cout("_output");
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int a, b;
-    cin >> a >> b;
-    cout << bpow(a, b);
-
+    int n, m;
+    cin >> n >> m;
+    vector<vector<char>> a(n + 1, vector<char> (m + 1));
+    vector<ii> caves;
+    int xs, ys, xe, ye;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> a[i][j];
+            if (a[i][j] == '+') {
+                caves.push_back({i, j});
+            } else if (a[i][j] == 'P') {
+                xs = i;
+                ys = j;
+            } else if (a[i][j] == 'C') {
+                xe = i;
+                ye = j;
+            };
+        };
+    };
     
+    /////////////////
     return 0;
 };
 /*

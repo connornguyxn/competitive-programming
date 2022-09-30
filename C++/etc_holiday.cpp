@@ -60,7 +60,7 @@ int main() {
             //     };
             // };
             q.push({dp[i - 1] + v[i], t[i]});
-            while ((q.top().second < i) && (!q.empty())) {
+            while (q.top().second < i) {
                 q.pop();
             };
             dp[i] = q.top().first;
