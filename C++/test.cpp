@@ -1,64 +1,47 @@
+#ifdef local_debug
+#include "include/debugging.h"
+#else
 #include <bits/stdc++.h>
+#endif
 using namespace std;
-
-// DSU implementation demonstrated by Kruskal algorithm
-// https://vnoi.info/wiki/algo/data-structures/disjoint-set-union.md
-// graph
-
+#define ll long long
+#define ull unsigned long long
+#define ld long double
+#define ii pair<int, int>
+#define fi first
+#define se second
+#define str string
+#define nl '\n'
+#define sp ' '
+#define mask(BI) (1LL << (BI))
+#define bitcnt(BM) __builtin_popcountll(BM)
+#define getbit(BM, BI) ((BM >> BI) & 1)
+#define all(A) (A).begin(), (A).end()
+#define dec_point(N) fixed << showpoint << setprecision(N)
 const int LIM = 1e6;
-// dual purpose array
-// negative array value = number of nodes under it
-// positive array value = parrent of node
-struct edge {
-    int s, e;
-    long long w;
-    bool operator < (edge x) {
-        return w < x.w;
-    };
-};
+const ull MOD = 1e9 + 7;
 
-int n, m;
-int pr[LIM];
-vector<edge> edges;
-
-int root(int v) {
-    if (pr[v] < 0) return v;
-    return pr[v] = root(pr[v]);
-};
-
-bool merge(int a, int b) {
-    if ((a = root(a)) == (b = root(b))) return false;
-    if (-pr[a] < -pr[b]) {
-        swap(a, b);
-    };
-    pr[a] += pr[b];
-    pr[b] = a;
-    return true;
-};
+// <problem link>
+// <tags>
 
 ///////////////////////////////////////
 int main() {
     ifstream cin("_input");
+    // ofstream cout("_output");
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int n, m;
-    cin >> n >> m;
-    vector<edge> edges;
-    for (int i = 0; i < m; i++) {
-        int s, e;
-        long long w;
-        cin >> s >> e >> w;
-        edges.push_back({s, e, w});
+    string s;
+    cin >> s;
+    
+    int sum = 0;
+    for (int i = 0; i < s.size(); i++) {
+        int so = s[i] - '0';
+        sum += so;
     };
-    sort(edges.begin(), edges.end());
-    memset(pr, -1, sizeof(pr));
-    long long cost = 0;
-    for (auto &i : edges) {
-        if (merge(i.s, i.e)) {
-            cost += i.w;
-        };
-    };
-    cout << cost;
+    
+    cout << sum;
+    
+    /////////////////
     return 0;
 };
 /*

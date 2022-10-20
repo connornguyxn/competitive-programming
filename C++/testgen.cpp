@@ -1,25 +1,18 @@
 #ifdef local_debug
 #include "include/debugging.h"
-#define init_ifs() ifstream cin("input.inp")
-#define init_ofs() ofstream cout("output.out")
 #else
 #include <bits/stdc++.h>
-#define init_ifs()
-#define init_ofs()
-#define vdb(...)
-#define db(...)
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
 #define ld long double
+#define ii pair<int, int>
 #define str string
 #define nl '\n'
 #define sp ' '
 #define all(a) a.begin(), a.end()
 #define dec_point(n) fixed << showpoint << setprecision(n)
-#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-#define for_in(i, a) for (auto& i : a)
 const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
 
@@ -28,25 +21,20 @@ const ull MOD = 1e9 + 7;
 
 ///////////////////////////////////////
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    ofstream cout("input.inp");
+    // ifstream cin("_input");
+    ofstream cout("_input");
+    cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int tc = 1;
-    //cin >> tc;
-    while (tc--) {
-        int n;
-        cin >> n;
-        cout << n << sp << n << nl;
-        for (int i = 1; i <= n; i++) {
-            cout << i << sp;
+    int n;
+    n = 2000;
+    cout << n << sp << n << nl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << '.';
         };
-        for (int i = 1; i <= n; i++) {
-            cout << i << sp;
-        };
-        /////////////////
         cout << nl;
     };
+    /////////////////
     return 0;
 };
 /*

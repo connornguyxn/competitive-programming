@@ -1,7 +1,5 @@
 #ifdef local_debug
 #include "include/debugging.h"
-#define init_ifs() ifstream cin("input.inp")
-#define init_ofs() ofstream cout("output.out")
 #else
 #include <bits/stdc++.h>
 #define init_ifs()

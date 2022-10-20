@@ -12,8 +12,8 @@
 // undefine debug functions
 // #define init_ifs()
 // #define init_ofs()
-#define vdb(...)
-#define db(...)
+// #define vdb(...)
+// #define db(...)
 #endif // end
 using namespace std; // use standard namespace for faster access
 // aliases
@@ -21,13 +21,18 @@ using namespace std; // use standard namespace for faster access
 #define ull unsigned long long // 0 to approx 1e19
 #define ld long double // approx -1e308 to 1e308
 #define ii pair<int, int>
+#define fi first
+#define se second
 #define str string // python :D
 #define nl '\n' // saving time by not flushing buffer
 #define sp ' ' // writing this is faster
-#define all(a) a.begin(), a.end() // iterator macro
+#define mask(BI) (1LL << (BI))
+#define bitcnt(BM) __builtin_popcountll(BM)
+#define getbit(BM, BI) ((BM >> BI) & 1)
+#define all(A) (A).begin(), (A).end() // iterator macro
 // macro for functions
 // set decimal precision
-#define dec_point(n) fixed << showpoint << setprecision(n)
+#define dec_point(N) fixed << showpoint << setprecision(N)
 // dynamic container optimization, eg: map, vector
 // #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
 // #define for_in(i, a) for (auto& i : a) // python :D

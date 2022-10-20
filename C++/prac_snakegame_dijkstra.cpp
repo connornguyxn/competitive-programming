@@ -2,8 +2,6 @@
 #include "include/debugging.h"
 #else
 #include <bits/stdc++.h>
-#define vdb(...)
-#define db(...)
 #endif
 using namespace std;
 #define ll long long
@@ -17,36 +15,98 @@ using namespace std;
 #define dec_point(n) fixed << showpoint << setprecision(n)
 const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
-
-// <problem link>
-// <tags>
-
 ///////////////////////////////////////
-int main() {
-    ifstream cin("_input");
-    // ofstream cout("_output");
-    cin.tie(0) -> sync_with_stdio(0);
-    /////////////////
-    int n, m;
-    cin >> n >> m;
-    vector<vector<char>> a(n + 1, vector<char> (m + 1));
-    vector<ii> caves;
-    int xs, ys, xe, ye;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            cin >> a[i][j];
-            if (a[i][j] == '+') {
-                caves.push_back({i, j});
-            } else if (a[i][j] == 'P') {
-                xs = i;
-                ys = j;
-            } else if (a[i][j] == 'C') {
-                xe = i;
-                ye = j;
+struct pos {
+    int x, y, v;
+};
+bool operator < (pos a, pos b) {
+    return a.v < b.v;
+};
+/////////////////
+char board[2001][2001];
+int dist[2001][2001]; // dist of each square
+int shfx[4] = {1, -1, 0, 0}; // possible shifts on x axis
+int shfy[4] = {0, 0, 1, -1}; // possible shifts on y axis
+int n, m;
+/////////////////
+int dijkstra(pos s, pos e) {
+    vector<vector<int>> mxdist(n + 1, vector<int> (m + 1));
+    priority_queue<pos> pq;
+    mxdist[s.x][s.y] = dist[s.x][s.y];
+    pq.push(s);
+    while (!pq.empty()) {
+        pos c = pq.top();
+        pq.pop();
+        // if current node is selected then return result
+        if (c.x == e.x && c.y == e.y) {
+            return mxdist[c.x][c.y];
+        };
+        // for each possible move
+        for (int i = 0; i < 4; i++) {
+            int nx = c.x + shfx[i];
+            int ny = c.y + shfy[i];
+            // skip this node if out of range
+            if (nx < 1 || nx > n || ny < 1 || ny > m) {
+                continue;
+            };
+            // if next node result is higher
+            if (min(mxdist[c.x][c.y], dist[nx][ny]) > mxdist[nx][ny]) {
+                mxdist[nx][ny] = min(mxdist[c.x][c.y], dist[nx][ny]);
+                pq.push({nx, ny, mxdist[nx][ny]});
             };
         };
     };
-    
+    return -1;
+};
+///////////////////////////////////////
+int main() {
+    // ifstream cin("_input");
+    // ofstream cout("_output");
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    cin >> n >> m;
+    pos s, e;
+    deque<pos> call;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> board[i][j];
+            dist[i][j] = INFINITY;
+            if (board[i][j] == '+') {
+                call.push_front({i, j, 0});
+                dist[i][j] = 0;
+            } else if (board[i][j] == 'P') {
+                s = {i, j, 0};
+            } else if (board[i][j] == 'C') {
+                e = {i, j, 0};
+            };
+        };
+    };
+    // cout << "read" << endl;
+    int cnt = 0;
+    while (!call.empty()) {
+        pos c = call.back();
+        call.pop_back();
+        for (int i = 0; i < 4; i++) {
+            pos np = {c.x + shfx[i], c.y + shfy[i], c.v + 1};
+            if (np.x < 1 || np.x > n || np.y < 1 || np.y > m) {
+                continue;
+            };
+            if (dist[np.x][np.y] <= np.v) {
+                continue;
+            };
+            dist[np.x][np.y] = np.v;
+            call.push_front(np);
+            cnt++;
+        };
+    };
+    // for (int i = 1; i <= n; i++) {
+    //     for (int j = 1; j <= m; j++) {
+    //         cout << dist[i][j] << sp;
+    //     };
+    //     cout << nl;
+    // };
+    // cout << cnt << nl;
+    cout << dijkstra(s, e);
     /////////////////
     return 0;
 };
