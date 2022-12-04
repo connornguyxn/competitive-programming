@@ -1,0 +1,1 @@
+{"name":"Local: raisoi","url":"/home/inf1nity/Documents/VSCode/code-backup/C++/raisoi.cpp","tests":[{"id":1666921219078,"input":"4 8 3","output":"5"},{"id":1666921229843,"input":"5 6 5","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/inf1nity/Documents/VSCode/code-backup/C++/raisoi.cpp","group":"local","local":true}

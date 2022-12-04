@@ -11,8 +11,8 @@ void Tower(int n , char a, char b, char c ) {
     }
 
 int main() {
-    char a = 'A',b = 'B',c = 'C';
+    char a = 'A', b = 'B',c = 'C';
     int n;
-    std::cin>>n;
+    std::cin >> n;
     Tower(n,a,b,c);
 }

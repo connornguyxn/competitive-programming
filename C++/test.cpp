@@ -1,13 +1,17 @@
-#ifdef local_debug
-#include "include/debugging.h"
+#if localdb
+    #include "include/debug.h"
+    #define TASK "test"
 #else
-#include <bits/stdc++.h>
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "test"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
 #define ld long double
-#define ii pair<int, int>
+#define pii pair<int, int>
 #define fi first
 #define se second
 #define str string
@@ -17,8 +21,8 @@ using namespace std;
 #define bitcnt(BM) __builtin_popcountll(BM)
 #define getbit(BM, BI) ((BM >> BI) & 1)
 #define all(A) (A).begin(), (A).end()
-#define dec_point(N) fixed << showpoint << setprecision(N)
-const int LIM = 1e6;
+#define point(N) fixed << showpoint << setprecision(N)
+const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
 // <problem link>
@@ -26,21 +30,12 @@ const ull MOD = 1e9 + 7;
 
 ///////////////////////////////////////
 int main() {
-    ifstream cin("_input");
-    // ofstream cout("_output");
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    string s;
-    cin >> s;
-    
-    int sum = 0;
-    for (int i = 0; i < s.size(); i++) {
-        int so = s[i] - '0';
-        sum += so;
-    };
-    
-    cout << sum;
-    
+
+
     /////////////////
     return 0;
 };

@@ -1,0 +1,1 @@
+{"name":"Local: thangmay","url":"/home/inf1nity/Documents/VSCode/code-backup/C++/thangmay.cpp","tests":[{"id":1666837457367,"input":"2 2 7 19 97","output":"4582"},{"id":1666837475304,"input":"3 5 7 4 8","output":"25"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/inf1nity/Documents/VSCode/code-backup/C++/thangmay.cpp","group":"local","local":true}

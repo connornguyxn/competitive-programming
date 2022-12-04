@@ -11,8 +11,14 @@ newfile_name = ''.join(input('name: ').lower().split())
 wildcard_lines = {
     '// <problem link>': '',
     '// <tags>': '',
-    '// ifstream cin("_input");': '',
-    '// ofstream cout("_output");': '',
+    # '// ifstream cin("_input");': '',
+    # '// ofstream cout("_output");': '',
+    # '// freopen(TASK".inp", "r", stdin)': '',
+    # '// freopen(TASK".out", "w", stdout);': '',
+}
+
+placeholders = {
+    "<task name>": newfile_name.split('_')[-1]
 }
 
 for line in template_lines:
@@ -26,6 +32,10 @@ for line in template_lines:
         if line.strip().find('// ') == 0:
             continue
         line = line[:line.find('//')]
+        
+    for placeholder in placeholders:
+        line = line.replace(placeholder, placeholders[placeholder])
+        
     newfile_lines.append(line.rstrip())
     
 

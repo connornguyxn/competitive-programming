@@ -1,5 +1,5 @@
 #ifdef local_debug
-#include "include/debugging.h"
+#include "include/debug.h"
 #else
 #include <bits/stdc++.h>
 #define vdb(...)

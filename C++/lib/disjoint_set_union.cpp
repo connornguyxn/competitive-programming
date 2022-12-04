@@ -5,7 +5,7 @@ using namespace std;
 // https://vnoi.info/wiki/algo/data-structures/disjoint-set-union.md
 // graph
 
-const int LIM = 1e6;
+const int N = 1e6;
 // dual purpose array
 // negative array value = number of nodes under it
 // positive array value = parrent of node
@@ -16,10 +16,7 @@ struct edge {
         return w < x.w;
     };
 };
-
-int n, m;
-int pr[LIM];
-vector<edge> edges;
+int pr[N];
 
 int root(int v) {
     if (pr[v] < 0) return v;
@@ -35,7 +32,6 @@ bool merge(int a, int b) {
     pr[b] = a;
     return true;
 };
-
 ///////////////////////////////////////
 int main() {
     cin.tie(0) -> sync_with_stdio(0);
