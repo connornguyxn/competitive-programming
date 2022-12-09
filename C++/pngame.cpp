@@ -1,73 +1,167 @@
-// #pragma GCC optimize("trapv") // abort() on integer overflow
-                                // increase runtime by ~10%(?)
-// note: include headers *after* compile options
-#if DEBUG // if local debug flag is set to true
-    #include "include/debug.h" // include local debugging header
+#if localdb
+    #include "include/debug.h"
     #define TASK "test"
-#else // if not on local machine
-    // GCC optimization flags
+#else
     #pragma GCC optimize("O3,unroll-loops,inline")
-    // SIMD optimization
-    // #pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2")
-    #include <bits/stdc++.h> // include everything
-    // undefine debug functions
+    #include <bits/stdc++.h>
     #define db(...)
-    #define TASK "<task name>"
-#endif // end
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
+    #define TASK "pngame"
+#endif
+using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define ld long double
 #define pii pair<int, int>
 #define fi first
 #define se second
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
-#define mask(BI) (1ULL << (BI))
-#define bitcnt(BM) __builtin_popcountull(BM)
+#define str string
+#define nl '\n'
+#define sp ' '
+#define mask(BI) (1LL << (BI))
+#define bitcnt(BM) __builtin_popcountll(BM)
 #define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end() // iterator macro
-// macro for functions
-// set decimal precision
+#define all(A) (A).begin(), (A).end()
 #define point(N) fixed << showpoint << setprecision(N)
-// dynamic container optimization, eg: map, vector
-// #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-// #define for_in(i, a) for (auto& i : a) // python :D
-const int MAXN = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modular
+const int MAXN = 1e6;
+const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// https://imgur.com/8fmJfhD.png
+// graph, flow
 
+int n;
+vector<vector<int>> adj, cap;
+vector<int> par;
+
+int find_flow(const int &s, const int &e, int exc = -1) {
+    fill(all(par), -1);
+    par[s] = -2;
+    deque<pii> q;
+    q.push_front({s, INT_MAX});
+    
+    while (!q.empty()) {
+        int cur = q.back().first;
+        int flow = q.back().second;
+        q.pop_back();
+        
+        for (auto &nxt : adj[cur]) {
+            if (nxt == exc) continue;
+            
+            if (par[nxt] == -1 && cap[cur][nxt]) {
+                par[nxt] = cur;
+                int new_flow = min(flow, cap[cur][nxt]);
+                
+                if (nxt == e) return new_flow;
+                q.push_front({nxt, new_flow});
+            };
+        };
+    };
+    
+    return 0;
+};
+
+int max_flow(const int &s, const int &e) {
+    int flow = 0;
+    par.resize(n + 1);
+    int new_flow;
+    
+    while (new_flow = find_flow(s, e)) {
+        flow += new_flow;
+        
+        int cur = e;
+        while (cur != s) {
+            int prev = par[cur];
+            
+            cap[prev][cur] -= new_flow;
+            cap[cur][prev] += new_flow;
+            
+            cur = prev;
+        };
+    };
+    
+    return flow;
+};
 ///////////////////////////////////////
 int main() {
-    // file stream objects
-    // init_ifs();
-    // ifstream cin("_input");
-    // ofstream cout("_output");
-    // auto use file input/output if avalible
     if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
     if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
+    cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
+    int n1, n2, m;
+    cin >> n1 >> n2 >> m;
+    
+    // sink node = (n1+n2+1) = (n)
+    // source node = (0)
+    n = n1 + n2 + 1; // left side + right side + sink + source
+    
+    adj.resize(n + 1);
+    cap.resize(n + 1, vector<int>(n + 1));
+    
+    vector<pii> edges;
+    
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        v += n1;
         
+        edges.push_back({u, v});
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+        cap[u][v] = 1;
+    };
+    
+    for (int i = 1; i <= n1; i++) {
+        adj[0].push_back(i);
+        adj[i].push_back(0);
+        cap[0][i] = 1;
+    };
+    for (int i = 1; i <= n2; i++) {
+        adj[n1 + i].push_back(n);
+        adj[n].push_back(n1 + i);
+        cap[n1 + i][n] = 1;
+    };
+    
+    max_flow(0, n);
+    vector<int> match(n + 1);
+    
+    for (auto &it : edges) {
+        if (cap[it.fi][it.se] == 0) {
+            match[it.fi] = it.se;
+            match[it.se] = it.fi;
+        };
+    };
+    
         
-    //     /////////////////
-    //     cout << nl;
-    // };
+    for (int i = 1; i <= n1; i++) {
+        cap[match[i]][n] = 1;
+        cap[n][match[i]] = 0;
+        
+        if (match[i] && !find_flow(0, n, i)) {
+            cout << "N";
+        } else {
+            cout << "P";
+        };
+        
+        cap[match[i]][n] = 0;
+        cap[n][match[i]] = 1;
+    };
+    cout << nl;
+    
+    for (int i = n1 + 1; i < n; i++) {
+        cap[0][match[i]] = 1;
+        cap[match[i]][0] = 0;
+        
+        if (match[i] && !find_flow(0, n, i)) {
+            cout << "N";
+        } else {
+            cout << "P";
+        };
+        
+        cap[0][match[i]] = 0;
+        cap[match[i]][0] = 1;
+    };
     /////////////////
-    return 0; // for good measure :)
+    return 0;
 };
-// nice
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

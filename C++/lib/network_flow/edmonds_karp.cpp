@@ -1,73 +1,70 @@
-// #pragma GCC optimize("trapv") // abort() on integer overflow
-                                // increase runtime by ~10%(?)
-// note: include headers *after* compile options
-#if DEBUG // if local debug flag is set to true
-    #include "include/debug.h" // include local debugging header
-    #define TASK "test"
-#else // if not on local machine
-    // GCC optimization flags
-    #pragma GCC optimize("O3,unroll-loops,inline")
-    // SIMD optimization
-    // #pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2")
-    #include <bits/stdc++.h> // include everything
-    // undefine debug functions
-    #define db(...)
-    #define TASK "<task name>"
-#endif // end
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
-#define pii pair<int, int>
-#define fi first
-#define se second
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
-#define mask(BI) (1ULL << (BI))
-#define bitcnt(BM) __builtin_popcountull(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end() // iterator macro
-// macro for functions
-// set decimal precision
-#define point(N) fixed << showpoint << setprecision(N)
-// dynamic container optimization, eg: map, vector
-// #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-// #define for_in(i, a) for (auto& i : a) // python :D
-const int MAXN = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modular
-
-// <problem link>
-// <tags>
+#include <bits/stdc++.h>
+using namespace std;
 
 ///////////////////////////////////////
-int main() {
-    // file stream objects
-    // init_ifs();
-    // ifstream cin("_input");
-    // ofstream cout("_output");
-    // auto use file input/output if avalible
-    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
-    /////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
+int n;
+vector<vector<int>> adj, cap;
+vector<int> par;
+
+int find_flow(const int &s, const int &e, int exc = -1) {
+    fill(par.begin(), par.end(), -1);
+    par[s] = -2;
+    deque<pair<int, int>> q;
+    q.push_front({s, INT_MAX});
+    
+    while (!q.empty()) {
+        int cur = q.back().first;
+        int flow = q.back().second;
+        q.pop_back();
         
-        
-    //     /////////////////
-    //     cout << nl;
-    // };
-    /////////////////
-    return 0; // for good measure :)
+        for (auto &nxt : adj[cur]) {
+            if (nxt == exc) continue;
+            
+            if (par[nxt] == -1 && cap[cur][nxt]) {
+                par[nxt] = cur;
+                int new_flow = min(flow, cap[cur][nxt]);
+                
+                if (nxt == e) return new_flow;
+                q.push_front({nxt, new_flow});
+            };
+        };
+    };
+    
+    return 0;
 };
-// nice
+
+int max_flow(const int &s, const int &e) {
+    int flow = 0;
+    par.resize(n + 1);
+    int new_flow;
+    
+    // while flow can travel from start to end
+    while (new_flow = find_flow(s, e)) {
+        flow += new_flow;
+        
+        // trace back and reduce flow from found path
+        int cur = e;
+        while (cur != s) {
+            int prev = par[cur];
+            
+            cap[prev][cur] -= new_flow;
+            cap[cur][prev] += new_flow;
+            
+            cur = prev;
+        };
+    };
+    
+    return flow;
+};
+///////////////////////////////////////
+int main() {
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    
+    
+    
+    return 0;
+};
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

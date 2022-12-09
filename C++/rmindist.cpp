@@ -1,73 +1,61 @@
-// #pragma GCC optimize("trapv") // abort() on integer overflow
-                                // increase runtime by ~10%(?)
-// note: include headers *after* compile options
-#if DEBUG // if local debug flag is set to true
-    #include "include/debug.h" // include local debugging header
+#if localdb
+    #include "include/debug.h"
     #define TASK "test"
-#else // if not on local machine
-    // GCC optimization flags
+#else
     #pragma GCC optimize("O3,unroll-loops,inline")
-    // SIMD optimization
-    // #pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2")
-    #include <bits/stdc++.h> // include everything
-    // undefine debug functions
+    #include <bits/stdc++.h>
     #define db(...)
-    #define TASK "<task name>"
-#endif // end
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
+    #define TASK "rmindist"
+#endif
+using namespace std;
+#define ll long long
+#define ull unsigned long long
 #define pii pair<int, int>
 #define fi first
 #define se second
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
+#define str string
+#define nl '\n'
+#define sp ' '
 #define mask(BI) (1ULL << (BI))
 #define bitcnt(BM) __builtin_popcountull(BM)
 #define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end() // iterator macro
-// macro for functions
-// set decimal precision
+#define all(A) (A).begin(), (A).end()
 #define point(N) fixed << showpoint << setprecision(N)
-// dynamic container optimization, eg: map, vector
-// #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-// #define for_in(i, a) for (auto& i : a) // python :D
-const int MAXN = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modular
+const int MAXN = 1e6;
+const ull MOD = 1e9 + 7;
 
-// <problem link>
+// https://hntbptlctn22.contest.codeforces.com/group/vrP7XlTB8q/contest/414727/problem/A
 // <tags>
 
 ///////////////////////////////////////
 int main() {
-    // file stream objects
-    // init_ifs();
-    // ifstream cin("_input");
-    // ofstream cout("_output");
-    // auto use file input/output if avalible
     if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
     if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
+    cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
-        
-        
-    //     /////////////////
-    //     cout << nl;
-    // };
+    int n, m, p, q;
+    cin >> m >> n >> p >> q;
+    
+    vector<vector<ll>> a(n + 1, vector<ll>(m + 1));
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> a[i][j];
+            // current = input + top + right - top_left
+            a[i][j] += a[i - 1][j] + a[i][j - 1] - a[i - 1][j - 1];
+            cout << a[i][j] << sp;
+        };
+        cout << nl;
+    };
+    auto sum = [&](int xl, int yl, int xr, int yr) {
+        ll res = a[xr][yr];
+        res -= a[xl - 1][yr] + a[xr][yl - 1];
+        res += a[xl - 1][yl - 1];
+        return res;
+    };
+    
     /////////////////
-    return 0; // for good measure :)
+    return 0;
 };
-// nice
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
