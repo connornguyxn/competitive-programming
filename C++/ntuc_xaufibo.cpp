@@ -1,48 +1,69 @@
-#undef _GLIBCXX_DEBUG
-#pragma GCC optimize("Ofast,unroll-loops,inline")
-#pragma GCC target("avx,avx2,f16c,fma,sse3,ssse3,sse4,sse4.1,sse4.2")
-#include <bits/stdc++.h>
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "xaufibo"
+#endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
+#define pii pair<int, int>
+#define pll pair<long long, long long>
+#define fi first
+#define se second
+#define str string
 #define nl '\n'
+#define sp ' '
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int MAXN = 45;
+const ull MOD = 1e9 + 7;
+
+// http://ntucoder.net/Problem/Details/5679
+// dp
+
+ll dp[MAXN + 1], len[MAXN + 1];
 ///////////////////////////////////////
-
-//http://ntucoder.net/Problem/Details/5679
-
-///////////////////////////////////////
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    ifstream cin("ntucoder_xaufibo.inp");
-    //ofstream cout("ntucoder_xaufibo.out");
-    int tests, n, mx;
-    vector<int> dp(50);
-    dp[0] = 1;
-    dp[1] = 0;
-    mx = 1;
-    cin >> tests;
-
-    for (int test = 0; test < tests; test++) {
-        cin >> n;
-        n--;
-        if (n > mx) {
-            mx++;
-            for (mx; mx <= n; mx++) {
-                dp[mx] = dp[mx - 2] + dp[mx - 1];
-            };
-            mx--;
-        };
-        //cout << mx << nl;
-        cout << dp[n] << nl;
-    };
+ll count(int n, ll k) {
+    // db(n, k);
+    if (k == 0) return 0;
+    if (k == len[n]) return dp[n];
+    
+    ll mid = len[n - 2];
+    return count(n - 2, min(k, mid)) + count(n - 1, max(k - mid, 0LL));
 }
 ///////////////////////////////////////
-
-
-
-
+int main() {
+    // if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    len[0] = len[1] = 1;
+    dp[0] = 1;
+    dp[1] = 0;
+    for (int i = 2; i <= MAXN; i++) {
+        len[i] = len[i - 1] + len[i - 2];
+        dp[i] = dp[i - 1] + dp[i - 2];
+    };
+    
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int n;
+        ll k;
+        cin >> n >> k;
+        cout << count(n, k) << nl;
+    };
+    /////////////////
+    return 0;
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
@@ -57,7 +78,7 @@ int main() {
 000000000000000000000000001. .111.  ..1111111111111111111.. .11111111. .100000000000000000
 000000000000000000000000001. 11111.   ...11111111111111...  .11111111. .100000000000000000
 000000000000000000000000011 .1111111..   ..............   .11111111111. 110000000000000000
-00000000000000000000000001. .1111111111....         ....11111111111111. .10000000000000000
+00000000000000000000000001. .1111111111.................11111111111111. .10000000000000000
 00000000000000000000000001 .1111111111111111111111111111111111111111111  10000000000000000
 0000000000000000000000001. .1111111111111111111111111111111111111111111. .1000000000000000
 0000000000000000000000001. 11111111111111111111111111111111111111111111. .1000000000000000

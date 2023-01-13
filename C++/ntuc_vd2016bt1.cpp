@@ -1,110 +1,99 @@
-#if localdb
-#include "include/debug.h"
-#define TASK "test"
-#define db(val) "["#val" = " << (val) << "] "
-#else
-#pragma GCC optimize("O3,unroll-loops,inline")
-#include <bits/stdc++.h>
-#define db(...)
-#define TASK "test"
-#endif
+// #if DEBUG
+//     #include "lib/include/debug.h"
+//     #define TASK "test"
+// #else
+//     #pragma GCC optimize("O3,unroll-loops,inline")
+//     #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "vd2016bt1"
+// #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
-#define ii pair<ll, ll>
+#define pii pair<int, int>
+#define pll pair<long long, long long>
 #define fi first
 #define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define mask(BI) (1LL << (BI))
-#define bitcnt(BM) __builtin_popcountll(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end()
-#define point(N) fixed << showpoint << setprecision(N)
-const ll N = 1e6;
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const ll MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
-// https://imgur.com/puD1Yev.png
-// https://imgur.com/APO5pr0.png
-// graph, tree
+// http://ntucoder.net/Problem/Details/5526
+// string
 
-///////////////////////////////////////
-bool operator < (ii a, ii b) {
-    return a.fi * b.se - a.se * b.fi < 0;
-};
-ii operator + (ii a, ii b) {
-    return {a.fi + b.fi, a.se + b.se};
-};
-/////////////////
-ll getidx(ii a) {
-    ii cur = {1, 1}, l = {0, 1}, r = {1, 0};
-    ll idx = 1;
-    while (a != cur) {
-        idx <<= 1;
-        if (a < cur) {
-            r = cur;
-            cur = cur + l;
-        } else {
-            l = cur;
-            cur = cur + r;
-            idx++;
-        };
+struct Trie {
+    struct Node {
+        unordered_map<char, int> nxt;
+        ll cnt;
+        Node() {
+            cnt = 0;
+        }
     };
-    return idx;
+    vector<Node> trie;
+    
+    Trie() {
+        trie.push_back(Node());
+    }
+    
+    void insert(str s) {
+        ll cur = 0;
+        for (char c : s) {
+            if (!trie[cur].nxt.count(c)) {
+                trie[cur].nxt[c] = trie.size();
+                trie.push_back(Node());
+            };
+            cur = trie[cur].nxt[c];
+        };
+        trie[cur].cnt++;
+    }
+    
+    ll res = 0;
+    void count(ll cur, ll cnt) {
+        if (trie[cur].cnt) res += cnt;
+        
+        for (pll it : trie[cur].nxt) {
+            count(it.se, cnt + (trie[cur].nxt.size() > 1 || trie[cur].cnt));
+        };
+    }
 };
+///////////////////////////////////////
+ll n;
+void solve() {
+    Trie trie;
+    for (ll i = 0; i < n; i++) {
+        str x;
+        cin >> x;
+        trie.insert(x);
+    };
+    
+    for (pll it : trie.trie[0].nxt) {
+        trie.count(it.se, 1);
+    };
+    
+    // db(trie.res, n);
+    long double res = trie.res / n;
+    cout << showpoint << setprecision(2) << res << nl;
+}
 ///////////////////////////////////////
 int main() {
-    // freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
-    cin.tie(0) -> sync_with_stdio(0);
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    // cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int h, n;
-    cin >> h >> n;
-    
-    deque<ll> idx;
-    for (ll i = 0; i < n; i++) {
-        ll a, b;
-        cin >> a >> b;
-        idx.push_back(getidx({a, b}));
-    };
-    
-    sort(all(idx));
-    
-    unordered_set<ll> vis;
-    vis.reserve(2048);
-    vis.max_load_factor(0.1);
-    deque<ll> call;
-    
-    ll cnt = 0;
-    while (call.size() || idx.size()) {
-        ll c1 = (idx.size() ? idx.back() : 0);
-        ll c2 = (call.size() ? call.back() : 0);
-        ll cur;
-        if (c1 > c2) {
-            cur = c1;
-            idx.pop_back();
-        } else {
-            cur = c2;
-            call.pop_back();
-        };
-        
-        if (vis.count(cur)) continue;
-        vis.insert(cur);
-        
-        ll nxt = cur >> 1;
-        if (nxt > 0) {
-            cnt++;
-            if (!vis.count(nxt)) call.push_front(nxt);
-        };
-    };
-    
-    cout << cnt;
-    // cout << vis;
+    while (cin >> n) {
+        solve();
+    }
     /////////////////
     return 0;
-};
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

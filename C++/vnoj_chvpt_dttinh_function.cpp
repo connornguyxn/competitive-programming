@@ -1,76 +1,123 @@
-// note: include headers *after* compile options
-#if DEBUG // if debug flag is set to true
-    #include "lib/include/debug.h" // include local debugging header
-    // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
-    #define TASK "test" // define local test task name
-#else // if not on local machine
-    // GCC optimization flags
-    #pragma GCC optimize("O3,unroll-loops,inline") // safest optimizations
-    // #pragma GCC optimize("Ofast,unroll-loops,inline") // faster but less accurate
-    // SIMD optimization flags
-    #pragma GCC target("avx2") // prioritize avx2, use sse4.x if not available on older hardware
-    #include <bits/stdc++.h> // include everything
-    #define db(...) // undefine debug print function
-    #define TASK "<task name>" // define task name
+#if DEBUG
+    #include "lib/include/debug.h"
+    #pragma GCC optimize("trapv")
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "function"
 #endif
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
-// pair aliases
-#define pii pair<int, int>
+using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define pii pair<ll, ll>
 #define pll pair<long long, long long>
 #define fi first
 #define se second
-// other aliases
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
-// bit manipulation
+#define str string
+#define nl '\n'
+#define sp ' '
 #define mask(POS) (1ULL << (POS))
 #define bitcnt(MASK) __builtin_popcountull(MASK)
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
-#define all(VAR) (VAR).begin(), (VAR).end() // iterator macro
-// macro for functions
-// set decimal precision
+#define all(VAR) (VAR).begin(), (VAR).end()
 #define point(CNT) fixed << showpoint << setprecision(CNT)
-// dynamic container optimization, eg: map, vector
-// #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-// #define for_in(i, a) for (auto& i : a) // python :D
-const int N = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modulo
+const ll MAXN = 1e6;
+const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// https://oj.vnoi.info/problem/chvpt_dttinh_function
+// matrix, math
 
-////////////////////////////////////////
+ll a, b, n, mod;
+vector<vector<ll>> base;
+
+ll bmul(ll a, ll b) {
+    a %= mod;
+    b %= mod;
+    ll res = 0;
+    while (b > 0) {
+        if (b & 1) {
+            res = (res + a % mod) % mod;
+        }
+        a = (a + a) % mod;
+        b /= 2;
+    }
+    return res;
+}
+
+vector<vector<ll>> mul(const vector<vector<ll>> &a, const vector<vector<ll>> &b) {
+    vector<vector<ll>> res(a.size(), vector<ll>(b[0].size()));
+    
+    for (ll i = 0; i < a.size(); i++) {
+        for (ll j = 0; j < b[0].size(); j++) {
+            for (ll k = 0; k < a[0].size(); k++) {
+                res[i][j] = (res[i][j] + bmul(a[i][k] % mod, b[k][j] % mod) % mod) % mod;
+            };
+        };
+    };
+    
+    return res;
+}
+
+vector<vector<ll>> mpow() {
+    vector<vector<ll>> res = {{
+        {1, 0},
+        {0, 1}
+    }};
+    
+    while (n > 0) {
+        if (n % 2) {
+            res = mul(res, base);
+        };
+        base = mul(base, base);
+        n /= 2;
+    };
+    
+    return res;
+}
+
+
+///////////////////////////////////////
 int main() {
-    // file stream objects
-    // init_ifs();
-    // ifstream cin("_input");
-    // ofstream cout("_output");
-    // auto use file input/output if avalible
     if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
-    ////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
-        
-        
-    //     ////////////////
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    cin >> a >> b >> n >> mod;
+    
+    if (n == 1) {
+        cout << a;
+        return 0;
+    };
+    if (n == 2) {
+        cout << b;
+        return 0;
+    };
+    
+    a %= mod;
+    b %= mod;
+    
+    base = {{
+        {0, b},
+        {1, a}
+    }};
+    n -= 2;
+    
+    vector<vector<ll>> res = mpow();
+    
+    // for (ll i = 0; i < 2; i++) {
+    //     for (ll j = 0; j < 2; j++) {
+    //         cout << res[i][j] << sp;
+    //     };
     //     cout << nl;
     // };
-    ////////////////
-    return 0; // for good measure :)
+    
+    cout << (bmul(a % mod, res[0][1] % mod) + bmul(b % mod,res[1][1] % mod)) % mod;
+    /////////////////
+    return 0;
 }
-// nice
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

@@ -1,51 +1,107 @@
-#if localdb
-#include "include/debugging.h"
-#define TASK "test"
+#if DEBUG
+    #include "include/debug.h"
+    #pragma GCC optimize("trapv")
+    #define TASK "test"
 #else
-#include <bits/stdc++.h>
-#define TASK "test"
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "dictionary"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
-#define ii pair<int, int>
+#define pii pair<int, int>
+#define pll pair<long long, long long>
 #define fi first
 #define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define mask(BI) (1LL << (BI))
-#define bitcnt(BM) __builtin_popcountll(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end()
-#define dec_point(N) fixed << showpoint << setprecision(N)
-const int N = 1e6;
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// https://imgur.com/HJmVfAO.png
+// https://imgur.com/fNK3PJH.png
+// string
 
+struct Node {
+    int cnt;
+    str val;
+    unordered_map<char, int> nxt;
+    Node() {
+        cnt = 0;
+        val = "";
+        nxt.clear();
+    }
+};
+vector<Node> trie(1);
+
+void insert(const str &s) {
+    int cur = 0;
+    for (auto &c : s) {
+        if (!trie[cur].nxt.count(c)) {
+            trie.push_back(Node());
+            trie[cur].nxt[c] = trie.size();
+            trie[cur].val += c;
+        };
+        va = trie[cur].nxt[c];
+    };
+    trie[cur].cnt++;
+}
+
+str mx = "";
+void dfs(int cur, vector<int> &cnt) {
+    if (trie[cur].cnt > 0) {
+        if (trie[cur].val.size() > mx.size()) mx = trie[cur].val;
+        else if (trie[cur].val.size() == mx.size()) mx = min(mx, trie[cur].val);
+    };
+    
+    for (auto &it : trie[cur].nxt) {
+        if (cnt[it.fi - 'a'] > 0) {
+            cnt[it.fi - 'a']--;
+            dfs(it.se, cnt);
+            cnt[it.fi - 'a']++;
+        };
+    };
+}
+
+str solve(str s) {
+    vector<int> cnt(26);
+    for (auto &c : s) cnt[c - 'a']++;
+    
+    mx = "";
+    dfs(0, cnt);
+    
+}
 ///////////////////////////////////////
 int main() {
-    // freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    vector<ll> fib(50);
-    fib[0] = 1;
-    fib[1] = 1;
-    for (int i = 2; i <= 46; i++) fib[i] = fib[i - 1] + fib[i - 2];
-    
     int n;
     cin >> n;
     
-    for (int i = 1; i <= 46; i++) {
-        if (fib[i] >= n) {
-            cout << i - (n == 1);
-            break;
-        };
+    for (int i = 0; i < n; i++) {
+        str s;
+        cin >> s;
+        insert(s);
     };
+    
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        str s;
+        cin >> s;
+        cout << solve(s) << nl;
+    };
+    
     /////////////////
     return 0;
 };

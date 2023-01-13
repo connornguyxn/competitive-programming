@@ -31,7 +31,7 @@ vector<int> dijkstra(vector<vector<pair<int, int>>> mp, int s) {
     vector<int> dist(mp.size(), INFINITY);
     dist[s] = 0;
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, 0});
+    pq.push({0, s});
     while (!pq.empty()) {
         db(pq.top().second, pq.top().first);
         int u = pq.top().second;

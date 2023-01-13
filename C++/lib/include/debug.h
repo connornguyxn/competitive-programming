@@ -4,7 +4,8 @@
 // input/output
 #include <iostream>
 #include <fstream>
-// #include <ios>
+#include <iomanip>
+
 // data types
 #include <cstring>
 #include <string>
@@ -21,18 +22,23 @@
 #include <set>
 #include <unordered_set>
 #include <bitset>
+
 // numeric
+// #include <bit>
 #include <numbers>
 #include <numeric>
 #include <cmath>
 #include <complex>
+
 // memory management
-#include <memory>
-#include <new>
+// #include <memory>
+// #include <new>
+
 // utilities
 #include <functional>
 #include <utility>
 #include <algorithm>
+
 // etc
 // #include <random>
 #include <cassert>

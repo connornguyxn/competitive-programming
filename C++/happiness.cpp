@@ -1,61 +1,89 @@
-#ifdef local_debug
-#include "include/debugging.h"
-
-#define init_ofs() ofstream cout("output.out")
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
 #else
-#include <bits/stdc++.h>
-#define init_ifs()
-#define init_ofs()
-#define vdb(...)
-#define db(...)
+    #pragma GCC optimize("Ofast,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "happiness"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
+#define pii pair<int, int>
+#define pll pair<long long, long long>
+#define fi first
+#define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define all(a) a.begin(), a.end()
-#define dec_point(n) fixed << showpoint << setprecision(n)
-#define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-#define for_in(i, a) for (auto& i : a)
-const int LIM = 1e6;
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
 // <problem link>
 // <tags>
 
+int n, h;
+int a[20], b[20];
+
+unordered_map<str, int> dp;
+///////////////////////////////////////
+namespace sub1 {
+    int solve(int i, int s1, int s2) {
+        str key = to_string(i) + sp + to_string(s1) + sp + to_string(s2);
+        
+        if (dp[key] > 0) {
+            return dp[key];
+        };
+        
+        if (i == n) {
+            dp[key] = (s1 >= h && s2 >= h);
+            return dp[key];
+        };
+        
+        dp[key] += solve(i + 1, s1 + a[i], s2);
+        dp[key] += solve(i + 1, s1, s2 + b[i]);
+        dp[key] += solve(i + 1, s1 + a[i], s2 + b[i]);
+        
+        return dp[key];
+    }
+
+    void main() {
+        dp.clear();
+        cout << solve(0, 0, 0) << nl;
+    }
+
+}
 ///////////////////////////////////////
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    init_ifs();
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int tc = 1;
-    //cin >> tc;
+    dp.reserve(65536);
+    dp.max_load_factor(0.25);
+    
+    int tc;
+    cin >> tc;
     while (tc--) {
-        int n, m;
-        cin >> n >> m;
-        vector<int> a(n);
+        cin >> n >> h;
         for (int i = 0; i < n; i++) {
             cin >> a[i];
         };
-        vector<int> dp(m + 1, INFINITY);
-        dp[0] = 0;
-        for (int i = 1; i <= m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (a[j] <= i) {
-                    dp[i] = min(dp[i], dp[i - a[j]] + 1);
-                };
-            };
+        for (int i = 0; i < n; i++) {
+            cin >> b[i];
         };
-        cout << dp[m];
-        /////////////////
-        cout << nl;
-    };
+        sub1::main();
+    }
+    /////////////////
     return 0;
-};
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

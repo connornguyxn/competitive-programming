@@ -1,76 +1,142 @@
-// note: include headers *after* compile options
-#if DEBUG // if debug flag is set to true
-    #include "lib/include/debug.h" // include local debugging header
-    // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
-    #define TASK "test" // define local test task name
-#else // if not on local machine
-    // GCC optimization flags
-    #pragma GCC optimize("O3,unroll-loops,inline") // safest optimizations
-    // #pragma GCC optimize("Ofast,unroll-loops,inline") // faster but less accurate
-    // SIMD optimization flags
-    #pragma GCC target("avx2") // prioritize avx2, use sse4.x if not available on older hardware
-    #include <bits/stdc++.h> // include everything
-    #define db(...) // undefine debug print function
-    #define TASK "<task name>" // define task name
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "nobita"
 #endif
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
-// pair aliases
+using namespace std;
+#define ll long long
+#define ull unsigned long long
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define fi first
 #define se second
-// other aliases
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
-// bit manipulation
+#define str string
+#define nl '\n'
+#define sp ' '
 #define mask(POS) (1ULL << (POS))
 #define bitcnt(MASK) __builtin_popcountull(MASK)
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
-#define all(VAR) (VAR).begin(), (VAR).end() // iterator macro
-// macro for functions
-// set decimal precision
+#define all(VAR) (VAR).begin(), (VAR).end()
 #define point(CNT) fixed << showpoint << setprecision(CNT)
-// dynamic container optimization, eg: map, vector
-// #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-// #define for_in(i, a) for (auto& i : a) // python :D
-const int N = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modulo
+const int MAXN = 1e5;
+const ull MOD = 1e9 + 7;
 
-// <problem link>
+// https://oj.vnoi.info/problem/chvpt_nobita
 // <tags>
 
-////////////////////////////////////////
-int main() {
-    // file stream objects
-    // init_ifs();
-    // ifstream cin("_input");
-    // ofstream cout("_output");
-    // auto use file input/output if avalible
-    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
-    ////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
+struct node {
+    int n;
+    ll w;
+};
+struct edge {
+    int u, v;
+    ll w;
+};
+int n, m;
+vector<node> adj[MAXN + 1];
+vector<edge> edges;
+unordered_set<int> mk;
+///////////////////////////////////////
+namespace sub1 {
+    int par[MAXN + 1];
+    
+    int root(int u) {
+        if (par[u] < 0) return u;
+        return par[u] = root(par[u]);
+    }
+    
+    int join(int u, int v) {
+        if ((u = root(u)) == (v = root(v))) return 0;
         
+        if (par[u] > par[v]) swap(u, v);
+        par[u] += par[v];
+        par[v] = u;
         
-    //     ////////////////
-    //     cout << nl;
-    // };
-    ////////////////
-    return 0; // for good measure :)
+        return 1;
+    }
+    
+    void main() {
+        sort(all(edges), [](edge a, edge b) { return a.w < b.w; });
+        
+        memset(par, -1, sizeof(par));
+        ll res = 0;
+        
+        for (edge &cur : edges) res += join(cur.u, cur.v) * cur.w;
+        
+        cout << res;
+    }
 }
-// nice
+///////////////////////////////////////
+namespace sub2 {
+    void main() {
+        vector<ll> dist(n + 1, INFINITY);
+        priority_queue<pair<ll, int>> pq;
+        pq.push({0, 1});
+        dist[1] = 0;
+        
+        while (!pq.empty()) {
+            int u = pq.top().second;
+            pq.pop();
+            
+            if (u == *(mk.begin())) break;
+            
+            for (node &nxt : adj[u]) {
+                ll w = nxt.w;
+                int v = nxt.n;
+                
+                if (dist[u] + w < dist[v]) {
+                    dist[v] = dist[u] + w;
+                    pq.push({dist[v], v});
+                };
+            };
+        };
+        
+        cout << dist[*(mk.begin())];
+    }
+}
+///////////////////////////////////////
+namespace sub4 {
+    
+}
+///////////////////////////////////////
+int main() {
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    cin >> n >> m;
+    
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        ll w;
+        cin >> u >> v >> w;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+        edges.push_back({u, v, w});
+    };
+    
+    int k;
+    cin >> k;
+    
+    for (int i = 0; i < k; i++) {
+        int x;
+        cin >> x;
+        mk.insert(x);
+    };
+    
+    if (k == n) {
+        sub1::main();
+    } else if (k == 1) {
+        sub2::main();
+    }
+    /////////////////
+    return 0;
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

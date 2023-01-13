@@ -1,66 +1,79 @@
-#if localdb
-#include "include/debugging.h"
-#define TASK "test"
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
 #else
-#include <bits/stdc++.h>
-#define TASK "test"
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "hinhthang"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
-#define ii pair<int, int>
+#define pii pair<int, int>
+#define pll pair<long long, long long>
 #define fi first
 #define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define mask(BI) (1LL << (BI))
-#define bitcnt(BM) __builtin_popcountll(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end()
-#define dec_point(N) fixed << showpoint << setprecision(N)
-const int N = 1e6;
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
-// <problem link>
+// https://oj.vnoi.info/problem/chvpt_dtqg_hinhthang
 // <tags>
 
+int n, s;
+vector<int> a, b;
+vector<vector<int>> dp;
 
-///////////////////////////////////////
-int main() {
-    // freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
-    cin.tie(0) -> sync_with_stdio(0);
-    /////////////////
-    int n, mx = 0;
-    bool mk[(int) 3e6 + 10];
-    memset(mk, 0, sizeof(mk));
+int solve(int i, int j) {
+    if (i == n && j == n) return 0;
     
-    cin >> n;
-    vector<int> a(n);
+    if (dp[i][j] != -1) return dp[i][j];
     
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-        mk[a[i]] = 1;
-        mx = max(mx, a[i]);
-    };
-    
-    ll cnt = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = a[i] * 2; j <= mx; j += a[i]) {
-            if (mk[j]) {
-                for (int k = j * 2; k <= mx; k += j) {
-                    cnt += mk[k];
-                };
-            };
+    int res = MOD;
+    for (int p = i + 1; p <= n; p++) {
+        for (int q = j + 1; q <= n; q++) {
+            if (a[p] - a[i - 1] + b[q] - b[j - 1] <= s)
+                res = min(res, solve(p, q));
         };
     };
     
-    cout << cnt;
+    return dp[i][j] = res + 1;
+}
+///////////////////////////////////////
+int main() {
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    cin >> n >> s;
+    n++;
+    a.resize(n + 1);
+    b.resize(n + 1);
+    
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        a[i] += a[i - 1];
+    };
+    for (int i = 1; i <= n; i++) {
+        cin >> b[i];
+        b[i] += b[i - 1];
+    };
+    
+    dp.resize(n + 1, vector<int>(n + 1, -1));
+    int res = solve(1, 1);
+    cout << (res < MOD ? res : -1);
     /////////////////
     return 0;
-};
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

@@ -1,71 +1,65 @@
-#if localdb
+#if DEBUG
     #include "include/debug.h"
+    #pragma GCC optimize("trapv")
     #define TASK "test"
 #else
     #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
     #include <bits/stdc++.h>
     #define db(...)
-    #define TASK "gifts"
+    #define TASK "n0463c"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
 #define pii pair<int, int>
+#define pll pair<long long, long long>
 #define fi first
 #define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define mask(BI) (1LL << (BI))
-#define bitcnt(BM) __builtin_popcountll(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end()
-#define point(N) fixed << showpoint << setprecision(N)
-const int MAXN = 1e6 + 1;
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
-// https://oj.vnoi.info/problem/chvpt_gifs
-// <tags>
+// http://laptrinhphothong.vn/Problem/Details/6057
+// searching, sorting
 
 ///////////////////////////////////////
 int main() {
-    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    // if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int n;
-    cin >> n;
-    bool mk[MAXN] = {0};
+    int n, m;
+    cin >> n >> m;
     
+    set<pair<int, int>> a;
     for (int i = 0; i < n; i++) {
-        int a;
-        cin >> a;
-        mk[a] = 1;
+        int x;
+        cin >> x;
+        a.insert({x, i});
     };
     
-    int res = 0;
-    int nxt[MAXN];
-    bool vis[MAXN] = {0};
-    iota(nxt, nxt + MAXN, 0);
-    
-    cin >> n;
-    while (n--) {
-        int a;
-        cin >> a;
+    for (int i = 0; i < m; i++) {
+        int x;
+        cin >> x;
         
-        int cnt = a;
-        while (cnt--) {
-            while (nxt[a] < MAXN && vis[nxt[a]]) {
-                nxt[a] += a;
-            };
-            if (nxt[a] >= MAXN) break;
-            vis[nxt[a]] = true;
-            res += mk[nxt[a]];
+        auto it = a.upper_bound({x, MAXN});
+        
+        if (it == a.begin()) {
+            cout << -1 << nl;
+        } else {
+            it--;
+            cout << it -> fi << nl;
+            a.erase(it);
         };
     };
-    
-    cout << res;
     /////////////////
     return 0;
 };

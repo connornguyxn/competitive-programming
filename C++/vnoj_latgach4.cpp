@@ -1,59 +1,108 @@
-#if localdb
-#include "include/debugging.h"
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
 #else
-#include <bits/stdc++.h>
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "latgach4"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
-#define ii pair<int, int>
+#define pii pair<int, int>
+#define pll pair<long long, long long>
 #define fi first
 #define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define mask(BI) (1LL << (BI))
-#define bitcnt(BM) __builtin_popcountll(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end()
-#define dec_point(N) fixed << showpoint << setprecision(N)
-const int N = 1e6;
-const ull MOD = 1e9 + 7;
- 
-// <problem link>
-// <tags>
- 
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int MAXN = 1e6;
+const ull MOD = 111539786;
+
+// https://oj.vnoi.info/problem/latgach4
+// math, matrix, basic
+
+struct Matrix {
+    int nr, nc;
+    vector<vector<ll>> x;
+    
+    Matrix(int _n_row, int _n_col) : nr(_n_row), nc(_n_col), x(_n_row, vector<ll>(_n_col)) {
+        nr = _n_row;
+        nc = _n_col;
+    }
+    
+    Matrix operator*(Matrix other) {
+        Matrix res(nr, nr);
+        
+        for (int i = 0; i < nr; i++) {
+            for (int j = 0; j < other.nc; j++) {
+                for (int k = 0; k < nc; k++) {
+                    res.x[i][j] = res.x[i][j] + (x[i][k] * other.x[k][j] % MOD) % MOD;
+                };
+            };
+        };
+        
+        return res;
+    }
+    
+    Matrix& operator*=(Matrix other) {
+        return *this = *this * other;
+    }
+    
+    Matrix pow(ll k) {
+        Matrix a = *this;
+        Matrix res(nr, nr);
+        for (int i = 0; i < nr; i++) res.x[i][i] = 1;
+        
+        while (k > 0) {
+            if (k % 2) res *= a;
+            a *= a;
+            k /= 2;
+        };
+        
+        return res;
+    }
+};
 ///////////////////////////////////////
 int main() {
-    ifstream cin("maxsegment.inp");
-    ofstream cout("maxsegment.out");
+    // if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
     cin.tie(0) -> sync_with_stdio(0);
     /////////////////
-    int n, k;
-    cin >> n >> n >> k;
-    
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    };
-    
-    
-    deque <int> dq;
-    for (int i = 0; i < n; i++) { 
-        while (!dq.empty() && a[dq.back()] <= a[i]) dq.pop_back();
-        dq.push_back(i);
-        if (i - dq.front() >= k) {
-            dq.pop_front();
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int n;
+        cin >> n;
+        
+        Matrix base(2, 2);
+        base.x = {
+            {0, 1},
+            {1, 1}
         };
-        if (i >= k - 1) {
-            cout << a[dq.front()] << sp;
+        
+        base = base.pow(n);
+        
+        Matrix res(2, 2);
+        res.x = {
+            {0, 1},
+            {1, 2}
         };
+        
+        res *= base;
+        
+        cout << res.x[0][1] << nl;
     };
- 
     /////////////////
     return 0;
-};
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

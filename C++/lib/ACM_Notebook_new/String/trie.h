@@ -1,3 +1,4 @@
+#include <vector>
 // Trie {{{
 // Tested: https://www.fb.com/codingcompetitions/hacker-cup/2022/round-3/problems/B
 struct Trie {

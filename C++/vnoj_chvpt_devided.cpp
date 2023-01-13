@@ -1,66 +1,67 @@
-#if localdb
-#include "include/debugging.h"
-#define TASK "test"
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
 #else
-#include <bits/stdc++.h>
-#define TASK "test"
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "devided"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
-#define ld long double
-#define ii pair<int, int>
+#define pii pair<int, int>
+#define pll pair<long long, long long>
 #define fi first
 #define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define mask(BI) (1LL << (BI))
-#define bitcnt(BM) __builtin_popcountll(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end()
-#define dec_point(N) fixed << showpoint << setprecision(N)
-const int N = 1e5;
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int MAXN = 1e5;
 const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// https://oj.vnoi.info/problem/chvpt_devided
+// graph
 
-vector<ll> phitiln(int n) {
-    vector<ll> phi(n + 1);#define getbit(BM, BI) ((BM >> BI) & 1)
-
-    for (int i = 0; i <= n; i++) phi[i] = i;
-
-    for (int i = 2; i <= n; i++) {
-        if (phi[i] == i) {
-            for (int j = i; j <= n; j += i)
-                phi[j] -= phi[j] / i;
-        };
-    };
+int n, k;
+vector<int> adj[MAXN + 1];
+bitset<MAXN + 1> mk;
+int res = 0;
+////////////////////////////////////////
+int dfs(int cur, int cnt = 0) {
+    res += cnt()
     
-    return phi;
-};
-///////////////////////////////////////
+    for (int nxt : adj) {
+        if (mk[nxt]) continue;
+        dfs(i, cnt + 1);
+    }
+}
+////////////////////////////////////////
 int main() {
-    // freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
     cin.tie(0) -> sync_with_stdio(0);
-    /////////////////
-    vector<ll> phi = phitiln(N);
-    for (int i = 1; i <= N; i++) {
-        phi[i] += phi[i - 1];
+    ////////////////
+    int n, m;
+    cin >> n >> m;
+    
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     };
     
-    int tc;
-    cin >> tc;
-    while (tc--) {
-        int n;
-        cin >> n >> n;
-        cout << phi[n] << nl;
-    };
-    /////////////////
+
+    ////////////////
     return 0;
-};
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

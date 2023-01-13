@@ -1,76 +1,97 @@
-// note: include headers *after* compile options
-#if DEBUG // if debug flag is set to true
-    #include "lib/include/debug.h" // include local debugging header
-    // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
-    #define TASK "test" // define local test task name
-#else // if not on local machine
-    // GCC optimization flags
-    #pragma GCC optimize("O3,unroll-loops,inline") // safest optimizations
-    // #pragma GCC optimize("Ofast,unroll-loops,inline") // faster but less accurate
-    // SIMD optimization flags
-    #pragma GCC target("avx2") // prioritize avx2, use sse4.x if not available on older hardware
-    #include <bits/stdc++.h> // include everything
-    #define db(...) // undefine debug print function
-    #define TASK "<task name>" // define task name
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "xmas"
 #endif
-using namespace std; // use standard namespace for faster access
-// aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
-// pair aliases
+using namespace std;
+#define ll long long
+#define ull unsigned long long
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define fi first
 #define se second
-// other aliases
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
-// bit manipulation
+#define str string
+#define nl '\n'
+#define sp ' '
 #define mask(POS) (1ULL << (POS))
 #define bitcnt(MASK) __builtin_popcountull(MASK)
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
-#define all(VAR) (VAR).begin(), (VAR).end() // iterator macro
-// macro for functions
-// set decimal precision
+#define all(VAR) (VAR).begin(), (VAR).end()
 #define point(CNT) fixed << showpoint << setprecision(CNT)
-// dynamic container optimization, eg: map, vector
-// #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-// #define for_in(i, a) for (auto& i : a) // python :D
-const int N = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modulo
+const int MAXN = 1e6;
+const ull MOD = 1e9 + 7;
+const ll inf1nity = 1e18 + 4;
 
-// <problem link>
+// https://lqdoj.edu.vn/problem/lqdoj2022frxmas
 // <tags>
 
-////////////////////////////////////////
-int main() {
-    // file stream objects
-    // init_ifs();
-    // ifstream cin("_input");
-    // ofstream cout("_output");
-    // auto use file input/output if avalible
-    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
-    ////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
+int n, k;
+vector<ll> a;
+///////////////////////////////////////
+bool solve(int l, int r) {
+    vector<ll> b, tmp;
+    
+    for (int i = l; i <= r; i++) {
+        b.push_back(a[i]);
+    };
+    
+    while (b.size()) {
+        int i = 0;
+        for (; i < b.size() - 1; i++) {
+            if (b[i] + b[i + 1] == k) {
+                i++;
+            } else {
+                tmp.push_back(b[i]);
+            };
+            // db(i, b[i], tmp);
+        };
+        if (i == b.size() - 1) {
+            tmp.push_back(b[i]);
+        };
         
+        // db(b, tmp);
         
-    //     ////////////////
-    //     cout << nl;
-    // };
-    ////////////////
-    return 0; // for good measure :)
+        if (tmp.size() == b.size()) {
+            return false;
+        };
+        
+        b = tmp;
+        tmp.clear();
+    };
+    
+    return true;
 }
-// nice
+
+///////////////////////////////////////
+int main() {
+    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    cin.tie(0) -> sync_with_stdio(0);
+    /////////////////
+    cin >> n >> k;
+    for (int i = 0; i < n; i++) {
+        ll x;
+        cin >> x;
+        a.push_back(x);
+    };
+    
+    int q;
+    cin >> q;
+    while (q--) {
+        int l, r;
+        cin >> l >> r;
+        l--, r--;
+        
+        cout << (solve(l, r) ? "YES" : "NO") << endl;
+    }
+    /////////////////
+    return 0;
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
