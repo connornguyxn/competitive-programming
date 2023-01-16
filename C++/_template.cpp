@@ -50,8 +50,13 @@ int main() {
     // ifstream cin("_input");
     // ofstream cout("_output");
     // auto use file input/output if avalible
-    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
+    // if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
     // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    
+    if (fopen(TASK".inp", "r")) {
+        freopen(TASK".inp", "r", stdin);
+        // freopen(TASK".out", "w", stdout);
+    };
     // i/o optimization
     // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
     // cin.tie(nullptr); // turn off automatic output flushing

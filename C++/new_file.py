@@ -28,33 +28,42 @@ else:
     problem_name = problem_link
     newfile_name = problem_name
 
+newfile_name = newfile_name.lower()
 
-wildcard_lines = {
+wildcard = {
     '// <problem link>': f'// {problem_link}',
     '// <tags>': '',
     '<task name>': problem_name,
-    '// if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);': '',
     # '// ifstream cin("_input");': '',
     # '// ofstream cout("_output");': '',
     # '// freopen(TASK".inp", "r", stdin)': '',
     # '// freopen(TASK".out", "w", stdout);': '',
 }
 
+exclude = [
+    '        // freopen(TASK".out", "w", stdout);'
+]
 
 for line in template_lines:
+    if line in exclude:
+        newfile_lines.append(line.rstrip())
+        continue
+    
     replaced = False
     
-    for wc, txt in wildcard_lines.items():
+    for wc, txt in wildcard.items():
         if (line.count(wc)):
             replaced = True
             if (txt != ''):
                 line = line.replace(wc, txt)
     
     if not replaced and line.strip().find('// ') == 0:
-            continue
-    if line.find(' // ') != -1:
+        continue
+    if line.find(' // ') != -1 and len(line.split(' // ')):
         line = line[:line.find(' // ')]
     newfile_lines.append(line.rstrip())
+
+
 
 
 if (exists(newfile_name + '.cpp')):

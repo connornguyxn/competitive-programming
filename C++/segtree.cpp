@@ -1,61 +1,96 @@
-#if localdb
-    #include "include/debug.h"
+#if DEBUG
+    #include "lib/include/debug.h"
     #define TASK "test"
 #else
     #pragma GCC optimize("O3,unroll-loops,inline")
+    #pragma GCC target("avx2")
     #include <bits/stdc++.h>
     #define db(...)
-    #define TASK "rmindist"
+    #define TASK "segtree"
 #endif
 using namespace std;
 #define ll long long
 #define ull unsigned long long
 #define pii pair<int, int>
+#define pll pair<long long, long long>
 #define fi first
 #define se second
 #define str string
 #define nl '\n'
 #define sp ' '
-#define mask(BI) (1ULL << (BI))
-#define bitcnt(BM) __builtin_popcountull(BM)
-#define getbit(BM, BI) ((BM >> BI) & 1)
-#define all(A) (A).begin(), (A).end()
-#define point(N) fixed << showpoint << setprecision(N)
-const int MAXN = 1e6;
+#define mask(POS) (1ULL << (POS))
+#define bitcnt(MASK) __builtin_popcountull(MASK)
+#define getbit(MASK, POS) ((MASK >> POS) & 1)
+#define all(VAR) (VAR).begin(), (VAR).end()
+#define point(CNT) fixed << showpoint << setprecision(CNT)
+const int N = 1e6;
 const ull MOD = 1e9 + 7;
 
-// https://hntbptlctn22.contest.codeforces.com/group/vrP7XlTB8q/contest/414727/problem/A
+// segtree
 // <tags>
 
-///////////////////////////////////////
-int main() {
-    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    cin.tie(0) -> sync_with_stdio(0);
-    /////////////////
-    int n, m, p, q;
-    cin >> m >> n >> p >> q;
+struct segtree {
+    int n;
+    vector<ll> t;
     
-    vector<vector<ll>> a(n + 1, vector<ll>(m + 1));
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            cin >> a[i][j];
-            // current = input + top + right - top_left
-            a[i][j] += a[i - 1][j] + a[i][j - 1] - a[i - 1][j - 1];
-            cout << a[i][j] << sp;
+    void build(vector<ll> a) {
+        for (int i = 0; i < n; i++) t[n + i] = a[i];
+        for (int i = n - 1; i >= 0; i--) {
+            t[i] = max(t[i * 2], t[i * 2 + 1]);
         };
-        cout << nl;
-    };
-    auto sum = [&](int xl, int yl, int xr, int yr) {
-        ll res = a[xr][yr];
-        res -= a[xl - 1][yr] + a[xr][yl - 1];
-        res += a[xl - 1][yl - 1];
-        return res;
-    };
+    }
     
-    /////////////////
-    return 0;
+    void modify(int p, ll val) {
+        for (t[p += n] = val; p > 1; p >>= 1) {
+            t[p >> 1] = max(t[p], t[p ^ 1]);
+        };
+    }
+    
+    ll get(int l, int r) {
+        ll res = -INFINITY;
+        
+        for (l += n, r += n; l < r; l /= 2, r /= 2) {
+            if (l % 2) res = max(res, t[l++]);
+            if (r % 2) res = max(res, t[--r]);
+        }
+        
+        return res;
+    }
+    
+    segtree(vector<ll> a) : n(a.size()), t(n * 2) {
+        build(a);
+    }
 };
+////////////////////////////////////////
+int main() {
+    if (fopen(TASK".inp", "r")) {
+        freopen(TASK".inp", "r", stdin);
+        // freopen(TASK".out", "w", stdout);
+    };
+    cin.tie(0) -> sync_with_stdio(0);
+    ////////////////
+    int n;
+    cin >> n;
+    
+    vector<ll> a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+    
+    segtree st(a);
+    
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int c, l, r;
+        cin >> c >> l >> r;
+        if (c == 1) {
+            st.modify(l - 1, r);
+        } else {
+            cout << st.get(l - 1, r) << nl;
+        };
+    };
+    ////////////////
+    return 0;
+}
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
