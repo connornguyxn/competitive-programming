@@ -1,4 +1,3 @@
-#!/bin/python3
 from os.path import exists
 
 with open('_template.cpp', 'r') as f:
