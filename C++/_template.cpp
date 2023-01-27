@@ -52,7 +52,6 @@ int main() {
     // auto use file input/output if avalible
     // if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
     // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
-    
     if (fopen(TASK".inp", "r")) {
         freopen(TASK".inp", "r", stdin);
         // freopen(TASK".out", "w", stdout);
