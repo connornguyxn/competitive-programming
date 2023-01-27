@@ -2,6 +2,7 @@
 #if DEBUG // if debug flag is set to true
     #include "lib/include/debug.h" // include local debugging header
     // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
+    // replaced wih a sanitizer instead, see tasks.json
     #define TASK "test" // define local test task name
 #else // if not on local machine
     // GCC optimization flags
@@ -15,28 +16,19 @@
 #endif
 using namespace std; // use standard namespace for faster access
 // aliases
-#define ll long long // -(2^63) to (2^63)-1 (approx -1e18 to 1e18)
-#define ull unsigned long long // 0 to approx 1e19
-// pair aliases
+#define ll long long
+#define ull unsigned long long
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define fi first
 #define se second
-// other aliases
 #define str string // python :D
 #define nl '\n' // saving time by not flushing buffer
-#define sp ' ' // writing this is faster
+#define sp ' '
 // bit manipulation
 #define mask(POS) (1ULL << (POS))
-#define bitcnt(MASK) __builtin_popcountull(MASK)
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
 #define all(VAR) (VAR).begin(), (VAR).end() // iterator macro
-// macro for functions
-// set decimal precision
-#define point(CNT) fixed << showpoint << setprecision(CNT)
-// dynamic container optimization, eg: map, vector
-// #define mp_optimize(mp) mp.reserve(4096); mp.max_load_factor(0.1);
-// #define for_in(i, a) for (auto& i : a) // python :D
 const int N = 1e6; // array limit
 const ull MOD = 1e9 + 7; // common modulo
 
@@ -44,37 +36,35 @@ const ull MOD = 1e9 + 7; // common modulo
 // <tags>
 
 ////////////////////////////////////////
+int solve() {
+    
+    
+    
+    
+    ////////////////
+    return 0;
+}
+////////////////////////////////////////
 int main() {
     // file stream objects
-    // init_ifs();
-    // ifstream cin("_input");
-    // ofstream cout("_output");
-    // auto use file input/output if avalible
-    // if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    // if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
     if (fopen(TASK".inp", "r")) {
         freopen(TASK".inp", "r", stdin);
         // freopen(TASK".out", "w", stdout);
     };
     // i/o optimization
-    // ios_base::sync_with_stdio(false); // desyncronize standard c and c++ streams
-    // cin.tie(nullptr); // turn off automatic output flushing
     cin.tie(0) -> sync_with_stdio(0); // new and shorter version
     ////////////////
-    // // test case handler
-    // int tc = 1;
-    // //cin >> tc;
-    // while (tc--) {
-    //     // code goes here
-        
-        
-    //     ////////////////
-    //     cout << nl;
-    // };
+    // test case handler
+    int tc = 1;
+    // cin >> tc;
+    while (tc--) {
+        solve();
+        cout << nl;
+    };
     ////////////////
     return 0; // for good measure :)
 }
-// nice
+// nice ascii art
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
