@@ -40,7 +40,8 @@ wildcard = {
 }
 
 exclude = [
-    '        // freopen(TASK".out", "w", stdout);'
+    '        // freopen(TASK".out", "w", stdout);',
+    '   // cin >> tc;'
 ]
 
 for line in template_lines:
