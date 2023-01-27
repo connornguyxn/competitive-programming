@@ -8,7 +8,7 @@
     #pragma GCC optimize("O3,unroll-loops,inline") // safest optimizations
     // #pragma GCC optimize("Ofast,unroll-loops,inline") // faster but less accurate
     // SIMD optimization flags
-    #pragma GCC target("avx2") // prioritize avx2, use sse4.x if not available on older hardware
+    #pragma GCC target("arch=native,tune=generic") // auto tune and use every optimization avalible
     #include <bits/stdc++.h> // include everything
     #define db(...) // undefine debug print function
     #define TASK "<task name>" // define task name
