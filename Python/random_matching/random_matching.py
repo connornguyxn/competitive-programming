@@ -1,27 +1,36 @@
 from requests import get
 from tabulate import tabulate
 
-with open('a.txt', 'r') as f:
-    a = f.readlines()
-with open('b.txt', 'r') as f:
-    b = f.readlines()
-req_url = 'https://www.random.org/integers/?num={}&min=0&max={}&col=1&base=10&format=plain&rnd=new'
 
-# multiply each item of b to match a
-b = b * (len(a) // len(b))
-# shuffle b using random.org
-url = req_url.format(len(b), len(b) - 1)
-response = get(url)
-b = [b[int(i)] for i in response.text.split()]
+with open('items.txt', 'r') as f:
+    items = f.readlines()
+with open('candidates.txt', 'r') as f:
+    candidates = f.readlines()
 
-print(f'Remaining items: {len(a) - len(b)}')
-if input('Randomize remaining items? (y/n) ') == 'y':
-    # shuffle remaining items
-    url = req_url.format(len(a) - len(b), len(a) - len(b))
+
+def get_sequence(min, max):
+    url = f'https://www.random.org/sequences/?min={min}&max={max}&col=1&format=plain&rnd=new'
     response = get(url)
-    b += [b[int(i)] for i in response.text.split()]
+    # format response to int list
+    return [int(i) for i in response.text.split()]
 
-# match a and b and write to file
+
+# multiply each item of b to match items
+b = candidates * (len(items) // len(candidates))
+# shuffle b using random.org interger sequence generator
+order = get_sequence(0, len(b) - 1)
+b = [b[i] for i in order]
+
+
+print(f'Remaining items: {len(items) - len(b)}')
+if input('Randomize remaining items? (y/n) ') == 'y':
+    # randomize remaining items
+    order = get_sequence(0, len(candidates))
+    for i in range(len(items) - len(b)):
+        b.append(candidates[order[i]])
+
+
+# match items and b and write to file
 with open('match.txt', 'w') as f:
-    f.write(tabulate(zip(a, b), tablefmt='plain'))
+    f.write(tabulate(zip(items, b), tablefmt='plain'))
 print('Results written to match.txt')
