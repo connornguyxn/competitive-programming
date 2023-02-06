@@ -1,13 +1,12 @@
-<<<<<<< HEAD
 *.out
 *.exe
 *.gch
 
 _todo_*
-
-
 etc/
-=======
-#exclude all non-extension file
-*/[^\.]*
->>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
+
+
+# exclude all extensionless files
+*
+!*/
+!*.*
