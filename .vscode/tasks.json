@@ -5,21 +5,13 @@
             "label": "(inf) C/C++: g++ build active file",
             "command": "/usr/bin/g++",
             "args": [
-                "-Dlocal_debug",
-<<<<<<< HEAD
-                "-I",
-                "${workspaceFolder}/C++/lib",
-=======
->>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
+                "-std=c++17",
+                "-DDEBUG=true",
                 "-Wall",
                 "-Wextra",
                 "-fdiagnostics-color=always",
                 "-ggdb3",
                 "${file}",
-<<<<<<< HEAD
-=======
-                "-H",
->>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
                 "-o",
                 "${fileDirname}/a.out"
             ],
@@ -31,7 +23,7 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
             "detail": "compiler: /usr/bin/g++"
         },
@@ -40,11 +32,8 @@
             "label": "(inf) C/C++: g++ build active file (with debug flags)",
             "command": "/usr/bin/g++",
             "args": [
-<<<<<<< HEAD
-                "-I",
-                "${workspaceFolder}/C++/lib",
-=======
->>>>>>> ff1e4424a3963b8bde9665cede1359df7d8c8746
+                "-std=c++17",
+                "-DDEBUG=true",
                 "-Wall",
                 "-Wextra",
                 "-pedantic",

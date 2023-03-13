@@ -12,6 +12,7 @@ if (choice == '1'):
         'vnoi': 'vnoj',
         'ntucoder': 'ntuc',
         'ucode': 'ucode',
+        'lqdoj': 'lqdoj'
     }
     newfile_name = problem_link.split('/')[-1]
     

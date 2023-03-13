@@ -1,12 +1,14 @@
-*.out
-*.exe
-*.gch
-
-_todo_*
-etc/
-
-
 # exclude all extensionless files
 *
 !*/
 !*.*
+
+
+*.out
+*.exe
+*.gch
+*.inp
+*.out
+
+_todo_*
+etc/
