@@ -1,56 +1,64 @@
-// note: include headers *after* compile options
-#if DEBUG // if debug flag is set to true
-    #include "lib/include/debug.h" // include local debugging header
-    // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
-    // replaced wih a sanitizer instead, see tasks.json
-    #define TASK "test" // define local task name
-#else // if not on local machine
-    // GCC optimization flags
-    #pragma GCC optimize("O3,unroll-loops,inline") // safest optimizations
-    // #pragma GCC optimize("Ofast,unroll-loops,inline") // faster but less accurate
-    // SIMD optimization flags
-    #include <bits/stdc++.h> // include everything
-    #define TASK "<task name>" // define task name
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "olp4slcta"
 #endif
-using namespace std; // use standard namespace for faster access
-// aliases
+using namespace std;
 #define ll long long
 #define ull unsigned long long
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define fi first
 #define se second
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
+#define str string
+#define nl '\n'
 #define sp ' '
-// bit manipulation
 #define mask(POS) (1ULL << (POS))
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
-#define all(VAR) (VAR).begin(), (VAR).end() // iterator macro
-const int N = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modulo
+#define all(VAR) (VAR).begin(), (VAR).end()
+const int N = 1e6;
+const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// lqdoj.edu.vn/problem/olp4slcta
+// dp
 
 ////////////////////////////////////////
 int main() {
-    // file stream objects
     if (fopen(TASK".inp", "r")) {
         freopen(TASK".inp", "r", stdin);
         // freopen(TASK".out", "w", stdout);
     };
-    // i/o optimization
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
+    cin.tie(0) -> sync_with_stdio(0);
     ////////////////
+    int n, k;
+    cin >> n >> k;
+    vector<vector<ll>> a(n + 1, vector<ll>(2));
+    str inp;
+    cin >> inp;
+    for (int i = 1; i <= n; i++) {
+        a[i] = a[i - 1];
+        a[i][inp[i - 1] - '0']++;
+    }
+    // db(a);
     
-    
-    
-    
+    vector<ll> dp(n + 1);
+    dp[0] = 1;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            ll cnt0 = a[i][0] - a[j - 1][0];
+            ll cnt1 = a[i][1] - a[j - 1][1];
+            if (abs(cnt0 - cnt1) <= k) dp[i] = dp[i] + dp[j - 1] % MOD;
+        }
+    }
+    // db(dp);
+    cout << dp[n] % MOD;
     ////////////////
-    return 0; // for good measure :)
+    return 0;
 }
-// nice ascii art
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

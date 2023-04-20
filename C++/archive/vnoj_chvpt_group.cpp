@@ -1,13 +1,10 @@
 #if DEBUG
     #include "lib/include/debug.h"
     #define TASK "test"
-    #include <regex>
 #else
     #pragma GCC optimize("O3,unroll-loops,inline")
-    #pragma GCC target("avx2")
     #include <bits/stdc++.h>
-    #define db(...)
-    #define TASK "test"
+    #define TASK "group"
 #endif
 using namespace std;
 #define ll long long
@@ -20,22 +17,45 @@ using namespace std;
 #define nl '\n'
 #define sp ' '
 #define mask(POS) (1ULL << (POS))
-#define bitcnt(MASK) __builtin_popcountull(MASK)
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
 #define all(VAR) (VAR).begin(), (VAR).end()
-#define point(CNT) fixed << showpoint << setprecision(CNT)
 const int N = 1e6;
 const ull MOD = 1e9 + 7;
 
-// test
-// <tags>
+// oj.vnoi.info/problem/chvpt_group
+// math, data structure
 
 ////////////////////////////////////////
 int main() {
-    if (fopen(TASK".inp", "r")) freopen(TASK".inp", "r", stdin);
-    if (fopen(TASK".out", "r")) freopen(TASK".out", "w", stdout);
+    if (fopen(TASK".inp", "r")) {
+        freopen(TASK".inp", "r", stdin);
+        // freopen(TASK".out", "w", stdout);
+    };
     cin.tie(0) -> sync_with_stdio(0);
     ////////////////
+    int n, u, v;
+    cin >> n >> u >> v;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    };
+    
+    unordered_map<int, int> pos;
+    set<int> st;
+    ll res = 0;
+    int l = 0, r = 0;
+    for (int i = 0; i < n; i++) {
+        if (pos.count(a[i])) {
+            st.erase(pos[a[i]]);
+            r = *st.begin();
+        };
+        pos[a[i]] = i;
+        st.insert(i);
+        
+        if (pos.size() >= u) {
+            
+        }
+    };
     
     
     ////////////////

@@ -51,7 +51,6 @@ for line in template_lines:
         continue
     
     replaced = False
-    
     for wc, txt in wildcard.items():
         if (line.count(wc)):
             replaced = True
@@ -62,7 +61,9 @@ for line in template_lines:
         continue
     if line.find(' // ') != -1 and len(line.split(' // ')):
         line = line[:line.find(' // ')]
-    newfile_lines.append(line.rstrip())
+    if line.rstrip() != '':
+        line = line.rstrip()
+    newfile_lines.append(line)
 
 
 

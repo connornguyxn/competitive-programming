@@ -26,7 +26,6 @@
 // numeric
 // #include <bit>
 #include <numbers>
-#include <numeric>
 #include <cmath>
 #include <complex>
 
@@ -177,6 +176,19 @@ std::ostream& operator<<(std::ostream& out, const std::tuple<Types...>& value) {
     out << '(';
     TuplePrinter<std::tuple<Types...>, 0, sizeof...(Types) - 1>::print(out, value);
     return out << ')';
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream &out, std::priority_queue<T> pq) {
+    out << '{';
+    
+    while (pq.size() > 1) {
+        out << pq.top() << ", ";
+        pq.pop();
+    }
+    if (pq.size() != 0) out << pq.top();
+    
+    return out << '}';
 }
 
 

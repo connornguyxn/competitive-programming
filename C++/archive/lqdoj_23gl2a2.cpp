@@ -5,7 +5,7 @@
     #pragma GCC optimize("O3,unroll-loops,inline")
     #include <bits/stdc++.h>
     #define db(...)
-    #define TASK "olp4slcta"
+    #define TASK "23gl2a2"
 #endif
 using namespace std;
 #define ll long long
@@ -23,8 +23,8 @@ using namespace std;
 const int N = 1e6;
 const ull MOD = 1e9 + 7;
 
-// lqdoj.edu.vn/problem/olp4slcta
-// dp
+// lqdoj.edu.vn/problem/23gl2a2
+// easy, math, string
 
 ////////////////////////////////////////
 int main() {
@@ -34,26 +34,13 @@ int main() {
     };
     cin.tie(0) -> sync_with_stdio(0);
     ////////////////
-    int n, k;
-    cin >> n >> k;
-    vector<vector<int>> a(n + 1, vector<int>(2));
-    str inp;
-    cin >> inp;
-    for (int i = 0; i < n; i++) {
-        a[i + 1][inp[i] - '0']++;
-    }
-    vector<ll> dp(n + 1);
-    dp[0] = 1;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= i; j++) {
-            int cnt0 = a[i][0] - a[j - 1][0];
-            int cnt1 = a[i][1] - a[j - 1][1];
-            if (abs(cnt0 - cnt1) <= k) {
-                dp[i] += dp[j - 1];
-            }
-        }
-    }
-    cout << dp[n];
+    int n;
+    cin >> n;
+    str a;
+    cin >> a;
+    int cnt[N] = {0};
+    for (char i : a) cnt[i]++;
+    cout << (cnt['A'] + cnt['C'] == cnt['B'] ? "YES" : "NO");
     ////////////////
     return 0;
 }

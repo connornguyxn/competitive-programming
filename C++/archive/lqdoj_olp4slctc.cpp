@@ -1,56 +1,122 @@
-// note: include headers *after* compile options
-#if DEBUG // if debug flag is set to true
-    #include "lib/include/debug.h" // include local debugging header
-    // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
-    // replaced wih a sanitizer instead, see tasks.json
-    #define TASK "test" // define local task name
-#else // if not on local machine
-    // GCC optimization flags
-    #pragma GCC optimize("O3,unroll-loops,inline") // safest optimizations
-    // #pragma GCC optimize("Ofast,unroll-loops,inline") // faster but less accurate
-    // SIMD optimization flags
-    #include <bits/stdc++.h> // include everything
-    #define TASK "<task name>" // define task name
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #include <bits/stdc++.h>
+    #define db(...)
+    #define TASK "olp4slctc"
 #endif
-using namespace std; // use standard namespace for faster access
-// aliases
+using namespace std;
 #define ll long long
 #define ull unsigned long long
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define fi first
 #define se second
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
+#define str string
+#define nl '\n'
 #define sp ' '
-// bit manipulation
 #define mask(POS) (1ULL << (POS))
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
-#define all(VAR) (VAR).begin(), (VAR).end() // iterator macro
-const int N = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modulo
+#define all(VAR) (VAR).begin(), (VAR).end()
+const int N = 1e6;
+const ull MOD = 1e9 + 7;
+const ll INF = 1e18 + 1;
 
-// <problem link>
-// <tags>
+// lqdoj.edu.vn/problem/olp4slctc
+// graph, pathfinding, todo
 
+struct node {
+    int n;
+    ll d = 0;
+    int o = -1;
+};
+bool operator<(node x, node y) {
+    return x.d > y.d;
+}
+ostream &operator<<(ostream &cout, node cur) {
+    return cout << "(" << cur.n << ", " << cur.d << ", " << cur.o << ")";
+}
+
+vector<vector<node>> adj;
+vector<ll> dst;
+vector<int> org;
 ////////////////////////////////////////
 int main() {
-    // file stream objects
     if (fopen(TASK".inp", "r")) {
         freopen(TASK".inp", "r", stdin);
         // freopen(TASK".out", "w", stdout);
     };
-    // i/o optimization
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
+    cin.tie(0) -> sync_with_stdio(0);
     ////////////////
+    int n, m;
+    cin >> n >> m;
+    adj.resize(n + 1);
+    for (int i = 0; i < n - 1; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+    };
     
+    dst.resize(n + 1, INF);
+    org.resize(n + 1, -1);
     
+    priority_queue<node> pq;
+    for (int i = 0; i < m; i++) {
+        int cur;
+        cin >> cur;
+        org[cur] = cur;
+        dst[cur] = 0;
+        
+        for (node nxt : adj[cur]) {
+            if (nxt.d > dst[nxt.n]) continue;
+            pq.push({nxt.n, nxt.d, cur});
+            dst[nxt.n] = nxt.d;
+        };
+    };
     
-    
+    while (!pq.empty()) {
+        // db(pq);
+        node cur = pq.top();
+        pq.pop();
+        
+        if (org[cur.n] != -1) continue;
+        org[cur.n] = cur.o;
+        dst[cur.n] = cur.d;
+        
+        for (node nxt : adj[cur.n]) {
+            if (org[nxt.n] == cur.o) continue;
+            if (org[nxt.n] != -1) {
+                ll mid = cur.d + nxt.d + dst[nxt.n];
+                // db(cur.n, nxt.n);
+                // db(cur.o, org[nxt.n]);
+                // db(mid);
+                
+                if (dst[cur.o] == 0) {
+                    dst[cur.o] = mid;
+                } else {
+                    dst[cur.o] = min(dst[cur.o], mid);
+                }
+                if (dst[org[nxt.n]] == 0) {
+                    dst[org[nxt.n]] = mid;
+                } else {
+                    dst[org[nxt.n]] = min(dst[org[nxt.n]], mid);
+                }
+            } else {
+                pq.push({nxt.n, cur.d + nxt.d, cur.o});
+            }
+        }
+        // cout << nl;
+    }
+    // db(dst);
+    for (int i = 1; i <= n; i++) {
+        cout << dst[i] << sp;
+    }
     ////////////////
-    return 0; // for good measure :)
+    return 0;
 }
-// nice ascii art
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000

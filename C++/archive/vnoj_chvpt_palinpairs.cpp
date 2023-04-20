@@ -1,56 +1,64 @@
-// note: include headers *after* compile options
-#if DEBUG // if debug flag is set to true
-    #include "lib/include/debug.h" // include local debugging header
-    // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
-    // replaced wih a sanitizer instead, see tasks.json
-    #define TASK "test" // define local task name
-#else // if not on local machine
-    // GCC optimization flags
-    #pragma GCC optimize("O3,unroll-loops,inline") // safest optimizations
-    // #pragma GCC optimize("Ofast,unroll-loops,inline") // faster but less accurate
-    // SIMD optimization flags
-    #include <bits/stdc++.h> // include everything
-    #define TASK "<task name>" // define task name
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops,inline")
+    #include <bits/stdc++.h>
+    #define TASK "palinpairs"
 #endif
-using namespace std; // use standard namespace for faster access
-// aliases
+using namespace std;
 #define ll long long
 #define ull unsigned long long
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define fi first
 #define se second
-#define str string // python :D
-#define nl '\n' // saving time by not flushing buffer
+#define str string
+#define nl '\n'
 #define sp ' '
-// bit manipulation
 #define mask(POS) (1ULL << (POS))
 #define getbit(MASK, POS) ((MASK >> POS) & 1)
-#define all(VAR) (VAR).begin(), (VAR).end() // iterator macro
-const int N = 1e6; // array limit
-const ull MOD = 1e9 + 7; // common modulo
+#define all(VAR) (VAR).begin(), (VAR).end()
+const int N = 1e6;
+const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// oj.vnoi.info/problem/chvpt_palinpairs
+// string
 
 ////////////////////////////////////////
 int main() {
-    // file stream objects
     if (fopen(TASK".inp", "r")) {
         freopen(TASK".inp", "r", stdin);
-        // freopen(TASK".out", "w", stdout);
+        freopen(TASK".out", "w", stdout);
     };
-    // i/o optimization
-    cin.tie(0) -> sync_with_stdio(0); // new and shorter version
+    cin.tie(0) -> sync_with_stdio(0);
     ////////////////
+    str a;
+    cin >> a;
+    int n = a.length();
     
+    vector<ll> cntl(n), cntr(n);
+    for (int m = 0; m < n; m++) {
+        for (int l = m, r = m; l >= 0 && r < n && a[l] == a[r]; l--, r++) {
+            cntl[l]++;
+            cntr[r]++;
+        };
+        for (int l = m, r = m + 1; l >= 0 && r < n && a[l] == a[r]; l--, r++) {
+            cntl[l]++;
+            cntr[r]++;
+        };
+    }
     
-    
-    
+    ll res = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            res += cntr[j] * cntl[i];
+        }
+    }
+    cout << res;
     ////////////////
-    return 0; // for good measure :)
+    return 0;
 }
-// nice ascii art
 /*
 000000000000000000000000000000000000000000011111111100000000000000000000000000000000000000
 0000000000000000000000000000000000001111.............1111111000000000000000000000000000000
