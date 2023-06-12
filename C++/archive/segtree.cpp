@@ -35,7 +35,7 @@ struct segtree {
     
     void build(vector<ll> a) {
         for (int i = 0; i < n; i++) t[n + i] = a[i];
-        for (int i = n - 1; i >= 0; i--) {
+        for (int i = n - 1; i > 0; i--) {
             t[i] = max(t[i * 2], t[i * 2 + 1]);
         };
     }

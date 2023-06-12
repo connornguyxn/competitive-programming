@@ -1,1 +1,0 @@
-{"name":"Local: arrange","url":"/home/inf1nity/Documents/VSCode/code-backup/C++/arrange.cpp","tests":[{"id":1666922432622,"input":"2\n4 8 3\n5 6 5","output":"5\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/inf1nity/Documents/VSCode/code-backup/C++/arrange.cpp","group":"local","local":true}

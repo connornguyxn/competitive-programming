@@ -11,7 +11,7 @@ using namespace std;
 #define sp(n) fixed << showpoint << setpreciscion(n)
 
 // http://vinhdinhcoder.net/Problem/Details/5291
-// sorting, 2pointers
+// sorting, 2ptrs
 
 ///////////////////////////////////////
 int main() {

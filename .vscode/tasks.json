@@ -2,13 +2,13 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "(inf) C/C++: g++ build active file",
+            "label": "(inf) C/C++: g++ build active file (Debug Build)",
             "command": "/usr/bin/g++",
             "args": [
                 "-std=c++17",
                 "-DDEBUG=true",
                 "-Wall",
-                "-Wextra",
+                "-Wextra",``
                 "-fdiagnostics-color=always",
                 "-ggdb3",
                 "${file}",
@@ -29,7 +29,7 @@
         },
         {
             "type": "cppbuild",
-            "label": "(inf) C/C++: g++ build active file (with debug flags)",
+            "label": "(inf) C/C++: g++ build active file (Full Debug Build)",
             "command": "/usr/bin/g++",
             "args": [
                 "-std=c++17",
@@ -70,7 +70,33 @@
                 "isDefault": true
             },
             "detail": "/usr/bin/g++"
-        }
+        },
+        {
+            "type": "cppbuild",
+            "label": "(inf) C/C++: g++ build active file (Release Build)",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++17",
+                "-Wall",
+                "-Wextra",
+                "-fdiagnostics-color=always",
+                "-ggdb3",
+                "${file}",
+                "-o",
+                "${fileDirname}/a.out"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "compiler: /usr/bin/g++"
+        },
     ],
-    "version": "2.0.0"
+
 }

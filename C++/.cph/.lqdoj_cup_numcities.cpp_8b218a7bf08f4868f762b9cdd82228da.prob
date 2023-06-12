@@ -1,1 +1,0 @@
-{"name":"Local: lqdoj_cup_numcities","url":"/home/inf1nity/Documents/VSCode/code-backup/C++/lqdoj_cup_numcities.cpp","tests":[{"id":1666410245010,"input":"5\n1\n2\n3\n4\n5","output":"3\n7\n13\n22\n33"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/inf1nity/Documents/VSCode/code-backup/C++/lqdoj_cup_numcities.cpp","group":"local","local":true}

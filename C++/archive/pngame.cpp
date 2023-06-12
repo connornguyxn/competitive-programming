@@ -130,7 +130,6 @@ int main() {
         };
     };
     
-        
     for (int i = 1; i <= n1; i++) {
         cap[match[i]][n] = 1;
         cap[n][match[i]] = 0;

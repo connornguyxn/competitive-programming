@@ -4,7 +4,7 @@
 - [2. Notes](#2-notes)
   - [2.1. Why faster input/output code works and cout.tie(NULL) does literally nothing](#21-why-faster-inputoutput-code-works-and-couttienull-does-literally-nothing)
   - [2.2. What are the differences between array-like types and when to use them](#22-what-are-the-differences-between-array-like-types-and-when-to-use-them)
-  - [2.3. Why hash maps are OP](#23-why-hash-maps-are-op)
+  - [2.3. Why hash maps are OP and how to use them](#23-why-hash-maps-are-op-and-how-to-use-them)
   - [2.4. Why pragmas are also OP and how to use them](#24-why-pragmas-are-also-op-and-how-to-use-them)
 
 # 2. Notes
@@ -17,9 +17,11 @@
 
 > [https://stackoverflow.com/q/4424579](https://stackoverflow.com/a/31165481)
 
-## 2.3. Why hash maps are OP
+## 2.3. Why hash maps are OP and how to use them
 
-In a nutshell, what they can provide is at worst O(1) look up, which takes away the work of finding where a complement element would be in a list. So in problems like TwoSum, you can solve it in O(N) rather than using binary search to solve it in O(N log n).
+Hash maps (namely `unorderded_map` and `unorderded_set`) are data structures that provide efficient storage and retrieval values using hash functions. They are incredibly powerful due to their efficiency (O(1) average lookup/insert).
+
+Though they can be nuked to match an array with specifically crafted inputs ([https://codeforces.com/blog/entry/62393](https://codeforces.com/blog/entry/62393)), utilizing them for an on-site competition should be fine.
 
 ## 2.4. Why pragmas are also OP and how to use them
 

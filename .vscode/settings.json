@@ -85,6 +85,10 @@
         "barrier": "cpp",
         "latch": "cpp",
         "semaphore": "cpp",
-        "syncstream": "cpp"
+        "syncstream": "cpp",
+        "rope": "cpp",
+        "stacktrace": "cpp",
+        "expected": "cpp",
+        "spanstream": "cpp"
     }
 }

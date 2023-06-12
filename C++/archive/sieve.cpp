@@ -27,19 +27,6 @@ const ull MOD = 1e9 + 7;
 // sieve
 // <tags>
 
-vector<int> prime, lpf(N + 1, 2);
-void sieve() {
-    prime.push_back(2);
-    
-    for (int x = 3; x <= N; x += 2) {
-        if (lpf[x] == 2) {
-            prime.push_back(lpf[x] = x);
-        };
-        for (int i = 0; i < prime.size() && prime[i] <= lpf[x] && prime[i] * x <= N; i++) {
-            lpf[prime[i] * x] = prime[i];
-        };
-    };
-}
 ////////////////////////////////////////
 int solve() {
     

@@ -43,8 +43,38 @@
 #include <cassert>
 // #include <ctime>
 
+// Variable logger
 // github.com/rachitiitr/modern-cpp-tricks#solution-using-a-powerful-macro
 #define db(...) logger(#__VA_ARGS__, __VA_ARGS__)
+
+//primitive types
+template <typename T1, typename T2>
+std::ostream& operator<<(std::ostream& out, const std::pair<T1, T2>& pair) {
+    return out << '(' << pair.first << ", " << pair.second << ')';
+}
+
+// Source: https://stackoverflow.com/a/31116392/12128483
+template<typename Type, unsigned N, unsigned Last>
+struct TuplePrinter {
+    static void print(std::ostream& out, const Type& value) {
+        out << std::get<N>(value) << ", ";
+        TuplePrinter<Type, N + 1, Last>::print(out, value);
+    }
+};
+
+template<typename Type, unsigned N>
+struct TuplePrinter<Type, N, N> {
+    static void print(std::ostream& out, const Type& value) {
+        out << std::get<N>(value);
+    }
+};
+
+template<typename... Types>
+std::ostream& operator<<(std::ostream& out, const std::tuple<Types...>& value) {
+    out << '(';
+    TuplePrinter<std::tuple<Types...>, 0, sizeof...(Types) - 1>::print(out, value);
+    return out << ')';
+}
 
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const std::vector<T>& vec) {
@@ -53,15 +83,20 @@ std::ostream& operator<<(std::ostream& out, const std::vector<T>& vec) {
         return out;
     }
     out << '[';
-    for (int i = 0; i < vec.size() - 1; i++) {
+    for (int i = 0; i < (int)vec.size() - 1; i++) {
         out << vec[i] << ", ";
     }
     return out << vec.back() << ']';
 }
 
-template <typename T1, typename T2>
-std::ostream& operator<<(std::ostream& out, const std::pair<T1, T2>& pair) {
-    return out << '(' << pair.first << ", " << pair.second << ')';
+template <typename T>
+std::ostream& operator<<(std::ostream &out, std::vector<std::vector<T>> a) {
+    for (std::vector it : a) {
+        out << it;
+        out << '\n';
+    }
+    
+    return out;
 }
 
 template <typename T>
@@ -155,28 +190,7 @@ std::ostream& operator<<(std::ostream& out, const std::set<T>& set) {
     return out << '}';
 }
 
-// Source: https://stackoverflow.com/a/31116392/12128483
-template<typename Type, unsigned N, unsigned Last>
-struct TuplePrinter {
-    static void print(std::ostream& out, const Type& value) {
-        out << std::get<N>(value) << ", ";
-        TuplePrinter<Type, N + 1, Last>::print(out, value);
-    }
-};
 
-template<typename Type, unsigned N>
-struct TuplePrinter<Type, N, N> {
-    static void print(std::ostream& out, const Type& value) {
-        out << std::get<N>(value);
-    }
-};
-
-template<typename... Types>
-std::ostream& operator<<(std::ostream& out, const std::tuple<Types...>& value) {
-    out << '(';
-    TuplePrinter<std::tuple<Types...>, 0, sizeof...(Types) - 1>::print(out, value);
-    return out << ')';
-}
 
 template <typename T>
 std::ostream& operator<<(std::ostream &out, std::priority_queue<T> pq) {
@@ -190,6 +204,7 @@ std::ostream& operator<<(std::ostream &out, std::priority_queue<T> pq) {
     
     return out << '}';
 }
+
 
 
 // https://codeforces.com/blog/entry/91347

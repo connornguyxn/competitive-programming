@@ -72,7 +72,6 @@ ll query(int l, int r, int tl, int tr, int v = 1) {
     // compare and return value of child nodes
     return max(lq, rq);
 };
-
 ///////////////////////////////////////
 int main() {
     // ifstream cin("_input");
