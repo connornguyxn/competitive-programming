@@ -1,28 +1,82 @@
-  for(int i = 0; i < M; ) {
-    int j;
-    int num = 0;
-    int tot = 0;
+#if DEBUG
+    #include "lib/include/debug.h"
+    #define TASK "test"
+#else
+    #pragma GCC optimize("O3,unroll-loops")
+    #pragma GCC target("sse4.2")
+    #include <bits/stdc++.h>
+    #define TASK "test"
+#endif
+using namespace std;
+#define ll long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define pll pair<long long, long long>
+#define fi first
+#define se second
+#define str string
+#define nl '\n'
+#define sp ' '
+#define all(var) (var).begin(), (var).end()
+#define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++)
+#define Repd(i, n) for (int i = (n); i--; )
+#define For(i, l, r) for (int i = (l), _r = (r); i < _r; i++)
+#define Ford(i, r, l) for (int i = (r), _l = (l); --i >= _l; )
+#define Fore(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
+#define Forde(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; )
+#define Forin(it, var) for (auto it : var)
+#define Bmask(i) (1ULL << (i))
+#define Bget(mask, i) ((mask >> (i)) & 1)
+#define Blog(n) (63 - __builtin_clzll(n))
+template <class T = int>
+T inp() { T x; cin >> x; return x; }
+template <typename... T>
+void print(T&&... n) {
+    using exp = int[];
+    exp{0, (cout << n << sp, 0)...};
+    cout << nl;
+}
+const int N = 1e2;
+const ll MOD = 1e9 + 7;
+const int INF = 1e9 + 1;
+const ll INFLL = 1e18 + 1;
+const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
+const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
 
-    set<pair<int, int> > st;
-    for(j = i; j < M && E[j].first == E[i].first; j++) {
-      int A = find(E[j].second.first);
-      int B = find(E[j].second.second);
-      if(B < A) swap(A, B);
-      if(A != B) {
-        st.insert(make_pair(A, B));
-        tot++;
-      }
-    }
-    assert(j - i <= 3);
-    for(; i < j; i++) {
-      num += merge(E[i].second.first, E[i].second.second);
+// test
+// <tags>
+
+int dp[N];
+int solve(int cur) {
+    if (cur < 0) return 0;
+    if (dp[cur] > 0) return dp[cur];
+    
+    int tmp = cur;
+    dp[cur] = 0;
+    while (tmp > 0) {
+        if (tmp % 10) dp[cur] |= solve(cur - tmp % 10);
+        tmp /= 10;
     }
     
-    mergs += num;
-    cst += num * E[i - 1].first;
-    if(tot == 3) {
-      if(num == 1 || num == 2 && st.size() == 3) cnt = (cnt * 3) % MOD;
-      if(num == 2 && st.size() == 2) cnt = (cnt * 2) % MOD;
+    return dp[cur];
+}
+////////////////////////////////////////
+int main() {
+    freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".out", "w", stdout);
+    cin.tie(0)->sync_with_stdio(0);
+    ////////////////
+    memset(dp, -1, sizeof(dp));
+    dp[0] = 1;
+    
+    Repd(i, N) {
+        cout << i << sp;
+        solve(i);
     }
-    if(tot == 2 && num == 1) cnt = (cnt * 2) % MOD;
-  }
+    // Rep(i, N) {
+    //     cout << solve(i) << nl;
+    // }
+    
+    ////////////////
+    return 0;
+}

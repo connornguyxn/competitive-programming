@@ -1,4 +1,6 @@
-n = int(input())
-for i in range(1, n):
-    if (n % i == 0):
-        print(i, end=' ')
+a = input().split()[0]
+w = {'I': 'am', 'We': 'are', 'They': 'are', 'You': 'are'}
+if a in w:
+    print(w[a])
+else:
+    print('is')

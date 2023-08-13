@@ -4,34 +4,12 @@ with open('lib/template.cpp', 'r') as f:
     template_lines = f.read().splitlines()
 
 newfile_lines = []
-choice = int(input('Link (1) or File (2): '))
-problem_link = input(f'Your choice was {choice}\nEnter {["link", "filename"][choice - 1]}: ').replace('https://', '')
+newfile_name = input(f'Enter filename: ')
 
-problem_prefixes = {
-    'vnoi': 'vnoj',
-    'ntucoder': 'ntuc',
-    'ucode': 'ucode',
-    'lqdoj': 'lqdoj'
-}
-
-if (choice == 1):
-    newfile_name = problem_link.split('/')[-1]
-    
-    for prefix in problem_prefixes:
-        if problem_link.find(prefix) != -1:
-            newfile_name = problem_prefixes[prefix] + '_' + newfile_name
-            break
-    else:
-        newfile_name = problem_link.split('/')[0].replace('.', '') + '_' + newfile_name
-    problem_name = newfile_name.split('_')[-1]
-else:
-    problem_name = problem_link
-    newfile_name = problem_name
-newfile_name = newfile_name.lower()
-
+problem_name = newfile_name.split('_')[-1]
 
 placeholders = {
-    '<problem link>': problem_link,
+    '<problem link>': newfile_name,
     '<task name>': problem_name,
 }
 

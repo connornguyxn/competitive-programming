@@ -5,35 +5,10 @@
             "label": "(inf) C/C++: g++ build active file (Debug Build)",
             "command": "/usr/bin/g++",
             "args": [
-                "-std=c++17",
+                "-std=c++14",
                 "-DDEBUG=true",
-                "-Wall",
-                "-Wextra",``
-                "-fdiagnostics-color=always",
-                "-ggdb3",
-                "${file}",
-                "-o",
-                "${fileDirname}/a.out"
-            ],
-            "options": {
-                "cwd": "${fileDirname}"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
-            "detail": "compiler: /usr/bin/g++"
-        },
-        {
-            "type": "cppbuild",
-            "label": "(inf) C/C++: g++ build active file (Full Debug Build)",
-            "command": "/usr/bin/g++",
-            "args": [
-                "-std=c++17",
-                "-DDEBUG=true",
+                
+                // enable most of the important warnings
                 "-Wall",
                 "-Wextra",
                 "-pedantic",
@@ -46,13 +21,25 @@
                 "-Wduplicated-cond",
                 "-Wcast-qual",
                 "-Wcast-align",
+                
+                //* https://codeforces.com/blog/entry/15547
+                // compiler debug macros
                 "-D_GLIBCXX_DEBUG",
                 "-D_GLIBCXX_DEBUG_PEDANTIC",
-                "-D_FORTIFY_SOURCE=2",
-                "-fsanitize=address",
-                "-fsanitize=undefined",
-                "-fno-sanitize-recover",
-                "-fstack-protector",
+                // "-D_FORTIFY_SOURCE=2", // (unix-only)
+                
+                // sanitizer options (unix-only)
+                // "-fsanitize=address",
+                // "-fsanitize=undefined",
+                // "-fno-sanitize-recover",
+                // "-fstack-protector",
+                
+                // universal replacements for a sanitizer
+                "-lmcheck",
+                "-ftrapv",
+                
+                //* other args
+                // not nessessary for on-site cp or already handled by IDE
                 "-fdiagnostics-color=always",
                 "-ggdb3",
                 "${file}",
@@ -69,18 +56,23 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "/usr/bin/g++"
+            "detail": "compiler: /usr/bin/g++"
         },
         {
             "type": "cppbuild",
-            "label": "(inf) C/C++: g++ build active file (Release Build)",
+            "label": "(inf) C/C++: g++ build active file (Themis Build)",
             "command": "/usr/bin/g++",
             "args": [
-                "-std=c++17",
-                "-Wall",
-                "-Wextra",
-                "-fdiagnostics-color=always",
-                "-ggdb3",
+                "-std=c++14",
+                "-pipe",
+                "-O2",
+                "-s",
+                "-static",
+                "-lm",
+                "-x",
+                "c++",
+                "-DTHEMIS",
+                "-Wl,-z,stack-size=66060288",
                 "${file}",
                 "-o",
                 "${fileDirname}/a.out"
@@ -92,7 +84,7 @@
                 "$gcc"
             ],
             "group": {
-                "kind": "build",
+                "kind": "test",
                 "isDefault": false
             },
             "detail": "compiler: /usr/bin/g++"

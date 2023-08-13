@@ -23,15 +23,14 @@
 #include <unordered_set>
 #include <bitset>
 
-// numeric
-// #include <bit>
+#include <numeric>
 #include <numbers>
 #include <cmath>
 #include <complex>
 
 // memory management
-// #include <memory>
-// #include <new>
+#include <memory>
+#include <new>
 
 // utilities
 #include <functional>
@@ -91,7 +90,7 @@ std::ostream& operator<<(std::ostream& out, const std::vector<T>& vec) {
 
 template <typename T>
 std::ostream& operator<<(std::ostream &out, std::vector<std::vector<T>> a) {
-    for (std::vector it : a) {
+    for (std::vector<T> it : a) {
         out << it;
         out << '\n';
     }
@@ -190,8 +189,6 @@ std::ostream& operator<<(std::ostream& out, const std::set<T>& set) {
     return out << '}';
 }
 
-
-
 template <typename T>
 std::ostream& operator<<(std::ostream &out, std::priority_queue<T> pq) {
     out << '{';
@@ -206,13 +203,13 @@ std::ostream& operator<<(std::ostream &out, std::priority_queue<T> pq) {
 }
 
 
-
 // https://codeforces.com/blog/entry/91347
 template<typename ...Args>
 void logger(std::string vars, Args&&... vals) {
     std::cout << vars << " = ";
     std::string sep = "";
-    // fold expression
-    (..., (std::cout << sep << vals, sep = ", "));
+    // https://stackoverflow.com/a/27375675
+    using expander = int[];
+    (void)expander{0, (void(std::cout << std::forward<Args>(vals) << ", "), 0)...};
     std::cout << std::endl;
 }

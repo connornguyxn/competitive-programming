@@ -89,6 +89,7 @@
         "rope": "cpp",
         "stacktrace": "cpp",
         "expected": "cpp",
-        "spanstream": "cpp"
+        "spanstream": "cpp",
+        "strstream": "cpp"
     }
 }
