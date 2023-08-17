@@ -48,6 +48,10 @@ void print(T&&... n) {
     exp{0, (cout << n << sp, 0)...};
     cout << nl;
 }
+template <class T>
+void mxmz(T &a, T b) { a = max(a, b); }
+template <class T>
+void mnmz(T &a, T b) { a = max(a, b); }
 //* common constants
 const int N = 1e6; // array limit
 const ll MOD = 1e9 + 7; // common modulo

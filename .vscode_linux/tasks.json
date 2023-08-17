@@ -3,7 +3,7 @@
         {
             "type": "cppbuild",
             "label": "(inf) C/C++: g++ build active file (Debug Build)",
-            "command": "g++",
+            "command": "/usr/bin/g++",
             "args": [
                 "-std=c++14",
                 "-DDEBUG=true",
@@ -35,7 +35,7 @@
                 // "-fstack-protector",
                 
                 // universal replacements for a sanitizer
-                // "-lmcheck",
+                "-lmcheck",
                 "-ftrapv",
                 
                 //* other args
@@ -44,7 +44,7 @@
                 "-ggdb3",
                 "${file}",
                 "-o",
-                "${fileDirname}\\a.out"
+                "${fileDirname}/a.out"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -56,12 +56,12 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "compiler: g++"
+            "detail": "compiler: /usr/bin/g++"
         },
         {
             "type": "cppbuild",
             "label": "(inf) C/C++: g++ build active file (Themis Build)",
-            "command": "g++",
+            "command": "/usr/bin/g++",
             "args": [
                 "-std=c++14",
                 "-pipe",
@@ -75,7 +75,7 @@
                 "-Wl,-z,stack-size=66060288",
                 "${file}",
                 "-o",
-                "${fileDirname}\\a.out"
+                "${fileDirname}/a.out"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -87,7 +87,65 @@
                 "kind": "test",
                 "isDefault": false
             },
-            "detail": "compiler: g++"
+            "detail": "compiler: /usr/bin/g++"
+        },
+        {
+            "type": "cppbuild",
+            "label": "(inf) C/C++: g++ build active file (Full Debug Build)",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++14",
+                "-DDEBUG=true",
+                
+                // enable most of the important warnings
+                "-Wall",
+                "-Wextra",
+                "-pedantic",
+                "-Wshadow",
+                "-Wformat=2",
+                "-Wfloat-equal",
+                "-Wconversion",
+                "-Wlogical-op",
+                "-Wshift-overflow=2",
+                "-Wduplicated-cond",
+                "-Wcast-qual",
+                "-Wcast-align",
+                
+                //* https://codeforces.com/blog/entry/15547
+                // compiler debug macros
+                "-D_GLIBCXX_DEBUG",
+                "-D_GLIBCXX_DEBUG_PEDANTIC",
+                "-D_FORTIFY_SOURCE=2", // (unix-only)
+                
+                // sanitizer options (unix-only)
+                "-fsanitize=address",
+                "-fsanitize=undefined",
+                "-fno-sanitize-recover",
+                "-fstack-protector",
+                
+                // universal replacements for a sanitizer
+                // "-lmcheck",
+                // "-ftrapv",
+                
+                //* other args
+                // not nessessary for on-site cp or already handled by IDE
+                "-fdiagnostics-color=always",
+                "-ggdb3",
+                "${file}",
+                "-o",
+                "${fileDirname}/a.out"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false,
+            },
+            "detail": "compiler: /usr/bin/g++, unix only"
         },
     ],
 

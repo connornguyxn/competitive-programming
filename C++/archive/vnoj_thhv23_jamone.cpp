@@ -44,7 +44,7 @@ const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
 const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
 
 // https://oj.vnoi.info/problem/chvpt_thhv2023_jamone
-// graph, pathfinding, dp
+// graph, pathfinding, dp, incomplete
 
 struct node {
     int n, w, d;

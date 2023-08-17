@@ -5,7 +5,7 @@
     #pragma GCC optimize("O3,unroll-loops")
     #pragma GCC target("sse4.2")
     #include <bits/stdc++.h>
-    #define TASK "test"
+    #define TASK "543d"
 #endif
 using namespace std;
 #define ll long long
@@ -47,19 +47,61 @@ const ll INFLL = 1e18 + 1;
 const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
 const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
 
-// test
+// https://codeforces.com/contest/543/problem/D
 // <tags>
 
+int n;
+vector<vector<int>> adj;
+vector<ll> down, up, pre;
+////////////////////////////////////////
+void dfs_down(int cur, int par) {
+    down[cur] = 1;
+    for (int nxt : adj[cur]) {
+        if (nxt == par) continue;
+        dfs_down(nxt, cur);
+        down[cur] *= down[nxt] + 1;
+    }
+    for(int nxt : adj[cur]){
+        pre[nxt] = .0
+        
+    }
+}
+void dfs_up(int cur, int par) {
+    for (int nxt : adj[cur]) {
+        if (nxt == par) continue;
+        up[nxt] = down[cur] / (down[nxt] + 1) * (up[cur] + 1);
+        dfs_up(nxt, cur);
+    }
+}
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
     // freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////
+    cin >> n;
+    adj.resize(n + 1);
+    Fore(i, 2, n) {
+        int u = inp();
+        adj[i].push_back(u);
+        adj[u].push_back(i);
+    }
+    cout << adj;
     
+    down.resize(n + 1);
+    up.resize(n + 1);
+    pre.resize(n + 1);
     
+    dfs_down(1, 1);
+    up[1] = 1;
+    for (int nxt : adj[1]) {
+        up[nxt] = down[1] / (down[nxt] + 1) + 1;
+        cout << up[nxt] <<" "<< nxt <<"\n";
+        dfs_up(nxt, 1);
+    }
     
-    
+    db(down);
+    db(up);
     ////////////////
     return 0;
 }

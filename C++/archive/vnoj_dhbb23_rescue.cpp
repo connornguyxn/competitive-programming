@@ -40,7 +40,7 @@ const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
 const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
 
 // https://lqdoj.edu.vn/contest/dhbb23
-// pathfinding, dp
+// pathfinding, dp, incomplete
 
 struct node {
     int n;
