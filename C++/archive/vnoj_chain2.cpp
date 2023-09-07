@@ -29,7 +29,7 @@ const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
 // https://oj.vnoi.info/problem/chain2
-// string, searching, data structure
+// strings, searching, data structure
 
 struct trie {
     struct node {

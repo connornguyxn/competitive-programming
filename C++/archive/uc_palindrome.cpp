@@ -11,7 +11,7 @@ using namespace std;
 #define dec_pre(n) fixed << showpoint << setpreciscion(n)
 
 // https://ucode.vn/problems/117656
-// string
+// strings
 
 ///////////////////////////////////////
 int main() {

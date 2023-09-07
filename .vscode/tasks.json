@@ -36,7 +36,7 @@
                 
                 // universal replacements for a sanitizer
                 // "-lmcheck",
-                "-ftrapv",
+                // "-ftrapv",
                 
                 //* other args
                 // not nessessary for on-site cp or already handled by IDE
@@ -44,7 +44,7 @@
                 "-ggdb3",
                 "${file}",
                 "-o",
-                "${fileDirname}\\a.out"
+                "${fileDirname}\\a.exe",
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -72,10 +72,10 @@
                 "-x",
                 "c++",
                 "-DTHEMIS",
-                "-Wl,-z,stack-size=66060288",
+                // "-Wl,-z,stack-size=66060288",
                 "${file}",
                 "-o",
-                "${fileDirname}\\a.out"
+                "${fileDirname}\\a.exe",
             ],
             "options": {
                 "cwd": "${fileDirname}"

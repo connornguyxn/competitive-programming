@@ -2,10 +2,8 @@
     #include "lib/include/debug.h"
     #define TASK "test"
 #else
-    #pragma GCC optimize("O3,unroll-loops")
-    #pragma GCC target("sse4.2")
     #include <bits/stdc++.h>
-    #define TASK "543d"
+    #define TASK "maxmin"
 #endif
 using namespace std;
 #define ll long long
@@ -30,7 +28,7 @@ using namespace std;
 #define Blog(n) (63 - __builtin_clzll(n))
 template <class T = int>
 T inp() { T x; cin >> x; return x; }
-template <typename... T>
+template <class... T>
 void print(T&&... n) {
     using exp = int[];
     exp{0, (cout << n << sp, 0)...};
@@ -39,7 +37,7 @@ void print(T&&... n) {
 template <class T>
 void mxmz(T &a, T b) { a = max(a, b); }
 template <class T>
-void mnmz(T &a, T b) { a = max(a, b); }
+void mnmz(T &a, T b) { a = min(a, b); }
 const int N = 1e6;
 const ll MOD = 1e9 + 7;
 const int INF = 1e9 + 1;
@@ -47,61 +45,40 @@ const ll INFLL = 1e18 + 1;
 const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
 const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
 
-// https://codeforces.com/contest/543/problem/D
-// <tags>
+// https://oj.vnoi.info/problem/chvpt_nd_chondtqg1_maxmin
+// 2ptrs
 
-int n;
-vector<vector<int>> adj;
-vector<ll> down, up, pre;
-////////////////////////////////////////
-void dfs_down(int cur, int par) {
-    down[cur] = 1;
-    for (int nxt : adj[cur]) {
-        if (nxt == par) continue;
-        dfs_down(nxt, cur);
-        down[cur] *= down[nxt] + 1;
-    }
-    for(int nxt : adj[cur]){
-        pre[nxt] = .0
-        
-    }
-}
-void dfs_up(int cur, int par) {
-    for (int nxt : adj[cur]) {
-        if (nxt == par) continue;
-        up[nxt] = down[cur] / (down[nxt] + 1) * (up[cur] + 1);
-        dfs_up(nxt, cur);
-    }
-}
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////
-    cin >> n;
-    adj.resize(n + 1);
-    Fore(i, 2, n) {
-        int u = inp();
-        adj[i].push_back(u);
-        adj[u].push_back(i);
+    int n, x, y;
+    cin >> n >> x >> y;
+    
+    vector<ll> a(n);
+    Rep(i, n) cin >> a[i];
+    
+    int l = 0, mn = -1, mx = -1;
+    ll ans = 0;
+    
+    Rep(r, n) {
+        if (a[r] < y || x < a[r]) {
+            mx = -1;
+            mn = -1;
+            l = r + 1;
+        } else {
+            if (a[r] == y) mn = r;
+            if (a[r] == x) mx = r;
+            
+            if (mn >= 0 && mx >= 0) {
+                ans += min(mx, mn) - l + 1;
+            }
+        }
     }
-    cout << adj;
     
-    down.resize(n + 1);
-    up.resize(n + 1);
-    pre.resize(n + 1);
-    
-    dfs_down(1, 1);
-    up[1] = 1;
-    for (int nxt : adj[1]) {
-        up[nxt] = down[1] / (down[nxt] + 1) + 1;
-        cout << up[nxt] <<" "<< nxt <<"\n";
-        dfs_up(nxt, 1);
-    }
-    
-    db(down);
-    db(up);
+    cout << ans;
     ////////////////
     return 0;
 }

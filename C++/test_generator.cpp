@@ -40,8 +40,8 @@ int main() {
     freopen("test.inp", "w", stdout);
     cin.tie(0) -> sync_with_stdio(0);
     ////////////////
-    for (int i = 0; i < 500; i++) {
-        cout << 1 << sp;
+    for (int i = 0; i < 1000; i++) {
+        cout << i + 1 << sp;
     }
     ////////////////
     return 0;

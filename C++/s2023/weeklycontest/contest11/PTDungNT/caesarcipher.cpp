@@ -25,7 +25,7 @@ const int off_ver[8] = {-1, -1, 0, 1, 1, 1, 0, -1};
 const int off_hor[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 
 // caesarcipher
-// easy, string
+// easy, strings
 
 ////////////////////////////////////////
 int main() {

@@ -24,7 +24,7 @@ const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
 
 // http://ntucoder.net/Problem/Details/3255
-// string, map
+// strings, map
 
 ///////////////////////////////////////
 int main() {

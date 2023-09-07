@@ -29,7 +29,7 @@ const ull MOD = 1e9 + 7;
 
 // https://imgur.com/HJmVfAO.png
 // https://imgur.com/fNK3PJH.png
-// string
+// strings
 
 struct Node {
     int cnt;

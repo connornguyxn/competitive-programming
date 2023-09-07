@@ -24,7 +24,7 @@ const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
 
 // https://atcoder.jp/contests/dp/tasks/dp_f
-// dp, string
+// dp, strings
 
 ///////////////////////////////////////
 int main() {

@@ -29,7 +29,7 @@ const int offx[8] = {0, 0, -1, 1, -1, 1, -1, 1};
 const int offy[8] = {1, -1, 0, 0, 1, 1, -1, -1};
 
 // oj.vnoi.info/problem/nkpalin
-// dp, string, easy
+// dp, strings, easy
 
 ////////////////////////////////////////
 int main() {

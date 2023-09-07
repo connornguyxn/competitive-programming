@@ -27,7 +27,7 @@ const int N = 1e6;
 const ull MOD = 1e9 + 7;
 
 // oj.vnoi.info/problem/substr
-// string
+// strings
 
 vector<int> getlps(str a) {
     int n = a.size();

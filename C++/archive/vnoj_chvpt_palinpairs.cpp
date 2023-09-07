@@ -23,7 +23,7 @@ const int N = 1e6;
 const ull MOD = 1e9 + 7;
 
 // oj.vnoi.info/problem/chvpt_palinpairs
-// string
+// strings
 
 ////////////////////////////////////////
 int main() {

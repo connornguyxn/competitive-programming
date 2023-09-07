@@ -17,7 +17,7 @@ const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
 
 // http://ntucoder.net/Problem/Details/76
-// 2d, prefixsum (fuck dp)
+// 2d, prefsum (fuck dp)
 
 ///////////////////////////////////////
 int main() {

@@ -26,7 +26,7 @@ const ull MOD = 1e9 + 7;
 
 // imgur.com/YeisTaa.png
 // imgur.com/W4Cxsb9.png
-// string, greedy
+// strings, greedy
 
 ////////////////////////////////////////
 int solve() {

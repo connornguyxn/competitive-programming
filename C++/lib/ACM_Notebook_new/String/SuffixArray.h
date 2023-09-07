@@ -2,9 +2,9 @@
 // Source: http://codeforces.com/contest/452/submission/7269543
 // Efficient Suffix Array O(N*logN)
 
-// String index from 0
+// strings index from 0
 // Usage:
-// string s;  (s[i] > 0)
+// strings s;  (s[i] > 0)
 // SuffixArray sa(s);
 // Now we can use sa.SA and sa.LCP
 // sa.LCP[i] = max common prefix suffix of sa.SA[i-1] and sa.SA[i]

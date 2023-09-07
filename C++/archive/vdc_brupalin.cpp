@@ -11,7 +11,7 @@ using namespace std;
 #define dec_point(n) fixed << showpoint << setpreciscion(n)
 
 // http://vinhdinhcoder.net/Problem/Details/4708
-// string
+// strings
 
 ///////////////////////////////////////
 int main() {

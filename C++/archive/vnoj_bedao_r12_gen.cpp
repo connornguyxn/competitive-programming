@@ -26,7 +26,7 @@ const int N = 1e6;
 const ull MOD = 1e9 + 7;
 
 // https://oj.vnoi.info/problem/bedao_r12_gen
-// easy, string
+// easy, strings
 
 ///////////////////////////////////////
 int main() {

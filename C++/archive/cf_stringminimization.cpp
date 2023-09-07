@@ -22,7 +22,7 @@ const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
 
 // https://codeforces.com/contest/1706/problem/A
-// string
+// strings
 
 ///////////////////////////////////////
 int main() {

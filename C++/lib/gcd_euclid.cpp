@@ -22,7 +22,7 @@ int main() {
     long long a, b;
     cin >> a >> b;
     // cout << __gcd(a, b);
-    // cout << std::gcd(a, b); // from c++ 17
+    // cout << std::gcd(a, b); // from c++17
     cout << euclidgcd(a, b);
     
     return 0;

@@ -28,7 +28,7 @@ const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
 // Trie data structure implementation
-// string, searching
+// strings, searching
 // O(N + M)
 
 struct trie {

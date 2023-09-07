@@ -24,7 +24,7 @@ using namespace std;
 const ull MOD = 1e9 + 7;
 
 // https://codeforces.com/contest/1702/problem/B
-// string
+// strings
 
 ///////////////////////////////////////
 int main() {

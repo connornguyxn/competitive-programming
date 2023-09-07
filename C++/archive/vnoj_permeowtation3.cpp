@@ -20,7 +20,7 @@ using namespace std;
 const ull MOD = 1e9 + 7;
 
 // https://oj.vnoi.info/problem/vnoicup22_r1_a
-// string
+// strings
 
 ///////////////////////////////////////
 int main() {

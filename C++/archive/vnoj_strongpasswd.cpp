@@ -15,7 +15,7 @@ using namespace std;
 const ull MOD = 1e9 + 7;
 
 // https://oj.vnoi.info/problem/fc140_strongpasswd
-// string
+// strings
 
 ///////////////////////////////////////
 int main() {

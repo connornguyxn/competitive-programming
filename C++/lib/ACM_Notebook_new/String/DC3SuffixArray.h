@@ -1,6 +1,6 @@
 // Linear Suffix Array O(N)
 
-// String index from 0
+// strings index from 0
 // Usage:
 //  string s;
 //  DC3Algorithm dc3;

@@ -24,7 +24,7 @@ const int N = 1e6;
 const ull MOD = 1e9 + 7;
 
 // lqdoj.edu.vn/problem/23gl2a2
-// easy, math, string
+// easy, math, strings
 
 ////////////////////////////////////////
 int main() {

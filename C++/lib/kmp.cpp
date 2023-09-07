@@ -29,7 +29,7 @@ const int MAXN = 1e6;
 const ull MOD = 1e9 + 7;
 
 // KMP algorithm implementation
-// string, searching
+// strings, searching
 
 vector<int> getlps(str a) {
     int n = a.size();

@@ -185,7 +185,7 @@ template <typename Context> class char_converter {
 };
 
 // An argument visitor that return a pointer to a C string if argument is a
-// string or null otherwise.
+// strings or null otherwise.
 template <typename Char> struct get_cstring {
   template <typename T> const Char* operator()(T) { return nullptr; }
   const Char* operator()(const Char* s) { return s; }

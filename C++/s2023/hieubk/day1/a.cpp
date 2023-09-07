@@ -32,7 +32,7 @@ template<typename tVar, typename tVal>
 void mxmz(tVar &var, tVal val) { if (val > var) var = val; }
 
 // https://lptqht2023.contest.codeforces.com/group/zDiphsJ2IV/contest/445344/problem/A
-// string, easy
+// strings, easy
 
 ////////////////////////////////////////
 int main() {

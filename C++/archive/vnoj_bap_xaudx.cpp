@@ -10,7 +10,7 @@ using namespace std;
 #define sp(n) fixed << showpoint << setpreciscion(n)
 
 // hhttps://oj.vnoi.info/problem/nan_xaudx
-// string, map
+// strings, map
 
 ///////////////////////////////////////
 int main() {

@@ -12,7 +12,7 @@ using namespace std;
 #define sp(n) fixed << showpoint << setpreciscion(n)
 
 // https://ucode.vn/problems/117626
-// math, string
+// math, strings
 
 ///////////////////////////////////////
 int sumdigits(int n) {

@@ -38,3 +38,14 @@ You can check out all of them in [gcc's official guide](https://gcc.gnu.org/onli
 > And without pragmas:
 
 [![https://imgur.com/sI0e0Kd.png](https://imgur.com/sI0e0Kd.png)](https://imgur.com/sI0e0Kd.png)
+
+**Pragmas CAN and WILL slow down code or make them uncompilable with certain judge configurations:**
+
+Example problem (private): [https://oj.vnoi.info/problem/chvpt_nd_chondtqg1_maxmin](https://oj.vnoi.info/problem/chvpt_nd_chondtqg1_maxmin)
+
+[![https://imgur.com/u47IKwR.png](https://imgur.com/u47IKwR.png)](https://imgur.com/u47IKwR.png)
+The two submissions are identical, except the upper one has the pragma ```O3``` and ```unroll-loops```.
+
+In my experience, DMOJ, or at least the fork VNOJ, does not fare well with pragmas. Code with ```target``` pragmas straight up get CE on this platform.
+
+Pragmas are not free performance. Research your contest environment before using them.

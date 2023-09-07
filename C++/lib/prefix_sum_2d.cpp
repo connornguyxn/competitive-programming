@@ -25,7 +25,7 @@ const ull MOD = 1e9 + 7;
 
 // https://usaco.guide/silver/more-prefix-sums?lang=cpp
 // Example implementation of a 2D prefix sum array
-// 2d, prefixsum
+// 2d, prefsum
 
 ///////////////////////////////////////
 int main() {
