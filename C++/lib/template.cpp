@@ -29,10 +29,10 @@ using namespace std; // use standard namespace for faster access
 // functions with "d" suffix runs in reverse("d" = "decrease")
 #define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++) // repeat from 0 to n - 1
 #define Repd(i, n) for (int i = (n); i--; )
-#define For(i, l, r) for (int i = (l), _r = (r); i < _r; i++) // for l to r - 1
-#define Ford(i, r, l) for (int i = (r), _l = (l); --i >= _l; )
-#define Fore(i, l, r) for (int i = (l), _r = (r); i <= _r; i++) // for l to r
-#define Forde(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; )
+#define Fors(i, l, r) for (int i = (l), _r = (r); i < _r; i++) // for l to r - 1
+#define Forsd(i, r, l) for (int i = (r), _l = (l); --i >= _l; )
+#define For(i, l, r) for (int i = (l), _r = (r); i <= _r; i++) // for l to r
+#define Ford(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; )
 #define Forin(it, var) for (auto it : var)
 // bitwise macros
 #define bmask(i) (1ULL << (i)) // bitmask
