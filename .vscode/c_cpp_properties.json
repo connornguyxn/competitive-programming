@@ -1,5 +1,6 @@
 {
     "configurations": [
+
         {
             "name": "Linux",
             "includePath": [
@@ -8,11 +9,24 @@
             "defines": [
                 "DEBUG=true",
             ],
-            "compilerPath": "C:/MinGW/bin/gcc.exe",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
             "cppStandard": "c++14",
+            "intelliSenseMode": "linux-gcc-x64"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+            ],
+            "defines": [
+                "DEBUG=true",
+            ],
+            "compilerPath": "C:/MinGW/bin/gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
             "intelliSenseMode": "windows-gcc-x86"
-        }
+        },
     ],
     "version": 4
 }

@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "test"
+    #define TASK "bonus"
 #endif
 using namespace std;
 using ll = long long;
@@ -45,48 +45,41 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// test
+// vnoj_chvpt_cdtqg_qhh_bonus
 // <tags>
 
-// disjoint set data structure implementation
-struct DSU {
-    vector<int> par, sz;
-    
-    DSU(int n) {
-        par.resize(n + 1);
-        sz.resize(n + 1);
-        Rep(i, n + 1) {
-            par[i] = i;
-            sz[i] = 1;
-        }
-    }
-    
-    int find(int u) {
-        if (par[u] == u) return u;
-        return par[u] = find(par[u]);
-    }
-    
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
-    }
-};
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
     // freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
+    
     vector<int> a(n);
     Rep(i, n) cin >> a[i];
     
+    int s = 0, mn = 0, mx = 0;
+    vector<int> ans;
+    Rep(i, n) {
+        s += a[i];
+        if (s < 0) {
+            ans.push_back(mx);
+            s = 0;
+            mn = 0;
+            mx = 0;
+        } else {
+            mxmz(mx, s - mn);
+            mnmz(mn, s);
+        }
+        // print(s, mn, mx);
+    }
+    ans.push_back(mx);
     
+    sort(ans.rbegin(), ans.rend());
+    
+    print(ans);
     ////////////////
     return 0;
 }

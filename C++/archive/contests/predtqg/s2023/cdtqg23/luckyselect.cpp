@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "test"
+    #define TASK "luckyselect1"
 #endif
 using namespace std;
 using ll = long long;
@@ -15,7 +15,7 @@ using pll = pair<ll, ll>;
 #define se second
 #define nl '\n'
 #define sp ' '
-#define all(a) (a).begin(), (a).end()
+#define all(var) (var).begin(), (var).end()
 #define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++)
 #define Repd(i, n) for (int i = (n); i--; )
 #define For(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
@@ -45,48 +45,54 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// test
-// <tags>
 
-// disjoint set data structure implementation
-struct DSU {
-    vector<int> par, sz;
+ll bpow(ll n, ll k) {
+    ll res = 1;
+    while (k > 0) {
+        if (k % 2) mul(res, n);
+        mul(n, n);
+        k /= 2;
+    }
+    return res;
+}
+///////////////////////////////
+int main() {
+    freopen(TASK".inp", "r", stdin);
+    freopen(TASK".out", "w", stdout);
+    cin.tie(0)->sync_with_stdio(0);
+    /////////////////////////////////
+    int n, m;
+    cin >> n >> m;
+    int k = bmask(m);
     
-    DSU(int n) {
-        par.resize(n + 1);
-        sz.resize(n + 1);
-        Rep(i, n + 1) {
-            par[i] = i;
-            sz[i] = 1;
+    vector<ll> cnt(k);
+    Rep(i, n) {
+        int c, cur = 0;
+        cin >> c;
+        Rep(j, c) {
+            int p;
+            cin >> p;
+            cur |= bmask(p - 1);
+        }
+        cnt[cur]++;
+    }
+    
+    vector<ll> sos(k), dp(k);
+    Rep(cur, k) {
+        for (int pre = cur; pre > 0; pre = (pre - 1) & cur) {
+            sos[cur] += cnt[pre];
+        }
+        dp[cur] = bpow(2, sos[cur]);
+    }
+    
+    ll ans = 0;
+    Rep(cur, k) {
+        if ((m - __builtin_popcount(cur)) % 2) {
+            sub(ans, dp[cur]);
+        } else {
+            add(ans, dp[cur]);
         }
     }
     
-    int find(int u) {
-        if (par[u] == u) return u;
-        return par[u] = find(par[u]);
-    }
-    
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
-    }
-};
-////////////////////////////////////////
-int main() {
-    freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
-    cin.tie(0)->sync_with_stdio(0);
-    ////////////////
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    Rep(i, n) cin >> a[i];
-    
-    
-    ////////////////
-    return 0;
+    cout << ans;
 }

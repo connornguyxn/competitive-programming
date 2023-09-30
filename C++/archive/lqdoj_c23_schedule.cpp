@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "test"
+    #define TASK "schedule"
 #endif
 using namespace std;
 using ll = long long;
@@ -45,48 +45,55 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// test
+// lqdoj_c23_schedule
 // <tags>
 
-// disjoint set data structure implementation
-struct DSU {
-    vector<int> par, sz;
-    
-    DSU(int n) {
-        par.resize(n + 1);
-        sz.resize(n + 1);
-        Rep(i, n + 1) {
-            par[i] = i;
-            sz[i] = 1;
+int n, m;
+vector<ll> k;
+vector<int> s, t;
+////////////////////////////////////////
+struct sub3 {
+    sub3() {
+        vector<int> a(n + 2);
+        
+        For(i, 1, m) {
+            a[s[i]] += k[i];
+            a[t[i] + 1] -= k[i];
         }
-    }
-    
-    int find(int u) {
-        if (par[u] == u) return u;
-        return par[u] = find(par[u]);
-    }
-    
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
+        
+        For(i, 1, n) a[i] += a[i - 1];
+        a.pop_back();
+        
+        cout << *max_element(all(a)) << nl;
     }
 };
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    Rep(i, n) cin >> a[i];
+    cin >> m >> n;
     
+    k.resize(m + 1);
+    s.resize(m + 1);
+    t.resize(m + 1);
     
+    For(i, 1, m) {
+        cin >> k[i] >> s[i] >> t[i];
+    }
+    
+    if ([&]() {
+        For(i, 1, m) if (s[i] != t[i]) return false;
+        return true;
+    }()) {
+        cout << *max_element(all(k)) << nl;
+    } else if ([&]() {
+        For(i, 1, m) if (k[i] > 1) return false;
+        return true;
+    }()) {
+        cout << *max_element(all(k)) << nl;
+    }
     ////////////////
     return 0;
 }

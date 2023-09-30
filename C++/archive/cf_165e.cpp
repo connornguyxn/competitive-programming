@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "test"
+    #define TASK "165e"
 #endif
 using namespace std;
 using ll = long long;
@@ -45,39 +45,12 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// test
-// <tags>
+// https://codeforces.com/contest/165/problem/E
+// bitwise, dp
 
-// disjoint set data structure implementation
-struct DSU {
-    vector<int> par, sz;
-    
-    DSU(int n) {
-        par.resize(n + 1);
-        sz.resize(n + 1);
-        Rep(i, n + 1) {
-            par[i] = i;
-            sz[i] = 1;
-        }
-    }
-    
-    int find(int u) {
-        if (par[u] == u) return u;
-        return par[u] = find(par[u]);
-    }
-    
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
-    }
-};
 ////////////////////////////////////////
 int main() {
-    freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".inp", "r", stdin);
     // freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////
@@ -86,7 +59,22 @@ int main() {
     vector<int> a(n);
     Rep(i, n) cin >> a[i];
     
+    vector<int> dp(bmask(23), -1);
+    Rep(i, n) dp[a[i]] = a[i];
     
+    Rep(i, 22) {
+        Rep(cur, bmask(22)) {
+            if (bget(cur, i)) {
+                mxmz(dp[cur], dp[cur ^ bmask(i)]);
+            }
+        }
+    }
+    
+    
+    Rep(i, n) {
+        // print(bitset<8>(a[i]), bitset<8>(a[i] ^ (bmask(32) - 1)));
+        cout << dp[a[i] ^ (bmask(22) - 1)] << nl;
+    }
     ////////////////
     return 0;
 }

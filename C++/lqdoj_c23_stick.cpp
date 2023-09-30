@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "test"
+    #define TASK "stick"
 #endif
 using namespace std;
 using ll = long long;
@@ -19,8 +19,9 @@ using pll = pair<ll, ll>;
 #define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++)
 #define Repd(i, n) for (int i = (n); i--; )
 #define For(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
+#define Fors(i, l, r) for (int i = (l), _r = (r); i < _r; i++)
 #define Ford(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; )
-#define Forin(it, var) for (auto it : var)
+#define Forin(it, var) for (auto& it : var)
 #define bmask(i) (1ULL << (i))
 #define bget(mask, i) ((mask >> (i)) & 1)
 #define blog2(n) (63 - __builtin_clzll(n))
@@ -45,36 +46,9 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// test
-// <tags>
+// https://lqdoj.edu.vn/problem/lqdoj23r4stick
+// math
 
-// disjoint set data structure implementation
-struct DSU {
-    vector<int> par, sz;
-    
-    DSU(int n) {
-        par.resize(n + 1);
-        sz.resize(n + 1);
-        Rep(i, n + 1) {
-            par[i] = i;
-            sz[i] = 1;
-        }
-    }
-    
-    int find(int u) {
-        if (par[u] == u) return u;
-        return par[u] = find(par[u]);
-    }
-    
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
-    }
-};
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
@@ -83,10 +57,29 @@ int main() {
     ////////////////
     int n;
     cin >> n;
-    vector<int> a(n);
-    Rep(i, n) cin >> a[i];
     
+    vector<ll> a;
+    a.reserve(n);
+    unordered_map<ll, ll> cnt;
     
+    Rep(i, n) {
+        int inp;
+        cin >> inp;
+        cnt[inp]++;
+        if (cnt[inp] == 1) a.push_back(inp);
+    }
+    sort(all(a));
+    print(a);
+    print(cnt);
+    
+    ll ans = 0, sum = 0;
+    for (int i = 0, j = 0; i < n; i++) {
+        if (cnt[a[i]] < 2) continue;
+        while (a[j] <= a[i] * 2) {
+            sum += cnt[a[j]];
+            j++;
+        }
+    }
     ////////////////
     return 0;
 }

@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "test"
+    #define TASK "data"
 #endif
 using namespace std;
 using ll = long long;
@@ -45,48 +45,72 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// test
-// <tags>
 
-// disjoint set data structure implementation
-struct DSU {
-    vector<int> par, sz;
+struct node {
+    int n, t;
+    bool operator<(node oth) const {
+        return t > oth.t;
+    }
+};
+struct edge {
+    int u, v;
+    long double w;
+    int t;
+    bool operator<(edge oth) const {
+        return w > oth.w;
+    }
+};
+int n, m, s, t;
+long double w;
+vector<vector<node>> adj;
+////////////////////////////////////////
+long double dijkstra() {
+    vector<int> dst(n + 1, INF);
+    dst[s] = 0;
+    priority_queue<node> pq;
+    pq.push({s, 0});
     
-    DSU(int n) {
-        par.resize(n + 1);
-        sz.resize(n + 1);
-        Rep(i, n + 1) {
-            par[i] = i;
-            sz[i] = 1;
+    while (pq.size()) {
+        node cur = pq.top();
+        pq.pop();
+        
+        if (cur.t > dst[cur.n]) continue;
+        if (cur.n == t) break;
+        
+        Forin(nxt, adj[cur.n]) {
+            if (cur.t + nxt.t < dst[nxt.n]) {
+                dst[nxt.n] = cur.t + nxt.t;
+                pq.push({nxt.n, dst[nxt.n]});
+            }
         }
     }
     
-    int find(int u) {
-        if (par[u] == u) return u;
-        return par[u] = find(par[u]);
-    }
-    
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
-    }
-};
+    return dst[t];
+}
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    Rep(i, n) cin >> a[i];
+    cin >> n >> m >> s >> t >> w;
     
+    vector<edge> edg(m);
+    Rep(i, m) {
+        cin >> edg[i].u >> edg[i].v >> edg[i].w >> edg[i].t;
+    }
     
+    sort(all(edg));
+    adj.resize(n + 1);
+    
+    long double ans = INFLL;
+    Rep(i, m) {
+        adj[edg[i].u].push_back({edg[i].v, edg[i].t});
+        adj[edg[i].v].push_back({edg[i].u, edg[i].t});
+        ans = min(ans, w / edg[i].w + dijkstra());
+    }
+    
+    cout << fixed << setprecision(2) << ans;
     ////////////////
     return 0;
 }
