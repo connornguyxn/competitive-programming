@@ -1,6 +1,6 @@
 // note: include headers *after* compile options
 #if DEBUG // if debug flag is set to true
-    #include "lib/include/debug.h" // include local debugging header
+    #include "lib/debug.h" // include local debugging header
     // #pragma GCC optimize("trapv") // abort() on integer overflow, increases runtime
     // replaced with a sanitizer instead, see tasks.json
     #define TASK "test" // define local task name
@@ -35,7 +35,6 @@ using pll = pair<ll, ll>;
 // bitwise macros
 #define bmask(i) (1ULL << (i)) // bitmask
 #define bget(mask, i) ((mask >> (i)) & 1) // get bit
-#define blog2(n) (63 - __builtin_clzll(n)) // constant-time log2
 //* common constants
 const int N = 1e6; // array limit
 const ll MOD = 1e9 + 7;// common modulo
@@ -67,9 +66,9 @@ void print(T&&... n) {
     cout << endl;
 }
 template <class T>
-void mxmz(T &a, T b) { a = max(a, b); }
+bool mxmz(T &a, T b) { return a < b ? a = b, 1 : 0; }
 template <class T>
-void mnmz(T &a, T b) { a = min(a, b); }
+bool mnmz(T &a, T b) { return b < a ? a = b, 1 : 0; }
 void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
@@ -88,18 +87,19 @@ void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 //! <tags>
 
 ////////////////////////////////////////!
+////////////////////////////////////////!
 int main() {
     // assign standard input/output to file streams
     freopen(TASK".inp", "r", stdin);
     //! freopen(TASK".out", "w", stdout);
     // desync cin from cout and C++ from C input
     cin.tie(0)->sync_with_stdio(0); // new and shorter version
-    ////////////////!
+    ////////////////////!
     
     
     
     
-    ////////////////!
+    ////////////////////!
     // for good measure :)
     // return 0+0-0*0/~0&0|0^0;
     return 0;

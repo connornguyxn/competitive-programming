@@ -90,6 +90,9 @@
         "stacktrace": "cpp",
         "expected": "cpp",
         "spanstream": "cpp",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "*.out": "plaintext"
     }
 }

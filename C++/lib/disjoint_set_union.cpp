@@ -16,21 +16,32 @@ struct edge {
         return w < x.w;
     };
 };
-int pr[N];
-
-int root(int v) {
-    if (pr[v] < 0) return v;
-    return pr[v] = root(pr[v]);
-};
-
-bool merge(int a, int b) {
-    if ((a = root(a)) == (b = root(b))) return false;
-    if (-pr[a] < -pr[b]) {
-        swap(a, b);
-    };
-    pr[a] += pr[b];
-    pr[b] = a;
-    return true;
+struct DSU {
+    vector<int> par;
+    
+    DSU(int n) : par(n + 1, -1) {}
+    
+    void clear() {
+        fill(par.begin(), par.end(), -1);
+    }
+    
+    int get_root(int u) {
+        if (par[u] < 0) return u;
+        return par[u] = get_root(par[u]);
+    }
+    
+    bool merge(int u, int v) {
+        u = get_root(u); v = get_root(v);
+        if (u == v) return false;
+        if (par[u] > par[v]) swap(u, v);
+        par[u] += par[v];
+        par[v] = u;
+        return true;
+    }
+    
+    int cmp_size(int u) {
+        return -par[get_root(u)];
+    }
 };
 ///////////////////////////////////////
 int main() {
@@ -46,10 +57,10 @@ int main() {
         edges.push_back({s, e, w});
     };
     sort(edges.begin(), edges.end());
-    memset(pr, -1, sizeof(pr));
+    DSU dsu(n);
     long long cost = 0;
     for (auto &i : edges) {
-        if (merge(i.s, i.e)) {
+        if (dsu.merge(i.s, i.e)) {
             cost += i.w;
         };
     };

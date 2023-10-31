@@ -1,1 +1,0 @@
-{"name":"Local: cal","url":"/home/inf1nity/Documents/VSCode/code-backup/C++/contests/contest12/cal.cpp","tests":[{"id":1663682249869,"input":"9 27\n3\n1 5\n10 11\n3 11","output":"3\n-1\n9"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/inf1nity/Documents/VSCode/code-backup/C++/contests/contest12/cal.cpp","group":"local","local":true}

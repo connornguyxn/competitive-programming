@@ -1,5 +1,5 @@
 #if DEBUG
-    #include "lib/include/debug.h"
+    #include "lib/debug.h"
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
@@ -19,11 +19,11 @@ using pll = pair<ll, ll>;
 #define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++)
 #define Repd(i, n) for (int i = (n); i--; )
 #define For(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
+#define Fors(i, l, r) for (int i = (l), _r = (r); i < _r; i++)
 #define Ford(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; )
-#define Forin(it, var) for (auto it : var)
+#define Forin(it, var) for (auto& it : var)
 #define bmask(i) (1ULL << (i))
 #define bget(mask, i) ((mask >> (i)) & 1)
-#define blog2(n) (63 - __builtin_clzll(n))
 const int N = 1e6;
 const ll MOD = 1e9 + 7;
 const ull BASE = 311;
@@ -38,9 +38,9 @@ void print(T&&... n) {
     cout << endl;
 }
 template <class T>
-void mxmz(T &a, T b) { a = max(a, b); }
+bool mxmz(T &a, T b) { return a < b ? a = b, 1 : 0; }
 template <class T>
-void mnmz(T &a, T b) { a = min(a, b); }
+bool mnmz(T &a, T b) { return b < a ? a = b, 1 : 0; }
 void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
@@ -48,45 +48,19 @@ void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 // test
 // <tags>
 
-// disjoint set data structure implementation
-struct DSU {
-    vector<int> par, sz;
-    
-    DSU(int n) {
-        par.resize(n + 1);
-        sz.resize(n + 1);
-        Rep(i, n + 1) {
-            par[i] = i;
-            sz[i] = 1;
-        }
-    }
-    
-    int find(int u) {
-        if (par[u] == u) return u;
-        return par[u] = find(par[u]);
-    }
-    
-    void join(int u, int v) {
-        u = find(u);
-        v = find(v);
-        if (u == v) return;
-        if (sz[u] < sz[v]) swap(u, v);
-        par[v] = u;
-        sz[u] += sz[v];
-    }
-};
+////////////////////////////////////////
 ////////////////////////////////////////
 int main() {
-    freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    // freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".inp", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
-    ////////////////
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    Rep(i, n) cin >> a[i];
+    ////////////////////
+    vector<int> a{1, 2, 2, 3, 4};
+    a.resize(unique(all(a)) - a.begin());
+    print(a);
     
     
-    ////////////////
+    
+    ////////////////////
     return 0;
 }

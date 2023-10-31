@@ -3,12 +3,12 @@
 !*/
 !*.*
 
-
 *.out
 *.exe
 *.gch
 *.inp
 *.out
+*.o
 
-_todo_*
 etc/
+**/archive/*/
