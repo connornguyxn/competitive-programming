@@ -1,10 +1,5 @@
-#if DEBUG
-    #include "lib/debug.h"
-    #define TASK "test"
-#else
-    #include <bits/stdc++.h>
-    #define TASK "bonmau"
-#endif
+#include <bits/stdc++.h>
+#define TASK "I"
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
@@ -31,12 +26,12 @@ const int INF = 1e9 + 1;
 const ll INFLL = 1e18 + 1;
 const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
 const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
-template <class... T>
-void print(T&&... n) {
-    using exp = int[];
-    exp{0, (cout << n << sp, 0)...};
-    cout << endl;
-}
+// template <class... T>
+// void print(T&&... n) {
+//     using exp = int[];
+//     exp{0, (cout << n << sp, 0)...};
+//     cout << endl;
+// }
 template <class T>
 bool mxmz(T &a, T b) { return a < b ? a = b, 1 : 0; }
 template <class T>
@@ -45,44 +40,64 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// https://oj.vnoi.info/problem/chvpt_bonmau
-// 2d, bruteforce
-
 ////////////////////////////////////////
+int count(int maxc, multiset<int> st) {
+    int res = 0, pre = INF, curc = maxc;
+    
+    while (st.size()) {
+        if (maxc < *st.begin()) return INF;
+        
+        auto cur = st.upper_bound(min(curc, pre));
+        if (cur != st.begin()) {
+            cur--;
+            curc -= *cur;
+            pre = *cur;
+            st.erase(cur);
+        } else {
+            res++;
+            pre = INF;
+            curc = maxc;
+        }
+    }
+    res += curc < maxc;
+    
+    return res;
+}
+////////////////////////////////////////
+void solve() {
+    int n, k;
+    cin >> n >> k;
+    
+    multiset<int> a;
+    Rep(i, n) {
+        int x;
+        cin >> x;
+        a.insert(x);
+    }
+    
+    int l = 1, r = INF;
+    while (l < r) {
+        int m = (l + r) / 2;
+        
+        if (count(m, a) <= k) {
+            r = m;
+        } else {
+            l = m + 1;
+        }
+    }
+    
+    cout << l << nl;
+}
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////////
-    int n;
-    cin >> n;
-    
-    vector<vector<int>> a(1001, vector<int>(1001));
-    
-    Rep(i, n) {
-        int x, y, c;
-        cin >> x >> y >> c;
-        a[x + 400][y + 400] = c;
-    }
-    
-    vector<vector<int>> mk(1001, vector<int>(1001));
-    
-    int ans = 0;
-    For(i, 400, 800) {
-        For(j, 400, 800) {
-            if (!a[i][j]) continue;
-            For(k, 0, 200) {
-                if (a[i][j + k] == 0 || a[i][j + k] == a[i][j]) continue;
-                mk[i][j + k] |= bmask(a[i][j]);
-                mk[i][j + k] |= bmask(a[i][j + k]);
-            }
-        }
-    }
-    For(i, 400, 800) {
-        For(j, 400, 800) {
-            
-        }
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        solve();
     }
     ////////////////////
     return 0;

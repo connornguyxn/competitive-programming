@@ -47,7 +47,7 @@ const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
 const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
 
 // https://oj.vnoi.info/problem/paliny
-// string, binsearch
+// string, binsearch, hashing
 
 struct Hash {
     int n;

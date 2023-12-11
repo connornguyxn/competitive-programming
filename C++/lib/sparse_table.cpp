@@ -46,24 +46,24 @@ struct sparse_table {
     vector<vector<data_t>> st;
     cmp comp;
     
-    sparse_table(const vector<data_t> &a) {
+    sparse_table(const vector<data_t>& a) {
         n = a.size();
-        k = b_log2(n);
+        k = __lg(n);
         
         st.resize(k + 1, vector<data_t>(n));
         st[0] = a;
         
         
-        for (int i = 1; i <= k; i++){
-            for (int j = 0; j + b_mask(i) - 1 < n; j++) {
-                st[i][j] = comp(st[i - 1][j], st[i - 1][j + b_mask(i - 1)]);
+        for (int i = 1; i <= k; i++) {
+            for (int j = 0; j + bmask(i) - 1 < n; j++) {
+                st[i][j] = comp(st[i - 1][j], st[i - 1][j + bmask(i - 1)]);
             }
         }
     }
     
     data_t get(int l, int r) {
-        int i = b_log2(r - l + 1);
-        return comp(st[i][l], st[i][r - b_mask(i) + 1]);
+        int i = __lg(r - l + 1);
+        return comp(st[i][l], st[i][r - bmask(i) + 1]);
     }
 };
 ////////////////////////////////////////

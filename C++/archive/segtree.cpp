@@ -29,6 +29,47 @@ const ull MOD = 1e9 + 7;
 // segtree
 // <tags>
 
+struct segtree_classic {
+    int n;
+    vector<int> st;
+    
+    void build(const vector<int>& a, int tl, int tr, int tv = 1) {
+        if (tl == tr) {
+            st[tv] = a[tl];
+        } else {
+            int tm = (tl + tr) / 2;
+            build(a, tl, tm, tv * 2);
+            build(a, tm + 1, tr, tv * 2 + 1);
+            st[tv] = max(st[tv * 2], st[tv * 2 + 1]);
+        }
+    }
+    
+    segtree(const vector<int>& a) : n(a.size()), st(n * 4) {
+        build(a, 0, n - 1);
+    }
+    
+    void update(int p, int v, int tl = 0, int tr = -1, int tv = 1) {
+        if (tr < 0) tr = n - 1;
+        if (p < tl || tr < p) return;
+        if (tl == tr) {
+            st[tv] = v;
+        } else {
+            int tm = (tl + tr) / 2;
+            update(p, v, tl, tm, tv * 2);
+            update(p, v, tm + 1, tr, tv * 2 + 1);
+            st[tv] = max(st[tv * 2], st[tv * 2 + 1]);
+        }
+    }
+    
+    int get(int l, int r, int tl = 0, int tr = -1, int tv = 1) {
+        if (tr < 0) tr = n - 1;
+        if (r < tl || tr < l) return -INF;
+        if (l <= tl && tr <= r) return st[tv];
+        int tm = (tl + tr) / 2;
+        return max(get(l, r, tl, tm, tv * 2), get(l, r, tm + 1, tr, tv * 2 + 1));
+    }
+};
+
 struct segtree {
     int n;
     vector<ll> t;

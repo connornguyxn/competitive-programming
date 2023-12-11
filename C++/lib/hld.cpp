@@ -66,13 +66,11 @@ int hld_dfs(int cur) {
 void hld_decompose(int cur, int cur_head) {
     head[cur] = cur_head;
     pos[cur] = hld_cur_pos++;
-    // cout << cur << sp << head[cur] << nl;
     
     if (heavy[cur]) hld_decompose(heavy[cur], cur_head);
     
     for (int nxt : adj[cur]) {
         if (nxt == par[cur] || nxt == heavy[cur]) continue;
-        
         hld_decompose(nxt, nxt);
     }
 }

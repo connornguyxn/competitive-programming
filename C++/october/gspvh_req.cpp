@@ -46,7 +46,7 @@ void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
 // https://gspvh23.contest.codeforces.com/group/FIWwc7nF6c/contest/479930/problem/K
-// math
+// math, segtree
 
 int n, q;
 vector<ll> st;
@@ -54,7 +54,7 @@ vector<ll> st;
 struct Query {
     int l, r, id;
     bool operator<(Query oth) const {
-        return id < oth.id;
+        return r < oth.r;
     }
 };
 ////////////////////
@@ -70,12 +70,12 @@ struct Sieve {
             }
         }
     }
-} sieve(N);
+} sieve(N + 1);
 ////////////////////////////////////////
 void update(int p, ll v, int tl = 0, int tr = n - 1, int tv = 1) {
     if (tr < p || p < tl) return;
     if (tl == p && tr == p) {
-        st[tv] = v;
+        st[tv] = v % MOD;
     } else {
         int tm = (tl + tr) / 2;
         update(p, v, tl, tm, tv * 2);
@@ -86,14 +86,14 @@ void update(int p, ll v, int tl = 0, int tr = n - 1, int tv = 1) {
 ////////////////////
 ll query(int l, int r, int tl = 0, int tr = n - 1, int tv = 1) {
     if (r < tl || tr < l) return 1;
-    if (l <= tl && tr <= r) return st[tv];
+    if (l <= tl && tr <= r) return st[tv] % MOD;
     int tm = (tl + tr) / 2;
     return (query(l, r, tl, tm, tv * 2) * query(l, r, tm + 1, tr, tv * 2 + 1)) % MOD;
 }
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
-    // freopen(TASK".out", "w", stdout);
+    freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////////
     cin >> n >> n >> q >> MOD;
@@ -105,14 +105,14 @@ int main() {
         while (x > 1) {
             pii cur{sieve.spf[x], 1};
             while (x % cur.fi == 0) {
-                cur.se *= x;
+                cur.se *= cur.fi;
                 x /= cur.fi;
             }
             cur.se /= cur.fi;
             fact[i].push_back(cur);
         }
     }
-    print(fact);
+    // print(fact);
     
     vector<Query> qs(q);
     Rep(i, q) {
@@ -124,45 +124,48 @@ int main() {
     sort(all(qs));
     
     st.resize(n * 4, 1);
-    vector<int> pre(N, INF);
+    vector<int> pre(N, INF), rep(100);
     vector<ll> ans(q);
     int id = -1;
     
     Forin(cq, qs) {
-        vector<int> rep;
-        
         while (id < cq.r) {
             id++;
-            print("id", id);
-            ll cur = 1;
-            Forin(it, fact[id]) {
-                mul(cur, (it.fi - 1) * it.se);
-                if (pre[it.fi] < id) rep.push_back(pre[it.fi]);
-                pre[it.fi] = id;
-            }
-            update(id, cur);
-        }
-        
-        print("rep", rep);
-        sort(all(rep));
-        rep.erase(unique(all(rep)), rep.end());
-        
-        Forin(p, rep) {
-            ll cur = 1;
-            Forin(it, fact[p]) {
-                print("pre", it.fi, pre[it.fi]);
-                if (pre[it.fi] == id) {
+            // print("id", id);
+            
+            int cnt = 0;
+            if (fact[id].size()) {
+                ll cur = 1;
+                Forin(it, fact[id]) {
                     mul(cur, (it.fi - 1) * it.se);
-                } else {
-                    mul(cur, it.fi * it.se);
+                    if (pre[it.fi] < id) rep[cnt++] = pre[it.fi];
+                    pre[it.fi] = id;
                 }
+                update(id, cur);
             }
-            update(p, cur);
+            
+            // print("rep", rep);
+            sort(rep.begin(), rep.begin() + cnt);
+            cnt = unique(rep.begin(), rep.begin() + cnt) - rep.begin();
+            
+            Rep(i, cnt) {
+                int p = rep[i];
+                ll cur = 1;
+                Forin(it, fact[p]) {
+                    // print("pre", it.fi, pre[it.fi]);
+                    if (pre[it.fi] == p) {
+                        mul(cur, (it.fi - 1) * it.se);
+                    } else {
+                        mul(cur, it.se * it.fi);
+                    }
+                }
+                update(p, cur);
+            }
         }
         
         ans[cq.id] = query(cq.l, cq.r);
-        For(i, cq.l, cq.r) cout << query(i, i) << sp;
-        print();
+        // Rep(i, n) cout << query(i, i) << sp;
+        // print();
     }
     
     Forin(it, ans) cout << it << sp;

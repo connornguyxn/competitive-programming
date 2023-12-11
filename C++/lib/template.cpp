@@ -27,10 +27,9 @@ using pll = pair<ll, ll>;
 #define all(a) (a).begin(), (a).end()
 //* functions and macros
 #define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++) // repeat from 0 to n - 1
-#define Repd(i, n) for (int i = (n); i--; ) // repeat decreasing
+#define Repd(i, n) for (int i = (n); i--; ) // decreasing
 #define For(i, l, r) for (int i = (l), _r = (r); i <= _r; i++) // for l to r
-#define Fors(i, l, r) for (int i = (l), _r = (r); i < _r; i++) // for smaller
-#define Ford(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; ) // for decreasing
+#define Ford(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; ) // decreasing
 #define Forin(it, var) for (auto& it : var)
 // bitwise macros
 #define bmask(i) (1ULL << (i)) // bitmask
@@ -38,22 +37,21 @@ using pll = pair<ll, ll>;
 //* common constants
 const int N = 1e6; // array limit
 const ll MOD = 1e9 + 7;// common modulo
-const ull BASE = 311; // hashing base
 // maximum values for common data types
 // INFINITY cannot be used when combining multiple max values
 const int INF = 1e9 + 1;
 const ll INFLL = 1e18 + 1;
-// directions = left, up, right, down, upper_l, upper_r, lower_r, lower_l
-const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
-const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
-// using namespace chrono;
-// struct Timer : high_resolution_clock {
-//     const time_point start_time;
-//     Timer() : start_time(now()) {}
-//     rep elapsed() const {
-//         return duration_cast<milliseconds>(now() - start_time).count();
-//     }
-// } timer;
+//! right, down, left, up, lower right, lower left, upper left, upper right
+const int dv[] = {0, 1, 0, -1, 1, 1, -1, -1};
+const int dh[] = {1, 0, -1, 0, 1, -1, -1, 1};
+using namespace chrono;
+struct Timer : high_resolution_clock {
+    const time_point start_time;
+    Timer() : start_time(now()) {}
+    rep elapsed() const {
+        return duration_cast<milliseconds>(now() - start_time).count();
+    }
+} timer;
 // python input()
 // template <class T = int>
 // T inp() { T x; cin >> x; return x; }
@@ -73,15 +71,15 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 // https://codeforces.com/blog/entry/76149
-// template <int D, typename T>
-// struct vec : vector<vec<D - 1, T>> {
-//     template<typename... Args>
-//     vec(int n = 1, Args... args) : vector<vec<D - 1, T>>(n, vec<D - 1, T>(args...)) {}
-// };
-// template<typename T>
-// struct vec<1, T> : vector<T> {
-//     vec(int n = 0, const T& val = T()) : vector<T>(n, val) {}
-// };
+template <typename T, int D>
+struct vec : vector<vec<T, D - 1>> {
+    template <typename... Args>
+    vec(int n = 0, Args... args) : vector<vec<T, D - 1>>(n, vec<T, D - 1>(args...)) {}
+};
+template <typename T>
+struct vec<T, 1> : vector<T> {
+    vec(int n = 0, const T& val = T()) : vector<T>(n, val) {}
+};
 
 //! <problem link>
 //! <tags>

@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "adn"
+    #define TASK "clis"
 #endif
 using namespace std;
 using ll = long long;
@@ -19,7 +19,6 @@ using pll = pair<ll, ll>;
 #define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++)
 #define Repd(i, n) for (int i = (n); i--; )
 #define For(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
-#define Fors(i, l, r) for (int i = (l), _r = (r); i < _r; i++)
 #define Ford(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; )
 #define Forin(it, var) for (auto& it : var)
 #define bmask(i) (1ULL << (i))
@@ -29,8 +28,16 @@ const ll MOD = 1e9 + 7;
 const ull BASE = 311;
 const int INF = 1e9 + 1;
 const ll INFLL = 1e18 + 1;
-const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
-const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
+const int dv[] = {0, 1, 0, -1, 1, 1, -1, -1};
+const int dh[] = {1, 0, -1, 0, 1, -1, -1, 1};
+using namespace chrono;
+struct Timer : high_resolution_clock {
+    const time_point start_time;
+    Timer() : start_time(now()) {}
+    rep elapsed() const {
+        return duration_cast<milliseconds>(now() - start_time).count();
+    }
+} timer;
 template <class... T>
 void print(T&&... n) {
     using exp = int[];
@@ -44,59 +51,51 @@ bool mnmz(T &a, T b) { return b < a ? a = b, 1 : 0; }
 void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
+template <int D, typename T>
+struct vec : vector<vec<D - 1, T>> {
+    template <typename... Args>
+    vec(int n = 0, Args... args) : vector<vec<D - 1, T>>(n, vec<D - 1, T>(args...)) {}
+};
+template <typename T>
+struct vec<1, T> : vector<T> {
+    vec(int n = 0, const T& val = T()) : vector<T>(n, val) {}
+};
 
-// https://oj.vnoi.info/problem/voi23_adn
-// greedy, dp
+// https://oj.vnoi.info/contest/chvpt_dtqg_kt_1/ranking/
+// greedy
 
 ////////////////////////////////////////
 ////////////////////////////////////////
 int main() {
-    freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".inp", "r", stdin);
     // freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////////
-    str s;
-    cin >> s;
-    int n = s.size();
-    
-    if (n == 1) return !(cout << 0);
-    if (s[0] == '?') s[0] = s[1];
-    if (s[n - 1] == '?') s[n - 1] = s[n - 2];
-    For(i, 1, n - 2) {
-        if (s[i] == '?' && s[i - 1] == s[i + 1]) s[i] = s[i - 1];
-    }
-    
-    str a{sp};
-    vector<ll> cnt(1);
-    a.reserve(n + 1);
-    cnt.reserve(n + 1);
-    
+    int n;
+    cin >> n;
+    vector<int> a(n * 2);
     Rep(i, n) {
-        if (s[i] == a.back()) {
-            cnt.back()++;
+        cin >> a[i];
+        a[i + n] = a[i];
+    }
+    
+    int cnt = 1;
+    pii ans = {0, 0};
+    
+    For(i, 1, n * 2 - 1) {
+        if (a[i] >= a[i - 1]) {
+            if (cnt < n) cnt++;
         } else {
-            a.push_back(s[i]);
-            cnt.push_back(1);
+            if (cnt > ans.se - ans.fi + 1) {
+                ans = {i - cnt, i - 1};
+            }
+            cnt = 1;
         }
     }
-    n = a.size() - 1;
-    
-    vector<ll> dp(n + 1);
-    For(i, 1, n) {
-        cnt[i] += cnt[i - 1];
-        
-        char cur = '?';
-        for (int j = i; a[j] == '?' || cur == '?' || a[j] == cur; j--) {
-            ll sum = cnt[i] - cnt[j - 1];
-            mxmz(dp[i], dp[j - 1] + sum * sum);
-            if (cur == '?') cur = a[j];
-        }
+    if (cnt > ans.se - ans.fi + 1) {
+        ans = {n - cnt, n - 1};
     }
-    print(a);
-    print(cnt);
-    print(dp);
-    
-    cout << (dp[n]) / 2;
+    cout << ans.fi + 1 << sp << ans.se % n + 1;
     ////////////////////
     return 0;
 }

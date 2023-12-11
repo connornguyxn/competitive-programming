@@ -3,7 +3,7 @@
     #define TASK "test"
 #else
     #include <bits/stdc++.h>
-    #define TASK "paint"
+    #define TASK "3b"
 #endif
 using namespace std;
 using ll = long long;
@@ -45,53 +45,44 @@ void add(ll &a, ll b) { a = (a + b) % MOD; }
 void sub(ll &a, ll b) { a = (a + MOD - b) % MOD; }
 void mul(ll &a, ll b) { a = a * (b % MOD) % MOD; }
 
-// https://lqdoj.edu.vn/problem/lqdoj2023r8paint
-// <tags>
+// https://tbhnptlcqntn2023.contest.codeforces.com/group/ZosfxzdjkV/contest/485583/problem/B
+// 2ptrs
 
-////////////////////////////////////////
 ////////////////////////////////////////
 int main() {
     freopen(TASK".inp", "r", stdin);
     // freopen(TASK".out", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     ////////////////////
-    int n, one, two;
-    cin >> n >> one >> two;
+    int n, w;
+    cin >> n >> w;
     
-    vector<int> a(n + 1);
-    For(i, 1, n) {
-        cin >> a[i];
+    vector<pii> a(n);
+    Rep(i, n) {
+        cin >> a[i].fi;
+        a[i].se = i;
+    }
+    sort(all(a));
+    
+    ll ans = 0;
+    vector<int> b;
+    b.reserve(n);
+    
+    For(j, 1, n - 2) {
+        For(i, 0, j - 1) {
+            if (a[i].se < a[j].se && a[i].fi < a[j].fi) b.push_back(a[i].fi);
+        }
+        
+        For(k, j + 1, n - 1) {
+            if (a[j].se > a[k].se || a[j].fi == a[k].fi) continue;
+            while (b.size() && b.back() > w - a[j].fi - a[k].fi) b.pop_back();
+            ans += b.size();
+        }
+        
+        b.clear();
     }
     
-    auto ok = [&](int w) {
-        vector<vector<pii>> dp(n + 1, vector<pii>(2));
-        
-        For(r, 1, n) {
-            dp[r][0] = dp[r][1] = {INF, INF};
-            for (int l = r; l > 0 && a[r] - a[l] < w * 2; l--) {
-                if (a[r] - a[l] < w) {
-                    if (dp[l - 1][0].fi <= two && dp[l - 1][0].se < one) mnmz(dp[r][1], {dp[l - 1][0].fi, dp[l - 1][0].se + 1});
-                    if (dp[l - 1][1].fi <= two && dp[l - 1][1].se < one) mnmz(dp[r][1], {dp[l - 1][1].fi, dp[l - 1][1].se + 1});
-                }
-                if (dp[l - 1][0].fi < two && dp[l - 1][0].se <= one) mnmz(dp[r][0], {dp[l - 1][0].fi + 1, dp[l - 1][0].se});
-                if (dp[l - 1][1].fi < two && dp[l - 1][1].se <= one) mnmz(dp[r][0], {dp[l - 1][1].fi + 1, dp[l - 1][1].se});
-            }
-        }
-        // print(dp);
-        
-        return dp[n][0].fi < INF || dp[n][1].fi < INF;
-    };
-    
-    int al = 0, ar = INF;
-    while (al < ar) {
-        int am = (al + ar) / 2;
-        if (ok(am)) {
-            ar = am;
-        } else {
-            al = am + 1;
-        }
-    }
-    cout << al;
+    cout << ans;
     ////////////////////
     return 0;
 }

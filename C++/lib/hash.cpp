@@ -8,7 +8,7 @@ struct Hash {
         mod = _mod;
         
         p[0] = 1;
-        Fore(i, 1, n) {
+        For(i, 1, n) {
             p[i] = p[i - 1] * base % mod;
             a[i] = (a[i - 1] * base + (ll)s[i - 1]) % mod;
         }

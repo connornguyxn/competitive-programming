@@ -72,7 +72,7 @@
                 "-x",
                 "c++",
                 "-DTHEMIS",
-                // "-Wl,-z,stack-size=66060288",
+                // "-Wl,--stack,1677721",
                 "${file}",
                 "-o",
                 "${fileDirname}\\a.exe",
