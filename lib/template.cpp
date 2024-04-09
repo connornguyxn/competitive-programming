@@ -1,9 +1,12 @@
 // note: include headers *after* compile options
 #include "bits/stdc++.h"
+#if DEBUG
     #define TASK "test" // define local task name
+#else
     // #pragma GCC optimize("O3") // safest optimization
     // #pragma GCC target("sse4.2") // SIMD instruction optimization
-    #define TASK "<task name>" // define task name
+    #define TASK "<task name>"
+#endif
 //* aliases
 using namespace std; // use standard namespace for faster access
 using ll = long long;

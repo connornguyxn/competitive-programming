@@ -32,7 +32,6 @@ for line in template_lines:
 
 
 
-
 if (exists(newfile_name + '.cpp')):
     inp = input('File exists. Overwrite? (y/n): ')
     if (inp == 'y'):
