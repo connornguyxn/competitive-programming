@@ -1,14 +1,9 @@
-# exclude all extensionless files
-*
-!*/
-!*.*
-
-*.out
+*.o
 *.exe
 *.gch
 *.inp
 *.out
-*.o
+*.ans
+/*.cpp
 
-etc/
-**/archive/*/
+/archive/**/

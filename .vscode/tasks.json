@@ -40,6 +40,7 @@
                 
                 //* other args
                 // not nessessary for on-site cp or already handled by IDE
+                "-Wl,--stack,66060288",
                 "-fdiagnostics-color=always",
                 "-ggdb3",
                 "${file}",
@@ -72,7 +73,7 @@
                 "-x",
                 "c++",
                 "-DTHEMIS",
-                // "-Wl,--stack,1677721",
+                "-Wl,--stack,66060288",
                 "${file}",
                 "-o",
                 "${fileDirname}\\a.exe",

@@ -1,3 +1,3 @@
 # What is this?
 
-This repository is for storing and sharing my written code from competitive programming websites.
+This repository is for storing and sharing all of my written code from my CP journey.

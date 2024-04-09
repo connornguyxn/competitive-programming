@@ -1,6 +1,0 @@
-var n:int64;
-///////////////////////////////////////
-begin
-readln(n);
-writeln(n);
-end.
