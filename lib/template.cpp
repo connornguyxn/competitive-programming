@@ -1,6 +1,6 @@
 // note: include headers *after* compile options
 #include "bits/stdc++.h"
-#if DEBUG
+#ifdef LOCAL
     #define TASK "test" // define local task name
 #else
     // #pragma GCC optimize("O3") // safest optimization
@@ -18,6 +18,7 @@ using pll = pair<ll, ll>;
 #define se second
 #define nl '\n' // saving time by not flushing cout buffer
 #define sp ' '
+#define dr(a) (*(a)) // dereferencing a variable, reduce clutter
 #define all(a) (a).begin(), (a).end()
 //* functions and macros
 #define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++) // repeat from 0 to n - 1
@@ -74,10 +75,10 @@ void print(T&&... n) {
 ////////////////////////////////////////!
 int main() {
     // assign standard input/output to file streams
-    if (fopen(TASK".inp", "r")) {
-        freopen(TASK".inp", "r", stdin);
-        //! freopen(TASK".out", "w", stdout);
-    }
+    freopen(TASK".inp", "r", stdin);
+    #ifndef LOCAL
+        freopen(TASK".out", "w", stdout);
+    #endif
     // desync cin from cout and C++ from C input
     cin.tie(0)->sync_with_stdio(0); // new and shorter version
     ////////////////////!
