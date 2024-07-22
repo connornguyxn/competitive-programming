@@ -7,5 +7,6 @@
 /*.cpp
 
 lib/etc/
-/archive/**/
-!/archive/Pascal
+archive/
+!/archive/pascal
+!/archive/cpp
