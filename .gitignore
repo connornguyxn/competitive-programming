@@ -6,5 +6,6 @@
 *.ans
 /*.cpp
 
+lib/etc/
 /archive/**/
 !/archive/Pascal

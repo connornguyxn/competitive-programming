@@ -2,7 +2,7 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "(inf) C/C++: g++ build active file (Debug Build)",
+            "label": "Build active file (Debug Build)",
             "command": "g++",
             "args": [
                 "-std=c++14",
@@ -11,44 +11,34 @@
                 // enable most of the important warnings
                 "-Wall",
                 "-Wextra",
-                "-pedantic",
-                "-Wshadow",
-                "-Wformat=2",
-                "-Wfloat-equal",
-                "-Wconversion",
-                "-Wlogical-op",
-                "-Wshift-overflow=2",
-                "-Wduplicated-cond",
-                "-Wcast-qual",
-                "-Wcast-align",
+                // "-pedantic",
+                // "-Wshadow",
+                // "-Wformat=2",
+                // "-Wfloat-equal",
+                // "-Wconversion",
+                // "-Wlogical-op",
+                // "-Wshift-overflow=2",
+                // "-Wduplicated-cond",
+                // "-Wcast-qual",
+                // "-Wcast-align",
                 
                 //* https://codeforces.com/blog/entry/15547
                 // compiler debug macros
                 "-D_GLIBCXX_DEBUG",
                 "-D_GLIBCXX_DEBUG_PEDANTIC",
-                // "-D_FORTIFY_SOURCE=2", // (unix-only)
-                
-                // sanitizer options (unix-only)
-                // "-fsanitize=address",
-                // "-fsanitize=undefined",
-                // "-fno-sanitize-recover",
-                // "-fstack-protector",
                 
                 // universal replacements for a sanitizer
                 // "-lmcheck",
                 // "-ftrapv",
                 
-                //* other args
-                // not nessessary for on-site cp or already handled by IDE
                 "-Wl,--stack,66060288",
                 "-fdiagnostics-color=always",
-                "-ggdb3",
                 "${file}",
                 "-o",
-                "${fileDirname}\\a.exe",
+                "${workspaceFolder}\\a.exe",
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
@@ -57,11 +47,14 @@
                 "kind": "build",
                 "isDefault": true
             },
+            "presentation": {
+                "showReuseMessage": false
+            }
             "detail": "compiler: g++"
         },
         {
             "type": "cppbuild",
-            "label": "(inf) C/C++: g++ build active file (Themis Build)",
+            "label": "Build active file (Themis Build)",
             "command": "g++",
             "args": [
                 "-std=c++14",
@@ -76,19 +69,40 @@
                 "-Wl,--stack,66060288",
                 "${file}",
                 "-o",
-                "${fileDirname}\\a.exe",
+                "${workspaceFolder}\\${fileBasenameNoExtension}.exe",
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
             ],
             "group": {
                 "kind": "test",
-                "isDefault": false
+                "isDefault": true
             },
-            "detail": "compiler: g++"
+            "detail": "compiler: g++, with Themis flags"
+        },
+        {
+            "type": "shell",
+            "label": "Run a.exe",
+            "command": ".\\a.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+        },
+        {
+            "label": "Rescan workspace",
+            "command": "${command:C_Cpp.RescanWorkspace}"
+        },
+        {
+            "label": "Build and run active file",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Rescan workspace",
+                "Build active file (Debug Build)",
+                "Run a.exe",
+            ],
         },
     ],
 
