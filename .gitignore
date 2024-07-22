@@ -7,6 +7,4 @@
 /*.cpp
 
 lib/etc/
-archive/
-!/archive/pascal
-!/archive/cpp
+archive/contests/
