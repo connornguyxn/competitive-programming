@@ -1,65 +1,72 @@
-#if DEBUG
-    #include "lib/include/debug.h"
-    #define TASK "test"
-#else
-    #include <bits/stdc++.h>
-    #define TASK "mixpotions"
-#endif
+#include "bits/stdc++.h"
 using namespace std;
-#define ll long long
-#define ull unsigned long long
-#define pii pair<int, int>
-#define pll pair<long long, long long>
+using ll = long long;
+using ull = unsigned long long;
+using str = string;
+using pii = pair<int, int>;
+using pll = pair<ll, ll>;
 #define fi first
 #define se second
-#define str string
 #define nl '\n'
 #define sp ' '
-#define all(var) (var).begin(), (var).end()
-#define Rep(i, n) for (int i = 0, _n = (n); i < _n; i++)
-#define Repd(i, n) for (int i = (n); i--; )
-#define Fors(i, l, r) for (int i = (l), _r = (r); i < _r; i++)
-#define Forsd(i, r, l) for (int i = (r), _l = (l); --i >= _l; )
-#define For(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
-#define Ford(i, r, l) for (int i = (r) + 1, _l = (l); --i >= _l; )
-#define Forin(it, var) for (auto it : var)
-#define bmask(i) (1ULL << (i))
-#define bget(mask, i) ((mask >> (i)) & 1)
-#define blog(n) (63 - __builtin_clzll(n))
-template <class T = int>
-T inp() { T x; cin >> x; return x; }
+#define all(a) (a).begin(), (a).end()
+#define FOR(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
+#define FORD(i, r, l) for (int i = (r), _l = (l); i >= _l; i--)
+#define FORIN(it, a) for (auto& it : a)
+#define bmask(i) (1LL << (i))
+#define bget(i, n) ((n) >> (i) & 1)
+#define bon(i, n) ((n) | bmask(i))
+#define boff(i, n) ((n) & ~bmask(i))
+const ll MOD = 1e9 + 7;
+const int INF = 0x3f3f3f3f;
+const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const ull N = 1e6 + 3;
+template <class T>
+using vector2 = vector<vector<T>>;
+template <class T>
+using vector3 = vector<vector2<T>>;
+template <class T, class... C>
+void assign(int n, T v, C&&... a) {
+    using e = int[];
+    e{(a.assign(n, v), 0)...};
+}
+template <class... C>
+void resize(int n, C&&... a) {
+    using e = int[];
+    e{(a.resize(n), 0)...};
+}
 template <class... T>
-void print(T&&... n) {
-    using exp = int[];
-    exp{0, (cout << n << sp, 0)...};
+void print(T&&... a) {
+    cout << "[debug] ";
+    using e = int[];
+    e{(cout << a << sp, 0)...};
     cout << endl;
 }
-template <class T>
-void mxmz(T &a, T b) { a = max(a, b); }
-template <class T>
-void mnmz(T &a, T b) { a = min(a, b); }
-const int N = 1e6;
-const ull MOD = 1e9 + 7;
-const ull BASE = 311;
-const int INF = 1e9 + 1;
-const ll INFLL = 1e18 + 1;
-const int dx[8] = {0, -1, 0, 1, -1, -1, 1, 1};
-const int dy[8] = {-1, 0, 1, 0, -1, 1, 1, -1};
+template <class Ch, class Tr, class C>
+basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& cout, C& a) {
+    cout << "{ ";
+    FORIN(it, a) cout << it << sp;
+    return cout << "}";
+}
+template <class T1, class T2>
+ostream& operator<<(ostream& cout, pair<T1, T2>& a) {
+    return cout << '(' << a.fi << sp << a.se << ')';
+}
 
 // https://lqdoj.edu.vn/problem/lqdoj2023r1mixpotion
-// bitwise, incomplete
+// bitwise
 
 int n;
 ll k;
 vector<ll> a;
-////////////////////////////////////////
-struct sub1 {
-    sub1() {
+////////////////////////////////////////////////////////////////////////////////
+namespace sub1 {
+    void main() {
         vector<ll> ans;
         ans.reserve(n * (n + 1) / 2);
         
-        Rep(i, n - 1) {
-            Fors(j, i + 1, n) {
+        FOR(i, 0, n - 2) {
+            FOR(j, i + 1, n - 1) {
                 ans.push_back(a[i] ^ a[j]);
             }
         }
@@ -67,18 +74,56 @@ struct sub1 {
         sort(all(ans));
         cout << ans[k - 1] << nl;
     }
-};
-////////////////////////////////////////
+}
+////////////////////////////////////////////////////////////////////////////////
+namespace sub3 {
+    void main() {
+        sort(all(a));
+        map<ll, ll> cnt;
+        FORIN(it, a) {
+            cnt[__lg(it)]++;
+        }
+        
+        vector<pll> a;
+        FORIN(it, cnt) {
+            a.push_back(it);
+        }
+        n = a.size() - 1;
+        
+        ll cur = 0;
+        FORIN(it, a) {
+            cur += it.se * (it.se - 1) / 2;
+        }
+        if (k <= cur) {
+            cout << 0;
+            return;
+        }
+        
+        FOR(i, 1, n) {
+            FOR(j, 0, i - 1) {
+                cur += a[j].se * a[i].se;
+                if (k <= cur) {
+                    cout << (bmask(a[i].fi) ^ bmask(a[j].fi));
+                    return;
+                }
+            }
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
 int main() {
+    // #define TASK "test"
+    #define TASK "mixpotions"
     freopen(TASK".inp", "r", stdin);
     freopen(TASK".out", "w", stdout);
-    cin.tie(0)->sync_with_stdio(0);
-    ////////////////
+    cin.tie(nullptr)->sync_with_stdio(false);
+    ////////////////////////////////////////
     cin >> n >> k;
-    a.resize(n);
-    Rep(i, n) cin >> a[i];
     
-    sub1();
-    ////////////////
-    return 0;
+    resize(n, a);
+    FORIN(it, a) cin >> it;
+    
+    if (n <= 5000) return sub1::main(), 0;
+    return sub3::main(), 0;
+    ////////////////////////////////////////
 }

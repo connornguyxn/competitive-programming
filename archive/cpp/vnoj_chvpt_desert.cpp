@@ -32,6 +32,7 @@ template<typename tVar, typename tVal>
 void mxmz(tVar &var, tVal val) { if (val > var) var = val; }
 
 // https://oj.vnoi.info/problem/chvpt_quang_contest1_desert
+// https://codeforces.com/problemset/problem/1526/C2
 // dp
 
 ////////////////////////////////////////

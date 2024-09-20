@@ -81,4 +81,5 @@
         "typeinfo": "cpp"
     },
     "python.analysis.typeCheckingMode": "basic",
+    "C_Cpp.errorSquiggles": "disabled",
 }

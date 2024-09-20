@@ -1,12 +1,77 @@
 {
     "tasks": [
         {
+            "label": "Run Python file",
+            "command": "python ${file}",
+            "type": "shell",
+            
+            "group": {
+                "kind": "build",
+                "isDefault": "**/*.py"
+            },
+        },
+        {
             "type": "cppbuild",
             "label": "Build active file (Debug Build)",
             "command": "g++",
             "args": [
                 "-std=c++14",
-                "-DLOCAL",
+                
+                // enable most of the important warnings
+                "-Wall",
+                "-Wextra",
+                "-pedantic",
+                // "-Wshadow",
+                // "-Wformat=2",
+                // "-Wfloat-equal",
+                // "-Wconversion",
+                // "-Wlogical-op",
+                // "-Wshift-overflow=2",
+                // "-Wduplicated-cond",
+                // "-Wcast-qual",
+                // "-Wcast-align",
+                
+                // show included headers
+                // "-H",
+                
+                //* https://codeforces.com/blog/entry/15547
+                // compiler debug macros
+                "-D_GLIBCXX_DEBUG",
+                "-D_GLIBCXX_DEBUG_PEDANTIC",
+                
+                // universal replacements for a sanitizer
+                // "-lmcheck",
+                // "-ftrapv",
+                
+                // increasing stack size
+                "-Wl,--stack=66060288",
+                
+                "-fdiagnostics-color=always",
+                "${file}",
+                "-o",
+                "test.exe",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": "**/*.cpp"
+            },
+            "presentation": {
+                "showReuseMessage": false
+            }
+            "detail": "compiler: g++"
+        },
+        {
+            "type": "cppbuild",
+            "label": "Build active file at location (Debug Build)",
+            "command": "g++",
+            "args": [
+                "-std=c++14",
                 
                 // enable most of the important warnings
                 "-Wall",
@@ -22,6 +87,9 @@
                 // "-Wcast-qual",
                 // "-Wcast-align",
                 
+                // show included headers
+                // "-H",
+                
                 //* https://codeforces.com/blog/entry/15547
                 // compiler debug macros
                 "-D_GLIBCXX_DEBUG",
@@ -31,11 +99,13 @@
                 // "-lmcheck",
                 // "-ftrapv",
                 
-                "-Wl,--stack,66060288",
+                // increasing stack size
+                "-Wl,--stack=66060288",
+                
                 "-fdiagnostics-color=always",
                 "${file}",
                 "-o",
-                "${workspaceFolder}\\a.exe",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -45,7 +115,7 @@
             ],
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": "**/*.cpp"
             },
             "presentation": {
                 "showReuseMessage": false
@@ -69,7 +139,7 @@
                 "-Wl,--stack,66060288",
                 "${file}",
                 "-o",
-                "${workspaceFolder}\\${fileBasenameNoExtension}.exe",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -85,10 +155,15 @@
         },
         {
             "type": "shell",
-            "label": "Run a.exe",
-            "command": ".\\a.exe",
+            "label": "Run test.exe at root",
+            "command": "${workspaceFolder}\\test.exe",
+        },
+        {
+            "type": "shell",
+            "label": "Run .exe at location",
+            "command": ".\\${fileBasenameNoExtension}.exe",
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${fileDirname}"
             },
         },
         {
@@ -96,12 +171,19 @@
             "command": "${command:C_Cpp.RescanWorkspace}"
         },
         {
+            "label": "Build and run active file at root",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build active file (Debug Build)",
+                "Run test.exe",
+            ],
+        },
+        {
             "label": "Build and run active file",
             "dependsOrder": "sequence",
             "dependsOn": [
-                "Rescan workspace",
-                "Build active file (Debug Build)",
-                "Run a.exe",
+                "Build active file at location (Debug Build)",
+                "Run .exe at location",
             ],
         },
     ],

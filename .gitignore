@@ -6,5 +6,5 @@
 *.ans
 /*.cpp
 
-lib/etc/
+templates/etc/
 archive/contests/
