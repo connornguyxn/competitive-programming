@@ -1,4 +1,4 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
@@ -14,15 +14,13 @@ using vector3 = vector<vector2<T>>;
 #define nl '\n'
 #define sp ' '
 #define all(a) (a).begin(), (a).end()
-#define lnode (tv * 2)
-#define rnode (tv * 2 + 1)
-#define FOR(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
-#define FORD(i, r, l) for (int i = (r), _l = (l); i >= _l; i--)
+#define tvl (tv * 2)
+#define tvr (tv * 2 + 1)
+#define FOR(i, l, r) for (ll i = (l), _r = (r); i <= _r; i++)
+#define FORD(i, r, l) for (ll i = (r), _l = (l); i >= _l; i--)
 #define FORIN(it, a) for (auto& it : a)
 #define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
-#define bon(i, n) ((n) | bmask(i))
-#define boff(i, n) ((n) & ~bmask(i))
 const ll MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
@@ -36,17 +34,6 @@ void resize(int n, C&&... a) {
     using e = int[];
     e{(a.resize(n), 0)...};
 }
-template <class T, class... T2>
-void mnmz(T& a, T2&&... b) {
-    a = min({a, b...});
-}
-template <class T, class... T2>
-void mxmz(T& a, T2&&... b) {
-    a = max({a, b...});
-}
-void add(ll& a, ll b) { a = (a + b) % MOD; }
-void sub(ll& a, ll b) { a = (a + MOD * MOD - b) % MOD; }
-void mul(ll& a, ll b) { a = a * (b % MOD) % MOD; }
 ////////////////////////////////////////
 template <class... T>
 void print(T&&... a) {
@@ -65,51 +52,73 @@ template <class T1, class T2>
 ostream& operator<<(ostream& cout, pair<T1, T2> a) {
     return cout << '(' << a.fi << sp << a.se << ')';
 }
+void logtime() {
+    cout << flush;
+    clog << nl << "[time] " << clock() * 1.0 / CLOCKS_PER_SEC << nl;
+}
 
-// a
-// <tags>
+
+// f
+// tree, dp, easy
+
 
 int n;
-ll s, t;
+ll c;
+vector2<int> adj;
 vector<ll> a;
 ////////////////////////////////////////////////////////////////////////////////
+namespace subf {
+    vector2<ll> dp;
+    ////////////////////////////////////////
+    void solve(int cur, int pre) {
+        dp[cur] = {0, a[cur]};
+        
+        FORIN(nxt, adj[cur]) if (nxt != pre) {
+            solve(nxt, cur);
+            
+            if (max(dp[nxt][1], dp[nxt][0]) > 0) {
+                dp[cur][0] += max(dp[nxt][1], dp[nxt][0]);
+            }
+            if (max(dp[nxt][1] - c * 2, dp[nxt][0]) > 0) {
+                dp[cur][1] += max(dp[nxt][1] - c * 2, dp[nxt][0]);
+            }
+        }
+    }
+    ////////////////////////////////////////
+    void main() {
+        cin >> n >> c;
+        
+        a.resize(n + 1);
+        FOR(i, 1, n) {
+            cin >> a[i];
+        }
+        
+        adj.assign(n + 1, {});
+        FOR(i, 1, n - 1) {
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        
+        dp.resize(n + 1, vector<ll>(2));
+        solve(1, 0);
+        cout << max(dp[1][0], dp[1][1]) << nl;
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////
 int main() {
-    #define TASK "test"
-    // #define TASK "a"
+    #define TASK "f"
     // freopen(TASK".inp", "r", stdin);
     // freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false);
+    // atexit(logtime);
     ////////////////////////////////////////
-    cin >> n >> s >> t;
+    int tc = 1;
+    cin >> tc;
     
-    resize(n + 1, a);
-    FOR(i, 1, n) cin >> a[i];
-    
-    vector<pll> b;
-    FOR(i, 1, n) {
-        if ((a[i] | t) == t) {
-            b.push_back({a[i], i});
-        }
-    }
-    
-    sort(all(b), [&](pll x, pll y) {
-        return __builtin_popcountll(x.fi & t) > __builtin_popcountll(y.fi & t);
-    });
-    
-    vector<ll> ans;
-    FOR(i, 0, b.size() - 1) {
-        if ((s | b[i].fi) != s) {
-            s |= b[i].fi;
-            ans.push_back(b[i].se);
-        }
-    }
-    
-    if (s == t) {
-        cout << ans.size() << nl;
-        FORIN(it, ans) cout << it << sp;
-    } else {
-        cout << -1;
+    while (tc--) {
+        subf::main();
     }
     ////////////////////////////////////////
 }

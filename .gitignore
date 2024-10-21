@@ -8,3 +8,7 @@
 
 templates/etc/
 archive/contests/
+
+contests/
+todo/
+workspace/

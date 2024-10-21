@@ -25,7 +25,7 @@ struct DSU {
         return par[u] = root(par[u]);
     }
     ////////////////////////////////////////
-    bool merge(int u, int v) {
+    bool join(int u, int v) {
         u = root(u); v = root(v);
         if (u == v) return false;
         if (par[u] > par[v]) swap(u, v);

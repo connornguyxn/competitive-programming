@@ -23,8 +23,8 @@ using namespace std;
 const int LIM = 1e6;
 const ull MOD = 1e9 + 7;
 
-// <problem link>
-// <tags>
+// https://oj.vnoi.info/submission/6977511
+// dp
 
 ///////////////////////////////////////
 // fuck lambda function, anh em tao overload :D

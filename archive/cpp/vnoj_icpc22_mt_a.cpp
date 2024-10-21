@@ -34,7 +34,7 @@ void resize(int n, C&&... a) {
     using e = int[];
     e{(a.resize(n), 0)...};
 }
-////////////////////////////////////////!
+////////////////////////////////////////
 template <class... T>
 void print(T&&... a) {
     cout << flush;
@@ -58,35 +58,52 @@ void logtime() {
 }
 
 
-mt19937 rng(time(nullptr));
-template <class T>
-T rand(T l, T r) {
-    return uniform_int_distribution<T>(l, r)(rng);
+// https://oj.vnoi.info/problem/icpc22_mt_a
+// dp
+
+int n, k;
+str a;
+////////////////////////////////////////////////////////////////////////////////
+namespace subf {
+    int dp[301][301][301][2];
+    ////////////////////////////////////////
+    int solve(int l, int r, int cnt0, int cnt1, bool turn) {
+        if (cnt0 == k) return 0;
+        if (cnt1 == k) return 1;
+        
+        int& res = dp[l][r][cnt0][turn];
+        if (res != -1) return res;
+        res = 0;
+        
+        if (turn == 0) {
+            res |= solve(l + 1, r, cnt0 + (a[l] == 'B'), cnt1, !turn);
+            res |= solve(l, r - 1, cnt0 + (a[r] == 'B'), cnt1, !turn);
+        } else {
+            res |= !solve(l + 1, r, cnt0, cnt1 + (a[l] == 'B'), !turn);
+            res |= !solve(l, r - 1, cnt0, cnt1 + (a[r] == 'B'), !turn);
+        }
+        res ^= turn;
+        
+        return res;
+    }
+    ////////////////////////////////////////
+    void main() {
+        a = sp + a;
+        memset(dp, -1, sizeof(dp));
+        cout << (solve(1, n, 0, 0, 0) ? "YES" : "NO");
+    }
 }
-////////////////////////////////////////!
-#define TASK "<task>"
-////////////////////////////////////////!
-void gen() {
-    ofstream cout(TASK".inp");
-    
-    
-}
-////////////////////////////////////////!
-bool check() {
-    system(TASK"_bf.exe");
-    system("move " TASK".out " TASK".ans");
-    system(TASK".exe");
-    return system("fc.exe " TASK".out " TASK".ans");
-}
-////////////////////////////////////////////////////////////////////////////////!
+////////////////////////////////////////////////////////////////////////////////
 int main() {
+    #define TASK "vnoj_icpc22_mt_a"
+    freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false);
     atexit(logtime);
-    ////////////////////////////////////////!
-    int tc = 1000;
-    FOR(t, 1, tc) {
-        gen();
-        if (check()) return 0;
-    }
-    ////////////////////////////////////////!
+    ////////////////////////////////////////
+    cin >> n >> k;
+    cin >> a;
+    
+    return subf::main(), 0;
+    ////////////////////////////////////////
 }

@@ -54,7 +54,7 @@ ostream& operator<<(ostream& cout, pair<T1, T2>& a) {
 }
 
 // https://oj.vnoi.info/problem/voi19_aspal
-// dp
+// dp, incomplete
 
 str p, q;
 ll dp[50000][2][2][1024];

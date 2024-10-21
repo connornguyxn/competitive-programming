@@ -1,4 +1,4 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
@@ -16,8 +16,8 @@ using vector3 = vector<vector2<T>>;
 #define all(a) (a).begin(), (a).end()
 #define tvl (tv * 2)
 #define tvr (tv * 2 + 1)
-#define FOR(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
-#define FORD(i, r, l) for (int i = (r), _l = (l); i >= _l; i--)
+#define FOR(i, l, r) for (ll i = (l), _r = (r); i <= _r; i++)
+#define FORD(i, r, l) for (ll i = (r), _l = (l); i >= _l; i--)
 #define FORIN(it, a) for (auto& it : a)
 #define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
@@ -52,88 +52,92 @@ template <class T1, class T2>
 ostream& operator<<(ostream& cout, pair<T1, T2> a) {
     return cout << '(' << a.fi << sp << a.se << ')';
 }
+void logtime() {
+    cout << flush;
+    clog << nl << "[time] " << clock() * 1.0 / CLOCKS_PER_SEC << nl;
+}
 
-// https://codeforces.com/group/OgDyRcm8ue/contest/550507
-// <tags>
 
-struct Path {
-    int n;
-    ll w, maxdist = 0;
-    bool operator<(const Path& o) const {
-        return w > o.w;
-    }
-};
-int n, m, k;
-vector2<Path> adj;
-vector<pii> pts;
+// cf_29d
+// shorting, tree, eulertour
+
+int n;
+vector2<int> adj;
+vector<int> ord;
 ////////////////////////////////////////////////////////////////////////////////
 namespace subf {
-    bool checksub() {
-        return true;
+    vector<int> pos;
+    ////////////////////////////////////////
+    int dfs(int cur, int pre) {
+        vector<pii> path;
+        FORIN(nxt, adj[cur]) if (nxt != pre) {
+            int leaf = dfs(nxt, cur);
+            path.push_back({leaf, nxt});
+        }
+        
+        adj[cur].clear();
+        if (path.empty()) return cur;
+        
+        sort(all(path), [&](pii a, pii b) {
+            return pos[a.fi] < pos[b.fi];
+        });
+        
+        FORIN(it, path) adj[cur].push_back(it.se);
+        
+        return path[0].fi;
     }
     ////////////////////////////////////////
+    vector<int> tour, visit;
+    void travel(int cur) {
+        tour.push_back(cur);
+        if (adj[cur].empty()) visit.push_back(cur);
+        
+        FORIN(nxt, adj[cur]) {
+            travel(nxt);
+            tour.push_back(cur);
+        }
+    }
     ////////////////////////////////////////
     void main() {
-        vector<ll> dist(n + 1, INFLL);
-        dist[n] = 0;
-        priority_queue<Path> pq;
-        pq.push({n, 0});
+        resize(n + 1, pos);
         
-        while (pq.size()) {
-            Path cur = pq.top();
-            pq.pop();
-            
-            FORIN(nxt, adj[cur.n]) {
-                if (dist[nxt.n] > cur.w + nxt.w) {
-                    dist[nxt.n] = cur.w + nxt.w;
-                    pq.push({nxt.n, dist[nxt.n]});
-                }
-            }
+        FOR(i, 0, ord.size() - 1) {
+            pos[ord[i]] = i + 1;
         }
         
-        vector<ll> dist2(n + 1, INFLL);
-        FORIN(it, pts) {
-            dist2[it.fi] = dist[it.fi];
-            pq.push({it.fi, dist[it.fi], it.se});
-        }
+        dfs(1, 0);
+        travel(1);
         
-        while (pq.size()) {
-            Path cur = pq.top();
-            pq.pop();
-            
-            FORIN(nxt, adj[cur.n]) {
-                if (dist2[nxt.n] > cur.w + nxt.w && cur.w + nxt.w - dist2[nxt.n] <= cur.maxdist) {
-                    dist2[nxt.n] = cur.w + nxt.w;
-                    pq.push({nxt.n, dist2[nxt.n], cur.maxdist});
-                }
-            }
+        if (visit == ord) {
+            FORIN(it, tour) cout << it << sp;
+        } else {
+            cout << -1;
         }
-        // print(dist2);
-        
-        FOR(i, 1, n - 1) cout << (dist2[i] < INFLL) << nl;
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
 int main() {
-    #define TASK "test"
-    // #define TASK "a"
+    #define TASK "cf_29d"
     freopen(TASK".inp", "r", stdin);
-    freopen(TASK".out", "w", stdout);
+    // freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false);
+    atexit(logtime);
     ////////////////////////////////////////
-    cin >> n >> m >> k;
+    cin >> n;
     
     resize(n + 1, adj);
-    FOR(i, 1, n) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        adj[u].push_back({v, w});
-        adj[v].push_back({u, w});
+    FOR(i, 2, n) {
+        int u, v;
+        cin >> u >> v;
+        adj[v].push_back(u);
+        adj[u].push_back(v);
     }
     
-    resize(k, pts);
-    FORIN(it, pts) cin >> it.fi >> it.se;
+    int x;
+    while (cin >> x) {
+        ord.push_back(x);
+    }
     
-    if (subf::checksub()) return subf::main(), 0;
+    return subf::main(), 0;
     ////////////////////////////////////////
 }

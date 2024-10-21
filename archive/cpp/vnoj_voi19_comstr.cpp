@@ -54,7 +54,7 @@ void print(T&&... a) {
 // }
 
 // https://oj.vnoi.info/problem/voi19_comstr
-// strings
+// strings, incomplete
 
 int n, n1, n2, r;
 str s, s1, s2;

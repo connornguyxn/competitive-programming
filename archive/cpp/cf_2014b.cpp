@@ -19,7 +19,7 @@ using vector3 = vector<vector2<T>>;
 #define FOR(i, l, r) for (ll i = (l), _r = (r); i <= _r; i++)
 #define FORD(i, r, l) for (ll i = (r), _l = (l); i >= _l; i--)
 #define FORIN(it, a) for (auto& it : a)
-#define bmask(i) (1 << (i))
+#define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
 const ll MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
@@ -34,14 +34,13 @@ void resize(int n, C&&... a) {
     using e = int[];
     e{(a.resize(n), 0)...};
 }
-////////////////////////////////////////!
+////////////////////////////////////////
 template <class... T>
 void print(T&&... a) {
-    cout << flush;
-    clog << "\n[debug] ";
+    cout << "[debug] ";
     using e = int[];
-    e{(clog << a << sp, 0)...};
-    clog << endl;
+    e{(cout << a << sp, 0)...};
+    cout << endl;
 }
 template <class Ch, class Tr, class C>
 basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& cout, C a) {
@@ -54,39 +53,43 @@ ostream& operator<<(ostream& cout, pair<T1, T2> a) {
     return cout << '(' << a.fi << sp << a.se << ')';
 }
 void logtime() {
-    print("[time]", clock() * 1.0 / CLOCKS_PER_SEC);
+    cout << flush;
+    clog << nl << "[time] " << clock() * 1.0 / CLOCKS_PER_SEC << nl;
 }
 
 
-mt19937 rng(time(nullptr));
-template <class T>
-T rand(T l, T r) {
-    return uniform_int_distribution<T>(l, r)(rng);
+// b
+// math, easy
+
+////////////////////////////////////////////////////////////////////////////////
+namespace subf {
+    ll n, k;
+    ////////////////////////////////////////
+    void main() {
+        cin >> n >> k;
+        
+        ll l = n - k + 1;
+        l += !(l % 2);
+        ll cnt = (n >= l ? (n - l) / 2 + 1 : 0);
+        
+        // print(l, n, cnt);
+        
+        cout << (cnt % 2 ? "NO" : "YES") << nl;
+    }
 }
-////////////////////////////////////////!
-#define TASK "<task>"
-////////////////////////////////////////!
-void gen() {
-    ofstream cout(TASK".inp");
-    
-    
-}
-////////////////////////////////////////!
-bool check() {
-    system(TASK"_bf.exe");
-    system("move " TASK".out " TASK".ans");
-    system(TASK".exe");
-    return system("fc.exe " TASK".out " TASK".ans");
-}
-////////////////////////////////////////////////////////////////////////////////!
+////////////////////////////////////////////////////////////////////////////////
 int main() {
+    #define TASK "b"
+    // freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false);
     atexit(logtime);
-    ////////////////////////////////////////!
-    int tc = 1000;
-    FOR(t, 1, tc) {
-        gen();
-        if (check()) return 0;
+    ////////////////////////////////////////
+    int tc = 1;
+    cin >> tc;
+    
+    while (tc--) {
+        subf::main();
     }
-    ////////////////////////////////////////!
+    ////////////////////////////////////////
 }
