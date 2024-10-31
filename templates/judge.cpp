@@ -16,8 +16,8 @@ using vector3 = vector<vector2<T>>;
 #define all(a) (a).begin(), (a).end()
 #define tvl (tv * 2)
 #define tvr (tv * 2 + 1)
-#define FOR(i, l, r) for (ll i = (l), _r = (r); i <= _r; i++)
-#define FORD(i, r, l) for (ll i = (r), _l = (l); i >= _l; i--)
+#define FOR(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
+#define FORD(i, r, l) for (int i = (r), _l = (l); i >= _l; i--)
 #define FORIN(it, a) for (auto& it : a)
 #define bmask(i) (1 << (i))
 #define bget(i, n) ((n) >> (i) & 1)
@@ -34,7 +34,7 @@ void resize(int n, C&&... a) {
     using e = int[];
     e{(a.resize(n), 0)...};
 }
-////////////////////////////////////////!
+////////////////////////////////////////
 template <class... T>
 void print(T&&... a) {
     cout << flush;
@@ -58,35 +58,50 @@ void logtime() {
 }
 
 
+////////////////////////////////////////////////////////////////////////////////
 mt19937 rng(time(nullptr));
 template <class T>
 T rand(T l, T r) {
     return uniform_int_distribution<T>(l, r)(rng);
 }
-////////////////////////////////////////!
+////////////////////////////////////////
+template <class... C>
+void readf(ifstream& cin, C&&... a) {
+    using e = int[];
+    e{(cin >> a, 0)...};
+}
+#define readout(...) readf(out, __VA_ARGS__)
+#define readans(...) readf(ans, __VA_ARGS__)
+////////////////////////////////////////////////////////////////////////////////
 #define TASK "<task>"
-////////////////////////////////////////!
+////////////////////////////////////////
 void gen() {
-    ofstream cout(TASK".inp");
+    ofstream cout(TASK".inp"); // dirty, but easier to write
+    
     
     
 }
-////////////////////////////////////////!
-bool check() {
-    system(TASK"_bf.exe");
+////////////////////////////////////////
+void check() {
+    system(TASK"_.exe"); // bruteforce code
     system("move " TASK".out " TASK".ans");
     system(TASK".exe");
-    return system("fc.exe " TASK".out " TASK".ans");
+    //! ifstream out(TASK".out");
+    //! ifstream ans(TASK".ans");
+    
+    assert(system("fc.exe " TASK".out " TASK".ans") == 0);
 }
-////////////////////////////////////////////////////////////////////////////////!
+////////////////////////////////////////////////////////////////////////////////
 int main() {
     cin.tie(nullptr)->sync_with_stdio(false);
     atexit(logtime);
-    ////////////////////////////////////////!
+    ////////////////////////////////////////
     int tc = 1000;
     FOR(t, 1, tc) {
+        print("Running on test", t);
         gen();
-        if (check()) return 0;
+        print("Test generated");
+        check();
     }
-    ////////////////////////////////////////!
+    ////////////////////////////////////////
 }

@@ -61,58 +61,50 @@ void logtime() {
 }
 
 
-// https://imgur.com/a/2FUDlMO
-// segtree, digit dp
+// https://cses.fi/problemset/task/1188
+// segtree
 
-int n, s, q;
-vector<array<ll, 3>> qs;
+int n;
+vector<int> a;
+int q;
+vector<int> qs;
 ////////////////////////////////////////////////////////////////////////////////
 namespace sub1 {
-    int m;
-    ll pow10[10];
     ////////////////////////////////////////
-    ll get_digit(int i, ll n) {
-        return n / pow10[i] % 10;
-    }
-    ////////////////////////////////////////
-    bool valid(ll n) {
-        if (n % s == 0) return 1;
-        while (n) {
-            if (n % 10 == s) return 1;
-            n /= 10;
-        }
-        return 0;
-    }
-    ////////////////////////////////////////
-    vector3<pll> dp; // {sum, count}
-    ////////////////////////////////////////
-    pll get_sum_valid(const ll& n, int idx = 9, bool low = 0, ll mod = 0, bool included = 0) {
-        if (idx < 0) return {0, (mod == 0 || included)};
-        
-        pll& mem = dp[idx][mod][included];
-        if (low && mem.fi != -1) return mem;
-        pll res = {0, 0};
-        
-        int d = get_digit(idx, n);
-        FOR(i, 0, (low ? 9 : d)) {
-            pll nxt = get_sum_valid(n, idx - 1, low || i < d, (mod * 10 + i) % s, included || i == s);
-            res.fi += nxt.fi;
-            res.se += nxt.se;
-            res.fi += pow10[idx] * i * nxt.se;
+    struct Node {
+        int best = -1;
+        int pre[2], suf[2], size;
+        ////////////////////////////////////////
+        friend Node operator+(const Node& ln, const Node& rn) {
+            Node res;
+            
+            res.best = max(ln.best, rn.best);
+            res.size = ln.size + rn.size;
+            
+            FOR(i, 0, 1) {
+                res.pre[i] = ln.pre[i] + (ln.pre[i] == ln.size ? rn.pre[i] : 0);
+                res.suf[i] = rn.suf[i] + (rn.suf[i] == rn.size ? ln.suf[i] : 0);
+                res.best = max(res.best, ln.suf[i] + rn.pre[i]);
+            }
+            
+            return res;
         }
         
-        return low ? mem = res : res;
-    }
+    };
     ////////////////////////////////////////
     struct Segtree {
-        vector<ll> st;
+        vector<Node> st;
         Segtree() {
-            st.assign(m * 4, 0);
+            st.assign(n * 4, Node());
         }
         ////////////////////////////////////////
-        void update(int p, ll v, int tl = 0, int tr = m - 1, int tv = 1) {
+        void update(int p, int v, int tl = 1, int tr = n, int tv = 1) {
             if (tl == tr) {
-                st[tv] = v;
+                st[tv] = Node();
+                st[tv].best = 1;
+                st[tv].pre[v] = 1;
+                st[tv].suf[v] = 1;
+                st[tv].size = 1;
                 return;
             }
             int tm = (tl + tr) / 2;
@@ -120,46 +112,19 @@ namespace sub1 {
             else update(p, v, tm + 1, tr, tvr);
             st[tv] = st[tvl] + st[tvr];
         }
-        ////////////////////////////////////////
-        ll get(int l, int r, int tl = 0, int tr = m - 1, int tv = 1) {
-            if (tr < l || r < tl) return 0;
-            if (l <= tl && tr <= r) return st[tv];
-            int tm = (tl + tr) / 2;
-            return get(l, r, tl, tm, tvl) + get(l, r, tm + 1, tr, tvr);
-        }
     };
     ////////////////////////////////////////
     void main() {
-        vector<int> zip;
-        FORIN(it, qs) {
-            zip.push_back(it[1]);
-            if (it[0] == 2) zip.push_back(it[2]);
-        }
-        sort(all(zip));
-        zip.erase(unique(all(zip)), zip.end());
-        unordered_map<int, int> pos;
-        m = zip.size();
-        FOR(i, 0, m - 1) {
-            pos[zip[i]] = i;
-        }
+        Segtree st;
         
-        pow10[0] = 1;
-        FOR(i, 1, 9) pow10[i] = pow10[i - 1] * 10;
-        
-        dp.assign(10, vector2<pll>(10, vector<pll>(2, {-1, -1})));
-        Segtree delta;
+        FOR(i, 1, n) {
+            st.update(i, a[i]);
+        }
         
         FORIN(cq, qs) {
-            if (cq[0] == 1) {
-                ll p = cq[1], c = cq[2];
-                delta.update(pos[p], (c - p) * (1 + valid(p)));
-            } else {
-                ll l = cq[1], r = cq[2];
-                ll res = (l + r) * (r - l + 1) / 2;
-                res += get_sum_valid(r).fi - get_sum_valid(l - 1).fi;
-                res += delta.get(pos[l], pos[r]);
-                cout << res << nl;
-            }
+            a[cq] ^= 1;
+            st.update(cq, a[cq]);
+            cout << st.st[1].best << sp;
         }
     }
     void run() {
@@ -169,18 +134,24 @@ namespace sub1 {
 }
 ////////////////////////////////////////////////////////////////////////////////
 int main() {
-    #define TASK "sdseq"
-    freopen(TASK".inp", "r", stdin);
-    freopen(TASK".out", "w", stdout);
+    #define TASK "cses_1188"
+    // freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false);
     atexit(logtime);
     ////////////////////////////////////////
-    cin >> n >> s >> q;
+    str s;
+    cin >> s;
     
-    resize(q, qs);
-    FORIN(it, qs) {
-        cin >> it[0] >> it[1] >> it[2];
+    n = s.size();
+    resize(n + 1, a);
+    FOR(i, 1, n) {
+        a[i] = s[i - 1] - '0';
     }
+    
+    cin >> q;
+    resize(q, qs);
+    FORIN(it, qs) cin >> it;
     
     sub1::run();
     ////////////////////////////////////////

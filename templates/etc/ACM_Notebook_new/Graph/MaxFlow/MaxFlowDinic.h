@@ -70,7 +70,7 @@ private:
         return d[t] != -1;
     }
 
-    int dfs (int v, int flow) {
+    int dfs(int v, int flow) {
         if (!flow) return 0;
         if (v == t) return flow;
         for (; ptr[v] < (int)g[v].size(); ++ptr[v]) {

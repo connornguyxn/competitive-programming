@@ -24,9 +24,10 @@ for site, prefix in site_prefixes.items():
         newfile_name = prefix + '_' + newfile_name
         break
 
-is_judge = '_judge' in newfile_name
+is_judge = newfile_name[-1] == '_'
 if is_judge:
-    newfile_name = newfile_name.replace('_judge', '')
+    print('Judge file detected.')
+    newfile_name = newfile_name[:-1]
 
 placeholders = {
     '<problem link>': problem_link,
@@ -43,7 +44,7 @@ def parse(template_lines):
         if line.count('//!'):
             line = line.replace('//!', '//')
         else:
-            if (line.count('//')):
+            if (line.count('///') == 0 and line.count('//')):
                 line = line[:line.find('//')].rstrip()
                 if line == '':
                     continue

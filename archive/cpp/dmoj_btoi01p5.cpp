@@ -57,6 +57,7 @@ ostream& operator<<(ostream& cout, pair<T1, T2> a) {
 }
 
 // https://dmoj.ca/problem/btoi01p5
+// https://oj.vnoi.info/problem/area
 // sweepline, segtree, classic, adhoc
 
 struct Line {
