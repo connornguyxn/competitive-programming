@@ -74,36 +74,9 @@
             "command": "g++",
             "args": [
                 "-std=c++14",
-                
-                // enable most of the important warnings
                 "-Wall",
                 "-Wextra",
-                // "-pedantic",
-                // "-Wshadow",
-                // "-Wformat=2",
-                // "-Wfloat-equal",
-                // "-Wconversion",
-                // "-Wlogical-op",
-                // "-Wshift-overflow=2",
-                // "-Wduplicated-cond",
-                // "-Wcast-qual",
-                // "-Wcast-align",
-                
-                // show included headers
-                // "-H",
-                
-                //* https://codeforces.com/blog/entry/15547
-                // compiler debug macros
-                // "-D_GLIBCXX_DEBUG",
-                // "-D_GLIBCXX_DEBUG_PEDANTIC",
-                
-                // universal replacements for a sanitizer
-                // "-lmcheck",
-                // "-ftrapv",
-                
-                // increasing stack size
                 "-Wl,--stack=66060288",
-                
                 "-fdiagnostics-color=always",
                 "${file}",
                 "-o",
