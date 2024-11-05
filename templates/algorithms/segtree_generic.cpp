@@ -1,13 +1,21 @@
-struct Node {
-    
-    ////////////////////////////////////////
-    friend Node operator+(const Node& lnode, const Node& rnode) {
-        Node res;
-        
-    }
-};
-////////////////////////////////////////
+#include "../template.cpp"
+
+int n;
+
 struct Segtree {
+    struct Node {
+        
+        ////////////////////////////////////////
+        friend Node operator+(const Node& ln, const Node& rn) {
+            // check if node not in range, return the other
+            
+            Node res;
+            
+            
+            
+            return res;
+        }
+    };
     vector<Node> st;
     Segtree() {
         st.assign(n * 4, Node());

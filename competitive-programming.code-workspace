@@ -1,12 +1,12 @@
 {
 	"folders": [
         {
-            "name": "competitive-programming",
-            "path": "."
-        },
-        {
             "name": "2024",
             "path": "E:/competitive-programming-archive/dtqg/2024"
+        },
+        {
+            "name": "competitive-programming",
+            "path": "."
         },
         {
             "name": "todo",

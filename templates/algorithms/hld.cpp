@@ -1,5 +1,7 @@
+#include "../template.cpp"
+
 int n, q;
-vector<vector<int>> adj;
+vector2<int> adj;
 ////////////////////////////////////////
 struct Node {
     int cnt = 0, l = -1, r = -1;
@@ -56,7 +58,7 @@ int hld_dfs(int cur) {
         par[nxt] = cur;
         depth[nxt] = depth[cur] + 1;
         int cnt = hld_dfs(nxt);
-        if (mxmz(mx, cnt)) hev[cur] = nxt;
+        if (maximize(mx, cnt)) hev[cur] = nxt;
         res += cnt;
     }
     return res;
@@ -84,6 +86,7 @@ int hld_get(int u, int v) {
     }
     
     if (depth[u] > depth[v]) swap(u, v);
+    // idx[u] + 1 if path query
     return res + st_get(idx[u], idx[v]).cnt;
 }
 ////////////////////
@@ -95,5 +98,6 @@ void hld_update(int u, int v, int val) {
     }
     
     if (depth[u] > depth[v]) swap(u, v);
+    // idx[u] + 1 if path query
     st_update(idx[u], idx[v], val);
 }

@@ -10,13 +10,12 @@
             "    void main() {",
             "        ",
             "    }",
-            "    void run() {",
-            "        main();",
-            "        exit(0);",
+            "    bool run() {",
+            "        return main(), 1;",
             "    }",
             "}"
         ],
-        "description": "Subtask namespace with main and run functions"
+        "description": "Subtask namespace"
     },
     "Big section break": {
         "prefix": "bbreak",

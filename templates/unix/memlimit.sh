@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-# $1 is process name
-# $2 is memory limit in MB
+# $1 = process name
+# $2 = memory limit in MB
 
 if [ $# -ne 2 ];
 then

@@ -4,11 +4,8 @@
 *.inp
 *.out
 *.ans
-/*.cpp
 
-templates/etc/
-archive/contests/
+templates/external/
 
-contests/
 todo/
 workspace/

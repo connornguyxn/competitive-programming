@@ -9,23 +9,35 @@ template <class T>
 using vector2 = vector<vector<T>>;
 template <class T>
 using vector3 = vector<vector2<T>>;
+#define sp ' '
+#define nl '\n'
 #define fi first
 #define se second
-#define nl '\n'
-#define sp ' '
-#define all(a) (a).begin(), (a).end()
+#define size(a) ((int)(a).size())
+#define all(a) begin(a), end(a)
 #define tvl (tv * 2)
 #define tvr (tv * 2 + 1)
 #define FOR(i, l, r) for (int i = (l), _r = (r); i <= _r; i++)
 #define FORD(i, r, l) for (int i = (r), _l = (l); i >= _l; i--)
 #define FORIN(it, a) for (auto& it : a)
-#define bmask(i) (1 << (i))
+#define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
 const ll MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+void addmod(ll& a, ll b) { a = (a + b % MOD) % MOD; }
+void submod(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
+void mulmod(ll& a, ll b) { a = a * (b % MOD) % MOD; }
 template <class T, class... C>
-void assign(int n, T v, C&&... a) {
+void minimize(T& a, C&&... v) {
+    a = min<T>({a, v...});
+}
+template <class T, class... C>
+void maximize(T& a, C&&... v) {
+    a = max<T>({a, v...});
+}
+template <class T, class... C>
+void assign(int n, const T& v, C&&... a) {
     using e = int[];
     e{(a.assign(n, v), 0)...};
 }
@@ -56,6 +68,7 @@ ostream& operator<<(ostream& cout, pair<T1, T2> a) {
 void logtime() {
     print("[time]", clock() * 1.0 / CLOCKS_PER_SEC);
 }
+
 
 
 ////////////////////////////////////////////////////////////////////////////////

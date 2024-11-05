@@ -1,6 +1,9 @@
+#include "../template.cpp"
+
+
 struct Segtree {
     int n;
-    vector<int> st;
+    vector<ll> st;
     Segtree(int _n) : n(_n), st(n * 4, INFLL) {}
     ////////////////////////////////////////
     void update(int p, int v, int tl, int tr, int tv) {
@@ -17,13 +20,13 @@ struct Segtree {
         update(p, v, 0, n - 1, 1);
     }
     ////////////////////////////////////////
-    int get(int l, int r, int tl, int tr, int tv) {
+    ll get(int l, int r, int tl, int tr, int tv) {
         if (tr < l || r < tl) return INFLL;
         if (l <= tl && tr <= r) return st[tv];
         int tm = (tl + tr) / 2;
         return min(get(l, r, tl, tm, tvl), get(l, r, tm + 1, tr, tvr));
     }
-    int get(int l, int r) {
+    ll get(int l, int r) {
         return get(l, r, 0, n - 1, 1);
     }
 };

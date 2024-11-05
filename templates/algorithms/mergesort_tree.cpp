@@ -1,3 +1,8 @@
+#include "../template.cpp"
+
+int n;
+vector<int> val;
+
 struct Segtree {
     vector2<ll> st;
     ////////////////////////////////////////
