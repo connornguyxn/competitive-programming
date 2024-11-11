@@ -93,3 +93,4 @@ else:
     file_basepath = f'{folder_path}/{newfile_name}'
     create_file(file_basepath + '.cpp', template_lines)
     create_file(file_basepath + '.inp', [])
+    create_file(file_basepath + '.ans', [])

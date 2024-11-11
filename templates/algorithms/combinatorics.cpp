@@ -69,6 +69,7 @@ ostream& operator<<(ostream& cout, pair<T1, T2> a) {
 // combinatorics
 
 
+const int N = 1e6;
 
 array<ll, N + 1> fact, ifact;
 ////////////////////////////////////////////////////////////////////////////////

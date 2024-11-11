@@ -12,6 +12,9 @@
             "label": "Create new file from template",
             "command": "python .\\new_file.py",
             "type": "shell",
+            "presentation": {
+                "focus": true,
+            },
         },
         {
             "type": "cppbuild",

@@ -1,11 +1,7 @@
-// #pragma GCC optimize("O3") // safest optimization
-// #pragma GCC target("sse4.2") // SIMD instruction optimization
-// include headers after compile options
-#include <bits/stdc++.h> // replaced with custom header, see `templates/stdc++.h`
+#include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
 using ull = unsigned long long;
-// using db = double;
 using str = string;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
@@ -26,9 +22,7 @@ using vector3 = vector<vector2<T>>;
 #define FORIN(it, a) for (auto& it : a)
 #define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
-const ll MOD = 1e9 + 7; // common modulo
-// maximum values for common data types
-// INFINITY cannot be used when combining multiple max values
+const ll MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 void addmod(ll& a, ll b) { a = (a + b % MOD) % MOD; }
@@ -42,7 +36,6 @@ template <class T, class... C>
 void maximize(T& a, C&&... v) {
     a = max<T>({a, v...});
 }
-// parameter pack expansion: https://stackoverflow.com/a/25683817
 template <class T, class... C>
 void assign(int n, const T& v, C&&... a) {
     using e = int[];
@@ -54,7 +47,6 @@ void resize(int n, C&&... a) {
     e{(a.resize(n), 0)...};
 }
 ////////////////////////////////////////
-// debug printing
 template <class... T>
 void print(T&&... a) {
     cout << flush;
@@ -63,7 +55,6 @@ void print(T&&... a) {
     e{(clog << a << sp, 0)...};
     clog << endl;
 }
-// container printing: https://codeforces.com/blog/entry/68920
 template <class Ch, class Tr, class C>
 basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& cout, C a) {
     cout << "{ ";
@@ -79,8 +70,8 @@ void logtime() {
 }
 
 
-//! <problem link>
-//! <tags>
+// cf_2036d
+// basic, implementation
 
 
 
@@ -89,7 +80,42 @@ namespace sub1 {
     ////////////////////////////////////////
     ////////////////////////////////////////
     void main() {
+        int n, m;
+        cin >> n >> m;
         
+        vector2<int> a(n + 1, vector<int>(m + 1));
+        FOR(i, 1, n) {
+            FOR(j, 1, m) {
+                char c;
+                cin >> c;
+                a[i][j] = c - '0';
+            }
+        }
+        
+        int cnt = 0;
+        
+        FOR(l, 0, min(n, m) / 2 - 1) {
+            vector<int> cur;
+            
+            FOR(i, 1 + l, m - l) {
+                cur.push_back(a[l + 1][i]);
+            }
+            FOR(i, 2 + l, n - l - 1) {
+                cur.push_back(a[i][m - l]);
+            }
+            FORD(i, m - l, 1 + l) {
+                cur.push_back(a[n - l][i]);
+            }
+            FORD(i, n - l - 1, 2 + l) {
+                cur.push_back(a[i][l + 1]);
+            }
+            
+            FOR(i, 0, size(cur) - 1) {
+                cnt += (cur[i] == 1 && cur[(i + 1) % size(cur)] == 5 && cur[(i + 2) % size(cur)] == 4 && cur[(i + 3) % size(cur)] == 3);
+            }
+        }
+        
+        cout << cnt << nl;
     }
     bool run() {
         return main(), 1;
@@ -97,18 +123,18 @@ namespace sub1 {
 }
 ////////////////////////////////////////////////////////////////////////////////
 int main() {
-    #define TASK "<task>"
-    freopen(TASK".inp", "r", stdin);
-    //! freopen(TASK".out", "w", stdout);
-    cin.tie(nullptr)->sync_with_stdio(false); // desync cin from cout and C++ from C input
-    // cout << fixed << setprecision(12); // set floating point precision
-    atexit(logtime); // log time at exit
+    #define TASK "cf_2036d"
+    // freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".out", "w", stdout);
+    cin.tie(nullptr)->sync_with_stdio(false);
+    atexit(logtime);
     ////////////////////////////////////////
+    int tc;
+    cin >> tc;
     
-    
-    if (sub1::run()) return 0;
+    FOR(ct, 1, tc) {
+        sub1::run();
+    }
     ////////////////////////////////////////
-    // for good measure :)
-    // return 0+0-0*0/~0&0|0^0;
     return 0;
 }
