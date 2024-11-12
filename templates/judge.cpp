@@ -22,9 +22,9 @@ using vector3 = vector<vector2<T>>;
 #define FORIN(it, a) for (auto& it : a)
 #define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
-const ll MOD = 1e9 + 7;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
+const ll MOD = 1e9 + 7;
 void addmod(ll& a, ll b) { a = (a + b % MOD) % MOD; }
 void submod(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
 void mulmod(ll& a, ll b) { a = a * (b % MOD) % MOD; }
@@ -111,7 +111,7 @@ int main() {
     ////////////////////////////////////////
     int tc = 1000;
     FOR(t, 1, tc) {
-        print("Running on test", t);
+        print("////////////////////////////////////////");
         gen();
         print("Test generated");
         check();

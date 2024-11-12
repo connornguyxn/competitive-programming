@@ -4,7 +4,7 @@
 #include <bits/stdc++.h> // replaced with custom header, see `templates/stdc++.h`
 using namespace std;
 using ll = long long;
-using ull = unsigned long long;
+// using ull = unsigned long long;
 // using db = double;
 using str = string;
 using pii = pair<int, int>;
@@ -26,14 +26,14 @@ using vector3 = vector<vector2<T>>;
 #define FORIN(it, a) for (auto& it : a)
 #define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
-const ll MOD = 1e9 + 7; // common modulo
 // maximum values for common data types
 // INFINITY cannot be used when combining multiple max values
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-void addmod(ll& a, ll b) { a = (a + b % MOD) % MOD; }
-void submod(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
-void mulmod(ll& a, ll b) { a = a * (b % MOD) % MOD; }
+const ll MOD = 1e9 + 7; // common modulo
+void addm(ll& a, ll b) { a = (a + b % MOD) % MOD; }
+void subm(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
+void mulm(ll& a, ll b) { a = a * (b % MOD) % MOD; }
 template <class T, class... C>
 void minimize(T& a, C&&... v) {
     a = min<T>({a, v...});
@@ -102,7 +102,7 @@ int main() {
     //! freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false); // desync cin from cout and C++ from C input
     // cout << fixed << setprecision(12); // set floating point precision
-    atexit(logtime); // log time at exit
+    atexit(logtime);
     ////////////////////////////////////////
     
     

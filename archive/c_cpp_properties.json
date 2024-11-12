@@ -10,13 +10,13 @@
                 "path": [
                     "C:/MinGW/lib/gcc/mingw32/9.2.0/include"
                 ],
-                "limitSymbolsToIncludedHeaders": true,
+                "limitSymbolsToIncludedHeaders": true
             },
             "includePath": [
                 "C:/MinGW/lib/gcc/mingw32/9.2.0/include"
             ],
             "cStandard": "c11",
-            "cppStandard": "c++14",
+            "cppStandard": "c++14"
         }
     ],
     "version": 4

@@ -1,10 +1,6 @@
 {
 	"folders": [
         {
-            "name": "2024",
-            "path": "E:/competitive-programming-archive/dtqg/2024"
-        },
-        {
             "name": "competitive-programming",
             "path": "."
         },
@@ -18,6 +14,19 @@
         }
     ],
     "settings": {
+        // "C_Cpp.default.configurationProvider": "ms-vscode.cpptools",
+        "C_Cpp.default.includePath": [
+            "C:/MinGW/lib/gcc/mingw32/9.2.0/include"
+        ],
+        "C_Cpp.default.browse.path": [
+            "C:/MinGW/lib/gcc/mingw32/9.2.0/include"
+        ],
+        "C_Cpp.default.browse.limitSymbolsToIncludedHeaders": true,
+        "C_Cpp.default.cppStandard": "c++14",
+        "C_Cpp.default.defines": [
+            "UNICODE",
+            "_UNICODE"
+        ],
         "files.associations": {
             "*.inp": "plaintext",
             "*.out": "plaintext",
@@ -98,6 +107,6 @@
             "scoped_allocator": "cpp",
             "typeindex": "cpp",
             "typeinfo": "cpp"
-        }
+        },
     }
 }
