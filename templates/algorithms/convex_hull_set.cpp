@@ -1,3 +1,6 @@
+#include "../template.cpp"
+
+
 struct Line {
     mutable ll k, m, p;
     bool operator < (const Line& o) const {
@@ -43,4 +46,4 @@ struct ConvexHull : multiset<Line, less<>> {
         Line l = *lower_bound(x);
         return l.k * x + l.m;
     }
-} cvh;
+};

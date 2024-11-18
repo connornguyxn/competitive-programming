@@ -10,7 +10,7 @@ int find_flow(const int &s, const int &e, int exc = -1) {
     fill(par.begin(), par.end(), -1);
     par[s] = -2;
     deque<pair<int, int>> q;
-    q.push_front({s, INT_MAX});
+    q.push_front({s, INFINITY});
     
     while (!q.empty()) {
         int cur = q.back().first;

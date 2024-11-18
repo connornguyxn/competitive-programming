@@ -93,7 +93,6 @@ void tarjan(int cur) {
     
     if (low[cur] == tin[cur]) {
         scc++;
-        
         int u;
         do {
             u = stk.back();

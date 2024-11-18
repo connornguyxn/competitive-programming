@@ -3,10 +3,15 @@
 int n;
 vector2<int> adj;
 
+
+
+
 int timer, lg;
 vector<int> tin, tout;
 vector2<int> up;
-////////////////////////////////////////
+
+
+
 void dfs(int cur, int pre) {
     tin[cur] = ++timer;
     
@@ -34,7 +39,9 @@ int lca(int u, int v) {
     }
     return up[0][u];
 }
-////////////////////////////////////////
+
+
+
 void prep() {
     timer = 0;
     lg = __lg(n);

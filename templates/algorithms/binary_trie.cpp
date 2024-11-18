@@ -1,8 +1,29 @@
 #include "../template.cpp"
 
+
+
 struct BinaryTrie {
     unique_ptr<BinaryTrie> adj[2];
     ll cnt = 0, sum = 0;
+    ////////////////////////////////////////
+    void clear() {
+        adj[0].reset();
+        adj[1].reset();
+        cnt = 0;
+    }
+    ////////////////////////////////////////
+    int max_xor(int val, int idx = 30) {
+        if (idx < 0) {
+            return 0;
+        }
+        int b = bget(idx, val);
+        assert(adj[0] || adj[1]);
+        
+        if (adj[b ^ 1]) {
+            return adj[b ^ 1]->max_xor(val, idx - 1) | bmask(idx);
+        }
+        return adj[b]->max_xor(val, idx - 1);
+    }
     ////////////////////////////////////////
     void insert(const int& val, const int& bit = 31) {
         cnt++;
@@ -15,7 +36,7 @@ struct BinaryTrie {
         adj[b]->insert(val, bit - 1);
     }
     ////////////////////////////////////////
-    ll sum_leq(const int& val, const int& bit = 31) {
+    ll sum_leq(const int& val, const int& bit = 31) { // unsigned int only
         if (bit < 0) return sum;
         
         int b = bit == 31 ? val >= 0 : bget(bit, val);

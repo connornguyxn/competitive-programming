@@ -1,4 +1,3 @@
-
 #if DEBUG
     #include "include/debug.h"
     #pragma GCC optimize("trapv")

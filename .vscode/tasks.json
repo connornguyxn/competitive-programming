@@ -1,57 +1,23 @@
 {
     "tasks": [
         {
-            "label": "Run Python file",
-            "command": "python ${file} && exit",
-            "type": "shell",
-            "group": {
-                "kind": "build",
-            },
-        },
-        {
-            "label": "Create new file from template",
-            "command": "python .\\new_file.py",
-            "type": "shell",
-            "presentation": {
-                "focus": true,
-            },
-        },
-        {
             "type": "cppbuild",
             "label": "Build active file (Debug Build)",
             "command": "g++",
             "args": [
                 "-std=c++14",
-                
-                // enable most of the important warnings
-                "-Wall",
+                "-pipe", // use pipes instead of temporary files
+                "-Wall", // enable all warnings
                 "-Wextra",
-                // "-pedantic",
-                // "-Wshadow",
-                // "-Wformat=2",
-                // "-Wfloat-equal",
-                // "-Wconversion",
-                // "-Wlogical-op",
-                // "-Wshift-overflow=2",
-                // "-Wduplicated-cond",
-                // "-Wcast-qual",
-                // "-Wcast-align",
-                
                 // show included headers
                 // "-H",
-                
-                //* https://codeforces.com/blog/entry/15547
-                // compiler debug macros
+                // compiler debug macros: https://codeforces.com/blog/entry/15547,
                 "-D_GLIBCXX_DEBUG",
                 "-D_GLIBCXX_DEBUG_PEDANTIC",
-                
                 // universal replacements for a sanitizer
                 // "-lmcheck",
                 // "-ftrapv",
-                
-                // increasing stack size
-                "-Wl,--stack=66060288",
-                
+                "-Wl,--stack=66060288", // increasing stack size
                 "-fdiagnostics-color=always",
                 "${file}",
                 "-o",
@@ -68,7 +34,7 @@
             },
             "presentation": {
                 "showReuseMessage": false,
-            }
+            },
             "detail": "compiler: g++"
         },
         {
@@ -80,6 +46,7 @@
                 "-Wall",
                 "-Wextra",
                 "-Wl,--stack=66060288",
+                "-pipe",
                 "-fdiagnostics-color=always",
                 "${file}",
                 "-o",
@@ -93,11 +60,30 @@
             ],
             "group": {
                 "kind": "build",
+                "isDefault": true,
             },
             "presentation": {
                 "showReuseMessage": false,
-            }
+            },
             "detail": "compiler: g++"
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "type": "shell",
+            "label": "Run Python file",
+            "command": "python ${file} && exit",
+            "group": {
+                "kind": "build",
+            },
+        },
+        {
+            "type": "shell",
+            "label": "Kill file process",
+            "command": "taskkill /IM ${fileBasenameNoExtension}.exe /F; exit",
+            "presentation": {
+                "panel": "dedicated",
+                "showReuseMessage": false,
+            }
         },
         {
             "type": "shell",
@@ -106,12 +92,20 @@
             "options": {
                 "cwd": "${fileDirname}"
             },
-            "problemMatcher": [],
             "presentation": {
                 "panel": "dedicated",
                 "clear": true,
                 "showReuseMessage": false,
             }
+        },
+        ////////////////////////////////////////////////////////////////////////////////
+        {
+            "label": "Create new file from template",
+            "command": "python .\\new_file.py",
+            "type": "shell",
+            "presentation": {
+                "focus": true,
+            },
         },
         {
             "label": "Rescan workspace",

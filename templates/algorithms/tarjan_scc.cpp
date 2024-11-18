@@ -1,14 +1,19 @@
+#include "../template.cpp"
+
+int n;
+vector2<int> adj;
+
 int timer, scc;
 vector<int> tin, low, root;
 deque<int> stk;
-vector<vector<int>> sadj;
+vector2<int> sadj;
 
 void dfs(int cur) {
     stk.push_back(cur);
     low[cur] = tin[cur] = timer++;
     
     FORIN(nxt, adj[cur]) {
-        if (del[nxt]) continue;
+        if (root[nxt] != -1) continue;
         if (tin[nxt] == -1) {
             dfs(nxt);
         }
@@ -17,7 +22,6 @@ void dfs(int cur) {
     
     if (low[cur] == tin[cur]) {
         scc++;
-        vals.push_back({});
         int u;
         do {
             u = stk.back();
@@ -27,12 +31,9 @@ void dfs(int cur) {
     }
 }
 
-void main() {
-    resize(n + 1, root);
-    assign(n + 1, -1, low, tin);
-    
+void prep() {
+    assign(n + 1, -1, tin, low, root);
     FOR(i, 1, n) if (tin[i] == -1) dfs(i);
-    
     resize(scc + 1, sadj);
     
     FOR(cur, 1, n) {

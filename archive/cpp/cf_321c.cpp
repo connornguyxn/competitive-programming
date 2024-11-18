@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-using ull = unsigned long long;
 using str = string;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
@@ -25,9 +24,9 @@ using vector3 = vector<vector2<T>>;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const ll MOD = 1e9 + 7;
-void addmod(ll& a, ll b) { a = (a + b % MOD) % MOD; }
-void submod(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
-void mulmod(ll& a, ll b) { a = a * (b % MOD) % MOD; }
+void addm(ll& a, ll b) { a = (a + b % MOD) % MOD; }
+void subm(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
+void mulm(ll& a, ll b) { a = a * (b % MOD) % MOD; }
 template <class T, class... C>
 void minimize(T& a, C&&... v) {
     a = min<T>({a, v...});
@@ -70,43 +69,77 @@ void logtime() {
 }
 
 
+// cf_321c
+// centroid, greedy
 
-////////////////////////////////////////////////////////////////////////////////
-mt19937 rng(time(nullptr));
-template <class T>
-T rand(T l, T r) {
-    return uniform_int_distribution<T>(l, r)(rng);
-}
-////////////////////////////////////////////////////////////////////////////////
-#define TASK "<task>"
-////////////////////////////////////////
-void gen() {
-    ofstream cout(TASK".inp"); // dirty, but easier to write
-    
-    
-    
-}
-////////////////////////////////////////
-void check() {
-    system(TASK"_.exe");
-    system("move " TASK".out " TASK".ans");
-    system(TASK".exe");
-    assert(system("fc.exe " TASK".ans " TASK".out") == 0);
-    //! ifstream cin(TASK".inp");
-    //! ifstream out(TASK".out");
-    //! ifstream ans(TASK".ans");
+
+int n;
+vector2<int> adj;
+///////////////////////////////////////////////////////////////////////////////
+namespace sub1 {
+    vector<int> size, del;
+    vector<char> ans;
+    ////////////////////////////////////////
+    void calc_size(int cur, int pre) {
+        size[cur] = 1;
+        FORIN(nxt, adj[cur]) {
+            if (nxt == pre || del[nxt]) continue;
+            calc_size(nxt, cur);
+            size[cur] += size[nxt];
+        }
+    }
+    ////////////////////////////////////////
+    int centroid(int cur, int pre, int s) {
+        FORIN(nxt, adj[cur]) {
+            if (nxt == pre || del[nxt]) continue;
+            if (size[nxt] > s) return centroid(nxt, cur, s);
+        }
+        return cur;
+    }
+    ////////////////////////////////////////
+    void dcmp(int cur, char rank) {
+        del[cur] = 1;
+        ans[cur] = rank;
+        
+        FORIN(nxt, adj[cur]) {
+            if (del[nxt]) continue;
+            calc_size(nxt, cur);
+            int c = centroid(nxt, nxt, size[cur] / 2);
+            dcmp(c, rank + 1);
+        }
+    }
+    ////////////////////////////////////////
+    void main() {
+        resize(n + 1, del, size, ans);
+        
+        calc_size(1, 1);
+        dcmp(centroid(1, 1, n / 2), 'A');
+        
+        FOR(i, 1, n) cout << ans[i] << sp;
+    }
+    bool run() {
+        return main(), 1;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 int main() {
+    #define TASK "cf_321c"
+    // freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false);
     atexit(logtime);
     ////////////////////////////////////////
-    int tc = 1000;
-    FOR(t, 1, tc) {
-        print("////////////////////////////////////////");
-        gen();
-        print("Test generated");
-        check();
+    cin >> n;
+    
+    resize(n + 1, adj);
+    FOR(i, 1, n) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
+    
+    if (sub1::run()) return 0;
     ////////////////////////////////////////
+    return 0;
 }

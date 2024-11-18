@@ -1,6 +1,6 @@
 #include "../template.cpp"
 
-
+using ull = unsigned ll;
 const int N = 1e6;
 ull bp[N + 1];
 const ull BASE = 311;

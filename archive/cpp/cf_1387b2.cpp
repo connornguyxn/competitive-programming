@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-using ull = unsigned long long;
 using str = string;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
@@ -25,9 +24,9 @@ using vector3 = vector<vector2<T>>;
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
 const ll MOD = 1e9 + 7;
-void addmod(ll& a, ll b) { a = (a + b % MOD) % MOD; }
-void submod(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
-void mulmod(ll& a, ll b) { a = a * (b % MOD) % MOD; }
+void addm(ll& a, ll b) { a = (a + b % MOD) % MOD; }
+void subm(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
+void mulm(ll& a, ll b) { a = a * (b % MOD) % MOD; }
 template <class T, class... C>
 void minimize(T& a, C&&... v) {
     a = min<T>({a, v...});
@@ -70,43 +69,81 @@ void logtime() {
 }
 
 
+// cf_1387b2
+// tree, centroid, greedy
 
-////////////////////////////////////////////////////////////////////////////////
-mt19937 rng(time(nullptr));
-template <class T>
-T rand(T l, T r) {
-    return uniform_int_distribution<T>(l, r)(rng);
-}
-////////////////////////////////////////////////////////////////////////////////
-#define TASK "<task>"
-////////////////////////////////////////
-void gen() {
-    ofstream cout(TASK".inp"); // dirty, but easier to write
-    
-    
-    
-}
-////////////////////////////////////////
-void check() {
-    system(TASK"_.exe");
-    system("move " TASK".out " TASK".ans");
-    system(TASK".exe");
-    assert(system("fc.exe " TASK".ans " TASK".out") == 0);
-    //! ifstream cin(TASK".inp");
-    //! ifstream out(TASK".out");
-    //! ifstream ans(TASK".ans");
+
+int n;
+vector2<int> adj;
+///////////////////////////////////////////////////////////////////////////////
+namespace sub1 {
+    ll ans = 0;
+    vector<int> size, nodes;
+    ////////////////////////////////////////
+    void dfs(int cur, int pre) {
+        size[cur] = 1;
+        FORIN(nxt, adj[cur]) if (nxt != pre) {
+            dfs(nxt, cur);
+            size[cur] += size[nxt];
+            ans += min(size[nxt], n - size[nxt]);
+        }
+    }
+    ////////////////////////////////////////
+    int centroid(int cur, int pre, int s) {
+        FORIN(nxt, adj[cur]) {
+            if (nxt == pre) continue;
+            if (size[nxt] > s) return centroid(nxt, cur, s);
+        }
+        return cur;
+    }
+    ////////////////////////////////////////
+    void add_nodes(int cur, int pre) {
+        nodes.push_back(cur);
+        FORIN(nxt, adj[cur]) if (nxt != pre) {
+            add_nodes(nxt, cur);
+        }
+    }
+    ////////////////////////////////////////
+    void main() {
+        resize(n + 1, size);
+        dfs(1, 1);
+        cout << ans * 2 << nl;
+        
+        
+        int c = centroid(1, 1, n / 2);
+        add_nodes(c, c);
+        
+        vector<int> new_node(n + 1);
+        
+        FOR(i, 0, n - 1) {
+            new_node[nodes[i]] = nodes[(i + n / 2) % n];
+        }
+        
+        FOR(i, 1, n) cout << new_node[i] << sp;
+    }
+    bool run() {
+        return main(), 1;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 int main() {
+    #define TASK "cf_1387b2"
+    freopen(TASK".inp", "r", stdin);
+    // freopen(TASK".out", "w", stdout);
     cin.tie(nullptr)->sync_with_stdio(false);
     atexit(logtime);
     ////////////////////////////////////////
-    int tc = 1000;
-    FOR(t, 1, tc) {
-        print("////////////////////////////////////////");
-        gen();
-        print("Test generated");
-        check();
+    cin >> n;
+    
+    resize(n + 1, adj);
+    FOR(i, 2, n) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
+    
+    if (sub1::run()) return 0;
     ////////////////////////////////////////
+    return 0;
 }
