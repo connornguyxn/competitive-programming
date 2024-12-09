@@ -24,7 +24,7 @@ for site, prefix in site_prefixes.items():
         newfile_name = prefix + '_' + newfile_name
         break
 
-is_judge = newfile_name[-1] == '_'
+is_judge = newfile_name[-1] == '.'
 if is_judge:
     print('Judge file detected.')
     newfile_name = newfile_name[:-1]

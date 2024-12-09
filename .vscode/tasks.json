@@ -94,7 +94,7 @@
             },
             "presentation": {
                 "panel": "dedicated",
-                "clear": true,
+                // "clear": true,
                 "showReuseMessage": false,
             }
         },

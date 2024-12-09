@@ -1,11 +1,6 @@
-// #pragma GCC optimize("O3") // safest optimization
-// #pragma GCC target("sse4.2") // SIMD instruction optimization
-// include headers after compile options
-#include <bits/stdc++.h> // replaced with custom header, see `templates/stdc++.h`
+#include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-// using ull = unsigned long long;
-// using db = double;
 using str = string;
 using pii = pair<int, int>;
 using pll = pair<ll, ll>;
@@ -26,11 +21,9 @@ using vector3 = vector<vector2<T>>;
 #define FORIN(it, a) for (auto& it : a)
 #define bmask(i) (1LL << (i))
 #define bget(i, n) ((n) >> (i) & 1)
-// maximum values for common data types
-// INFINITY cannot be used when combining multiple max values
 const int INF = 0x3f3f3f3f;
 const ll INFLL = 0x3f3f3f3f3f3f3f3f;
-const ll MOD = 1e9 + 7; // common modulo
+const ll MOD = 1e9 + 7;
 void addm(ll& a, ll b) { a = (a + b % MOD) % MOD; }
 void subm(ll& a, ll b) { a = (a + MOD - b % MOD) % MOD; }
 void mulm(ll& a, ll b) { a = a * (b % MOD) % MOD; }
@@ -42,7 +35,6 @@ template <class T, class... C>
 void maximize(T& a, C&&... v) {
     a = max<T>({a, v...});
 }
-// parameter pack expansion: https://stackoverflow.com/a/25683817
 template <class T, class... C>
 void assign(int n, const T& v, C&&... a) {
     using e = int[];
@@ -54,7 +46,6 @@ void resize(int n, C&&... a) {
     e{(a.resize(n), 0)...};
 }
 ////////////////////////////////////////
-// debug printing
 template <class... T>
 void print(T&&... a) {
     cout << flush;
@@ -63,7 +54,6 @@ void print(T&&... a) {
     e{(clog << a << sp, 0)...};
     clog << endl;
 }
-// container printing: https://codeforces.com/blog/entry/68920
 template <class Ch, class Tr, class C>
 basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& cout, C a) {
     cout << "{ ";
@@ -79,8 +69,8 @@ void logtime() {
 }
 
 
-//! <problem link>
-//! <tags>
+// cf_1638a
+// greedy, easy
 
 
 
@@ -89,7 +79,22 @@ namespace sub1 {
     ////////////////////////////////////////
     ////////////////////////////////////////
     void main() {
+        int n;
+        cin >> n;
         
+        vector<int> a(n + 1);
+        FOR(i, 1, n) cin >> a[i];
+        
+        FOR(i, 1, n) {
+            if (a[i] - a[i - 1] == 1) continue;
+            int j = i + 1;
+            while (a[j] != a[i - 1] + 1) j++;
+            reverse(a.begin() + i, a.begin() + j + 1);
+            break;
+        }
+        
+        FOR(i, 1, n) cout << a[i] << sp;
+        cout << nl;
     }
     bool run() {
         return main(), 1;
@@ -97,22 +102,18 @@ namespace sub1 {
 }
 ////////////////////////////////////////////////////////////////////////////////
 int main() {
-    #define TASK "<task>"
+    #define TASK "cf_1638a"
     freopen(TASK".inp", "r", stdin);
-    //! freopen(TASK".out", "w", stdout);
-    cin.tie(nullptr)->sync_with_stdio(false); // desync cin from cout and C++ from C input
-    // cout << fixed << setprecision(12); // set floating point precision
+    // freopen(TASK".out", "w", stdout);
+    cin.tie(nullptr)->sync_with_stdio(false);
     atexit(logtime);
     ////////////////////////////////////////
-    // int tc;
-    // cin >> tc;
+    int tc;
+    cin >> tc;
     
-    // FOR(ct, 1, tc) {
-    //     sub1::main();
-    // }
-    if (sub1::run()) return 0;
+    FOR(ct, 1, tc) {
+        sub1::run();
+    }
     ////////////////////////////////////////
-    // for good measure :)
-    // return 0+0-0*0/~0&0|0^0;
     return 0;
 }

@@ -1,6 +1,6 @@
 #include "../template.cpp"
 
-// internally 1-indexed, but added 1 to every index to use 0-based indexing
+// internally 1-indexed, but add 1 to every index to use 0-based indexing
 
 struct FenwickTree {
     int n;

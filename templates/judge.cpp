@@ -88,10 +88,10 @@ void gen() {
 }
 ////////////////////////////////////////
 void check() {
-    system(TASK"_.exe");
+    system(TASK".1.exe");
     system("move " TASK".out " TASK".ans");
     system(TASK".exe");
-    assert(system("fc.exe " TASK".ans " TASK".out") == 0);
+    assert(system("fc.exe " TASK".out " TASK".ans") == 0);
     //! ifstream cin(TASK".inp");
     //! ifstream out(TASK".out");
     //! ifstream ans(TASK".ans");

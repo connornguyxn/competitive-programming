@@ -1,12 +1,11 @@
 #include "../template.cpp"
 
-using ull = unsigned ll;
 const int N = 1e6;
-ull bp[N + 1];
-const ull BASE = 311;
+ll bp[N + 1];
+const ll BASE = 311;
 ////////////////////////////////////////////////////////////////////////////////
 struct Hash {
-    vector<ull> h;
+    vector<ll> h;
     void init(str s) {
         s = sp + s;
         h.resize(size(s));
@@ -15,12 +14,12 @@ struct Hash {
         }
     }
     ////////////////////////////////////////
-    ull get(int l, int r) {
+    ll get(int l, int r) {
         l++; r++;
         return h[r] - h[l - 1] * bp[r - l + 1];
     }
     ////////////////////////////////////////
-    friend ull join(ull a, ull b, int lb, int rb) {
+    friend ll join(ll a, ll b, int lb, int rb) {
         return a * bp[rb - lb + 1] + b;
     }
 };

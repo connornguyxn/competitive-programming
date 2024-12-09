@@ -1,22 +1,23 @@
 #include "../template.cpp"
 
 
-template <int N = 1000000>
+template <int N>
 struct Sieve {
     vector<int> prime;
-    array<int, N> spf = {};
+    array<int, N + 1> spf = {};
     Sieve() {
-        prime.reserve(sqrt(N));
+        prime.reserve(N / 4);
         spf[0] = spf[1] = -1;
-        FOR(i, 2, n) {
+        FOR(i, 2, N) {
             if (spf[i] == 0) {
                 prime.push_back(i);
                 spf[i] = i;
             }
             FORIN(it, prime) {
-                if (n / i < it || it > spf[i]) break;
+                if (N / i < it || it > spf[i]) break;
                 spf[i * it] = it;
             }
         }
     }
 };
+Sieve<(int)1e6> sv;

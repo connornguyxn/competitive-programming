@@ -31,4 +31,13 @@
         ],
         "description": "Small section break"
     },
+    "Lambda function": {
+        "prefix": "lambda",
+        "body": [
+            "[&]($0) {",
+            "    ",
+            "};"
+        ],
+        "description": "Lambda function"
+    },
 }
